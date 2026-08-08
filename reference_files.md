@@ -105,3 +105,13 @@
 ## Phase 4 benchmark + NRR（2026-08-06 新增）
 - [phase4_bench_v1.py](benchmarks/phase4_bench_v1.py) — Phase 4 基准编排器（G1 corpus 校验 / G2 git 钉扎 / G3 双 corpus 流水位级确定性 / G4 real parity / G5a binding 级单算子统计 + 热采样 / G5b e2e fresh+跨 run 门 / G6 证据 self-hash；gate 持久化 + `--fresh` 复用；**CUDA 上下文 segfault 修复**：torch/cupy 先于 pybind kernel 初始化，fc/poc4 惰性导入）
 - [results/phase4_bench_v1.json](benchmarks/results/phase4_bench_v1.json) / [.md](benchmarks/results/phase4_bench_v1.md) — Phase 4 基准证据（**E2E F=12 2.940–3.035× PASS-partial，未达 ≥5× 目标 → NRR-2026-024**；统一估计量 ratio-of-medians；单算子 binding 级 cs_rank 1.59×/parameter_scan 2.28×/rolling_ic 1.99×/factor_corr 13.15×/stock general 2.31–2.65×（跨会话方差异常波动，边界断言仅指示性）；**2026-08-07 基于停牌 corpus `41BB9EF4` 重跑 fresh**：parity gate=True、cross-run delta 3.13% 稳定、**stale 标注解除**；**经 GPT-5.6-Sol 审查 13 发现修复**：fail-closed 门 + 统一估计量 + CUDA 子命令覆盖 + gate provenance envelope）
+
+## 发布流程（2026-08-08 新增）
+- [README.md](README.md) / [README.en.md](README.en.md) / [README.zh-Hant.md](README.zh-Hant.md) — 三语 README（交叉链接/badge/Quick Start/性能表/示例图/API 矩阵/文档索引/Mermaid 架构）
+- [support_matrix.json](docs/support_matrix.json) — 构建/运行环境支持矩阵（单一真源；CUDA 13.3/MSVC 19.51/Python 3.12.7/CC 8.9；build_tested/declared_support/benchmark_runtime 三口径）
+- [LICENSE](LICENSE) / [CITATION.cff](CITATION.cff) — MIT 许可 + 学术引用
+- [CONTRIBUTING.md](CONTRIBUTING.md) / [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) / [SECURITY.md](SECURITY.md) / [SUPPORT.md](SUPPORT.md) — 社区健康文件（贡献/行为准则/安全/支持）
+- [ci.yml](.github/workflows/ci.yml) + [requirements-ci.txt](requirements-ci.txt) — CI（windows-latest + Python 3.12，CPU/契约臂 75 passed；numpy/pytest 锁版本）
+- [.github/ISSUE_TEMPLATE/](.github/ISSUE_TEMPLATE/) + [PULL_REQUEST_TEMPLATE.md](.github/PULL_REQUEST_TEMPLATE.md) — Issue/PR 模板
+- [factor_stream_hwm_v1.py](benchmarks/factor_stream_hwm_v1.py) + [factor_stream_hwm_v1.json](benchmarks/results/factor_stream_hwm_v1.json) — streaming(项②) HWM 证据（fail-closed 深度：分配下界/provenance source=live+git_head 校验/原子写/GUARD K>0；F128 实测 7,079.75 MiB fits，物理余量薄 ~26-166 MiB）
+- [docs/img/](docs/img/) — 示例图（rolling_ic/factor_corr/perf_speedup，确定性合成面板真实输出）

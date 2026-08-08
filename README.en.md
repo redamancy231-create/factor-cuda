@@ -71,5 +71,6 @@ graph LR
 - [ml-quant-trading](https://github.com/redamancy231-create/ml-quant-trading) — factor production
 - [etf-pattern-match-pybind11](https://github.com/redamancy231-create/etf-pattern-match-pybind11) — a reference project using the same stack (pybind11 + CMake)
 - [negative-results-registry](https://github.com/redamancy231-create/negative-results-registry) — negative-result registry (NRR-2026-024)
+- [redamancy231-create](https://github.com/redamancy231-create/redamancy231-create) — personal profile / full project index
 
 *Not investment advice.*

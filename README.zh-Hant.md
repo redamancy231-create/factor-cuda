@@ -71,5 +71,6 @@ graph LR
 - [ml-quant-trading](https://github.com/redamancy231-create/ml-quant-trading) — 因子生產
 - [etf-pattern-match-pybind11](https://github.com/redamancy231-create/etf-pattern-match-pybind11) — 同技術堆疊（pybind11+CMake）的參考專案
 - [negative-results-registry](https://github.com/redamancy231-create/negative-results-registry) — 負結果登記（NRR-2026-024）
+- [redamancy231-create](https://github.com/redamancy231-create/redamancy231-create) — 個人主頁 / 全部專案索引
 
 *非投資建議。*

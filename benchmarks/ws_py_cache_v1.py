@@ -44,6 +44,7 @@ T, N = 1218, 5000
 SEED = 42
 REPS = 11          # median of 11 (mirror C++ perf methodology)
 THRESHOLD = 1.2    # P3 gate: >= 1.2x cached-vs-uncached speedup
+MIN_ABS_MS = 1.0   # measurement-health floor: a real GPU call cannot be a ~0ms no-op
 
 
 def git_head() -> str:
@@ -149,7 +150,10 @@ def _measure_op(name, cached_fn, uncached_fn, cache_obj, out_kind):
 
 
 def _validate(ops) -> list:
-    """Fail-closed validation. Returns a list of problems; non-empty -> reject."""
+    """Fail-closed validation. Returns a list of problems; non-empty -> reject.
+    Gates: bitwise identity, cache reuse, measurement health (raw timings
+    present + strictly positive, median above an absolute no-op floor),
+    direction, and the speedup threshold."""
     problems = []
     for m in ops:
         if not m["bitwise_identical"]:
@@ -160,6 +164,20 @@ def _validate(ops) -> list:
                 f"{m['op']}: cache not reused across same-shape calls "
                 f"(entries {m['cache_entries_after_first']}->"
                 f"{m['cache_entries_after_second']})")
+        # Measurement health (review F1): the relative/identity gates alone let
+        # a degenerate ~0ms no-op pass; raw arrays must be complete and strictly
+        # positive, and medians must clear an absolute floor.
+        for side in ("uncached_raw_ms", "cached_raw_ms"):
+            raw = m.get(side, [])
+            if len(raw) != REPS or not all(v > 0 for v in raw):
+                problems.append(
+                    f"{m['op']}: {side} invalid (need {REPS} strictly positive "
+                    f"samples, got {len(raw)})")
+        if m["uncached_ms"] < MIN_ABS_MS or m["cached_ms"] < MIN_ABS_MS:
+            problems.append(
+                f"{m['op']}: median below absolute floor {MIN_ABS_MS} ms "
+                f"(no-op suspect: uncached {m['uncached_ms']} ms, cached "
+                f"{m['cached_ms']} ms)")
         if not (m["uncached_ms"] > m["cached_ms"]):
             problems.append(
                 f"{m['op']}: direction wrong (uncached {m['uncached_ms']} ms <= "
@@ -200,12 +218,16 @@ def render_md(payload: dict) -> str:
             f"{'BEATS' if ok else 'FAIL'} |")
     lines.append("")
     lines.append("## 判定")
+    measured = "、".join(m["op"] for m in payload["ops"])
     if all(m["speedup_x"] >= payload["threshold"] for m in payload["ops"]):
         lines.append(
-            "**BEATS gate**：全部 op 收益 ≥ 1.2x，缓存路径结果位级一致且缓存"
-            "实际复用 → 自动缓存收益成立。")
+            f"**BEATS gate（测得的 op：{measured}）**：这些 op 在 corpus 面板 "
+            f"(T,N)=({payload['panel']['T']},{payload['panel']['N']}) 上收益 "
+            f"≥ {payload['threshold']}x，缓存路径结果位级一致且缓存实际复用。"
+            f"parameter_scan 未纳入性能门——其 C++ workspace 收益 1.18x 未达 "
+            f"1.2x（缓存对它是正确性收益而非性能门槛），详见备注。")
     else:
-        lines.append("**FAIL**：至少一个 op 未达 gate（详见上表）。")
+        lines.append(f"**FAIL**：至少一个 op 未达 gate（详见上表）。")
     lines.append("")
     lines.append("## 备注")
     lines.append(payload["disclosure"])
@@ -288,9 +310,14 @@ def main() -> int:
             "capture_sha256": _sha([m["uncached_raw_ms"] for m in ops]
                                    + [m["cached_raw_ms"] for m in ops]),
         },
-        "disclosure": ("Python 适配层 + 绑定层开销≈0（上会话实测）；缓存收益来自"
-                       "消除 per-call 设备分配（C++ workspace 先例：cs_rank "
-                       "16.4→9.17ms、rolling_ic 48.98→33.0ms）。"),
+        "disclosure": ("缓存收益来自消除 per-call 设备分配（C++ workspace 先例："
+                       "cs_rank 16.4→9.17ms、rolling_ic 48.98→33.0ms；绝对收益 "
+                       "与 Python 端实测一致）。注意：Python 适配层存在加性开销"
+                       "（本产物 Python 端无缓存中位明显高于 C++ 绑定端先例，"
+                       "cs_rank 约 +14ms），并非≈0——缓存只消除设备分配，不影响"
+                       "适配层开销。仅测 rolling_ic 与 cs_rank 两 op（同面板 "
+                       "1218x5000/seed 42）；parameter_scan 未纳入性能门（其 C++ "
+                       "workspace 收益 1.18x 未达 1.2x，缓存对它是正确性收益）。"),
         "ops": ops,
     }
 

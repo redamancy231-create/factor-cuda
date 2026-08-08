@@ -113,10 +113,14 @@ class _WorkspaceCache:
     def clear(self):
         """Release all cached device buffers and drop the entries. Takes each
         key's lock first so a workspace is never freed while a call using it is
-        still in flight. Idempotent; safe to call between workloads."""
+        still in flight. Idempotent; safe to call between workloads. Also
+        re-enables the cache: a fail-safe disable (a one-off factory failure)
+        is recoverable through this public path, honoring fc.clear_workspaces()'
+        "the next call re-creates the caches" contract."""
         with self._guard:
             items = list(self._items.items())
             self._items = {}
+            self._enabled = True
         for _, (ws, lock) in items:
             with lock:
                 ws.clear()

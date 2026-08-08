@@ -158,10 +158,16 @@ def test_clear_workspaces_drops_and_rebuilds():
     assert np.isfinite(out).all()
 
 
-# ---- 4. failed call leaves the workspace usable ------------------------------
+# ---- 4. a failed call leaves the cache usable --------------------------------
+# NOTE (review P3-CONTRACT-03): this covers an ADAPTER-layer error (thrown in
+# u.to_numpy, BEFORE the cache/GPU region). The C++ kernel-run-time fail-path
+# contract (ws!=nullptr keeps its buffers for a retry) is covered by the C++
+# selfcheck workspace tests (poc3_cs_rank_selfcheck error-then-retry cases),
+# not reproduced here -- triggering a real kernel launch failure from Python is
+# not practical.
 
 @NEED_CUDA
-def test_error_then_retry_uses_same_workspace():
+def test_adapter_error_then_retry_cache_still_usable():
     x = _panel("float32")
     good = fc.cross_sectional_rank(x)
     with pytest.raises(ValueError):
@@ -247,6 +253,9 @@ def test_binding_workspace_handles_exist_and_clear():
     r2 = fb.cs_rank_f32(x, None, False, cw)
     assert np.array_equal(r0, r1, equal_nan=True)
     assert np.array_equal(r1, r2, equal_nan=True)
+    # release the device buffers allocated by the workspace-path calls (the
+    # C++ workspace has a trivial destructor -- a dropped handle would leak)
+    cw.clear()
 
 
 @NEED_CUDA
@@ -267,7 +276,8 @@ def _mk_op(**overrides):
         "speedup_x": 50.0 / 30.0, "bitwise_identical": True,
         "cache_reused": True, "cache_entries_after_first": 1,
         "cache_entries_after_second": 1, "output_kind": "ic",
-        "output_sha256": "X", "uncached_raw_ms": [], "cached_raw_ms": [],
+        "output_sha256": "X",
+        "uncached_raw_ms": [50.0] * 11, "cached_raw_ms": [30.0] * 11,
     }
     base.update(overrides)
     return base
@@ -302,6 +312,19 @@ def test_validate_rejects_wrong_direction():
 def test_validate_rejects_below_threshold():
     problems = _validate()([_mk_op(speedup_x=1.1)])
     assert any("1.2x" in p for p in problems)
+
+
+def test_validate_rejects_empty_raw_timings():
+    problems = _validate()(
+        [_mk_op(uncached_raw_ms=[], cached_raw_ms=[])])
+    assert any("raw" in p for p in problems)
+
+
+def test_validate_rejects_noop_below_absolute_floor():
+    problems = _validate()([
+        _mk_op(uncached_ms=0.05, cached_ms=0.04, speedup_x=1.25,
+               uncached_raw_ms=[0.05] * 11, cached_raw_ms=[0.04] * 11)])
+    assert any("floor" in p for p in problems)
 
 
 # ---- 8. package API -----------------------------------------------------------

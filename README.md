@@ -15,7 +15,7 @@
 ## 状态
 
 **已发布 v1.1.0（2026-08-08）**——PoC ①-④ 全闭合 + Phase 1-4 完成 + P3 适配层自动缓存。
-- 操作语义契约已冻结（L0 Spec，CLAUDE.md）；测试套件本地 GPU **150 passed / 3 skipped**（GitHub Actions 无 GPU 跑 CPU/契约臂 75 passed）；Phase 3 验收六门全 PASS。
+- 操作语义契约已冻结（L0 Spec，CLAUDE.md）；测试套件本地 GPU **150 passed / 3 skipped**（GitHub Actions 无 GPU 跑 CPU/契约臂 85 passed）；Phase 3 验收六门全 PASS。
 - Phase 4 benchmark 端到端 **~3.0×**（vs 同语义最佳免费替代；未达 5× 优势门槛 → **负结果已登记 NRR-2026-024**）。
 - 内存模型「可分块」三件套（F-blocking / streaming / N-blocking）已验证（PoC/内存可行性路径）：factor F=128 模型峰值 12,645.61 MiB 超预算 → streaming 实测 7,079.75 MiB fits。
 

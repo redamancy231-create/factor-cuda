@@ -9,7 +9,7 @@
 ## 狀態
 
 **已發佈 v1.1.0（2026-08-08）**——PoC ①–④ 均已完成驗證 + Phase 1-4 完成 + P3 適配層自動快取。
-- 操作語義契約已凍結（L0 Spec，CLAUDE.md）；測試套件本機 GPU **150 項通過 / 3 項跳過**（GitHub Actions 無 GPU 跑 CPU/契約臂 75 項通過）；Phase 3 六項驗收關卡全數 PASS。
+- 操作語義契約已凍結（L0 Spec，CLAUDE.md）；測試套件本機 GPU **150 項通過 / 3 項跳過**（GitHub Actions 無 GPU 跑 CPU/契約臂 85 項通過）；Phase 3 六項驗收關卡全數 PASS。
 - Phase 4 benchmark 端到端 **~3.0×**（vs 同語義最佳免費替代；未達 5× 優勢門檻 → **負結果已登記 NRR-2026-024**）。
 - 記憶體模型「可分塊」三件套（F-blocking / streaming / N-blocking）已驗證（PoC/記憶體可行性路徑）：factor F=128 模型峰值 12,645.61 MiB 超預算 → streaming 實測 7,079.75 MiB 符合預算。
 

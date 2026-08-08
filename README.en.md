@@ -9,7 +9,7 @@
 ## Status
 
 **Released v1.1.0 (2026-08-08)** — PoC items ①–④ closed out; Phases 1–4 complete + P3 adapter auto-cache.
-- The operation-semantics contract is frozen (L0 Spec, CLAUDE.md); all 150 tests passed locally on GPU / 3 skipped (GitHub Actions runs the CPU/contract arm without GPU: 75 passed); all six Phase 3 acceptance gates are marked PASS.
+- The operation-semantics contract is frozen (L0 Spec, CLAUDE.md); all 150 tests passed locally on GPU / 3 skipped (GitHub Actions runs the CPU/contract arm without GPU: 85 passed); all six Phase 3 acceptance gates are marked PASS.
 - Phase 4 benchmark end-to-end **~3.0×** (vs the best same-semantics free alternative; below the pre-registered 5× superiority threshold → **registered as negative result NRR-2026-024**).
 - The memory-model "divisible" trilogy (F-blocking / streaming / N-blocking) is validated as a PoC / memory-feasibility path: factor F=128 model peak 12,645.61 MiB (over budget) → streaming measured 7,079.75 MiB (fits).
 

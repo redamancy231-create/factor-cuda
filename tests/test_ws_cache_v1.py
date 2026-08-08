@@ -268,12 +268,39 @@ def test_binding_workspace_none_default_keeps_old_behavior():
     assert np.array_equal(r_default, r_none, equal_nan=True)
 
 
+@NEED_CUDA
+def test_dropped_handle_gc_releases_device_buffer():
+    """external MAJOR-1: a GC'd workspace handle (no explicit clear) must NOT
+    leak device buffers -- the binding's custom deleter clears before delete.
+    (torch.cuda.mem_get_info reads cudaMemGetInfo free bytes, which reflects
+    cudaMalloc'd workspace buffers even though torch's own allocator does not.)"""
+    import gc
+
+    from fc import _util as u
+    fb = u.fcb()
+    x = _panel("float32", seed=17)
+    torch.cuda.synchronize()
+    free0, _ = torch.cuda.mem_get_info()
+    ws = fb.CsRankWorkspace()
+    fb.cs_rank_f32(x, None, False, ws)          # allocates device buffers in ws
+    torch.cuda.synchronize()
+    free1, _ = torch.cuda.mem_get_info()
+    assert free1 <= free0 - 1024                # buffers are allocated (>= 1 KiB)
+    del ws
+    gc.collect()
+    torch.cuda.synchronize()
+    free2, _ = torch.cuda.mem_get_info()
+    assert free2 >= free1 + 1024                # custom deleter released them on GC
+
+
 # ---- 7. fail-closed evidence validation (synthetic negatives) ----------------
 
 def _mk_op(**overrides):
     base = {
         "op": "fake", "uncached_ms": 50.0, "cached_ms": 30.0,
-        "speedup_x": 50.0 / 30.0, "bitwise_identical": True,
+        # speedup_x must match the evidence producer's round(.,4) so the
+        # raw-derived recompute gate agrees on healthy inputs
+        "speedup_x": round(50.0 / 30.0, 4), "bitwise_identical": True,
         "cache_reused": True, "cache_entries_after_first": 1,
         "cache_entries_after_second": 1, "output_kind": "ic",
         "output_sha256": "X",
@@ -283,48 +310,64 @@ def _mk_op(**overrides):
     return base
 
 
-def _validate():
+def _validate_with(ops, prov=None):
     from benchmarks import ws_py_cache_v1 as ev
-    return ev._validate
+    return ev._validate(
+        ops, prov if prov is not None else {"git_head": "0" * 40})
 
 
 def test_validate_healthy_passes():
-    assert _validate()([_mk_op(), _mk_op(op="fake2")]) == []
+    assert _validate_with([_mk_op(), _mk_op(op="fake2")]) == []
 
 
 def test_validate_rejects_bitwise_mismatch():
-    problems = _validate()([_mk_op(bitwise_identical=False)])
+    problems = _validate_with([_mk_op(bitwise_identical=False)])
     assert any("bitwise" in p for p in problems)
 
 
 def test_validate_rejects_cache_not_reused():
-    problems = _validate()(
+    problems = _validate_with(
         [_mk_op(cache_reused=False, cache_entries_after_second=2)])
     assert any("reuse" in p for p in problems)
 
 
 def test_validate_rejects_wrong_direction():
-    problems = _validate()([_mk_op(uncached_ms=30.0, cached_ms=50.0,
+    problems = _validate_with([_mk_op(uncached_ms=30.0, cached_ms=50.0,
                                    speedup_x=0.6)])
     assert any("direction" in p for p in problems)
 
 
 def test_validate_rejects_below_threshold():
-    problems = _validate()([_mk_op(speedup_x=1.1)])
+    problems = _validate_with([_mk_op(speedup_x=1.1)])
     assert any("1.2x" in p for p in problems)
 
 
 def test_validate_rejects_empty_raw_timings():
-    problems = _validate()(
+    problems = _validate_with(
         [_mk_op(uncached_raw_ms=[], cached_raw_ms=[])])
     assert any("raw" in p for p in problems)
 
 
 def test_validate_rejects_noop_below_absolute_floor():
-    problems = _validate()([
+    problems = _validate_with([
         _mk_op(uncached_ms=0.05, cached_ms=0.04, speedup_x=1.25,
                uncached_raw_ms=[0.05] * 11, cached_raw_ms=[0.04] * 11)])
     assert any("floor" in p for p in problems)
+
+
+def test_validate_rejects_invalid_provenance():
+    problems = _validate_with([_mk_op()], {"git_head": "n/a"})
+    assert any("provenance" in p for p in problems)
+    problems2 = _validate_with([_mk_op()], {"git_head": "abc"})  # short SHA
+    assert any("provenance" in p for p in problems2)
+
+
+def test_validate_rejects_forged_derived_fields():
+    # uncached_ms/cached_ms/speedup_x disagree with the raw timings (external
+    # MINOR-3): the derived fields are recomputed and a mismatch is rejected.
+    problems = _validate_with([
+        _mk_op(uncached_ms=100.0, cached_ms=10.0, speedup_x=10.0)])
+    assert any("raw median" in p or "raw-derived" in p for p in problems)
 
 
 # ---- 8. package API -----------------------------------------------------------

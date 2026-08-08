@@ -90,6 +90,15 @@ def _sha(obj) -> str:
     return hashlib.sha256(text.encode("utf-8")).hexdigest().upper()
 
 
+def _bitwise_eq(a, b):
+    """True iff a and b are byte-identical (NaN PAYLOAD included). The
+    equal_nan=True form of array_equal treats different NaN payloads as equal
+    -- not acceptable for a bitwise gate (external review MINOR-2, 2026-08-08)."""
+    assert a.shape == b.shape and a.dtype == b.dtype
+    dt = np.uint32 if a.dtype == np.float32 else np.uint64
+    return bool((a.view(dt) == b.view(dt)).all())
+
+
 def _measure_op(name, cached_fn, uncached_fn, cache_obj, out_kind):
     """Measure ONE op on the SAME panel with the cache disabled vs enabled.
 
@@ -129,9 +138,15 @@ def _measure_op(name, cached_fn, uncached_fn, cache_obj, out_kind):
     cached_times.sort()
     cached_ms = cached_times[REPS // 2]
 
-    identical = bool(np.array_equal(out_u, out_c, equal_nan=True))
+    identical = _bitwise_eq(out_u, out_c)
     reused = n_after_second == n_after_first and n_after_first >= 1
     speedup = uncached_ms / cached_ms if cached_ms > 0 else 0.0
+
+    # bind BOTH sides' raw bit patterns (NaN payload included) so the hash is
+    # a faithful fingerprint of the compared outputs (external MINOR-2)
+    u_bytes = out_u.view(np.uint32 if out_u.dtype == np.float32 else np.uint64).tobytes()
+    c_bytes = out_c.view(np.uint32 if out_c.dtype == np.float32 else np.uint64).tobytes()
+    out_sha = hashlib.sha256(u_bytes + c_bytes).hexdigest().upper()
 
     return {
         "op": name,
@@ -143,17 +158,22 @@ def _measure_op(name, cached_fn, uncached_fn, cache_obj, out_kind):
         "cache_entries_after_first": n_after_first,
         "cache_entries_after_second": n_after_second,
         "output_kind": out_kind,
-        "output_sha256": _sha(out_u.tolist()),
+        "output_sha256": out_sha,
         "uncached_raw_ms": [round(v, 4) for v in uncached_times],
         "cached_raw_ms": [round(v, 4) for v in cached_times],
     }
 
 
-def _validate(ops) -> list:
+def _raw_median(raw):
+    return sorted(raw)[REPS // 2] if len(raw) == REPS else None
+
+
+def _validate(ops, provenance=None) -> list:
     """Fail-closed validation. Returns a list of problems; non-empty -> reject.
     Gates: bitwise identity, cache reuse, measurement health (raw timings
-    present + strictly positive, median above an absolute no-op floor),
-    direction, and the speedup threshold."""
+    present + strictly positive, median above an absolute no-op floor), derived
+    fields recomputed from the raw timings (never trusted), direction, the
+    speedup threshold, and provenance health (git must be resolvable)."""
     problems = []
     for m in ops:
         if not m["bitwise_identical"]:
@@ -167,17 +187,39 @@ def _validate(ops) -> list:
         # Measurement health (review F1): the relative/identity gates alone let
         # a degenerate ~0ms no-op pass; raw arrays must be complete and strictly
         # positive, and medians must clear an absolute floor.
+        raw_ok = True
         for side in ("uncached_raw_ms", "cached_raw_ms"):
             raw = m.get(side, [])
             if len(raw) != REPS or not all(v > 0 for v in raw):
                 problems.append(
                     f"{m['op']}: {side} invalid (need {REPS} strictly positive "
                     f"samples, got {len(raw)})")
+                raw_ok = False
         if m["uncached_ms"] < MIN_ABS_MS or m["cached_ms"] < MIN_ABS_MS:
             problems.append(
                 f"{m['op']}: median below absolute floor {MIN_ABS_MS} ms "
                 f"(no-op suspect: uncached {m['uncached_ms']} ms, cached "
                 f"{m['cached_ms']} ms)")
+        # Derived fields are recomputed from the raw samples -- a forged
+        # uncached_ms/cached_ms/speedup_x that disagrees with its own raw data
+        # is rejected (external review MINOR-3, 2026-08-08).
+        if raw_ok:
+            unc = _raw_median(m["uncached_raw_ms"])
+            cac = _raw_median(m["cached_raw_ms"])
+            if unc is not None and cac is not None and cac > 0:
+                if abs(m["uncached_ms"] - unc) > 1e-6:
+                    problems.append(
+                        f"{m['op']}: uncached_ms {m['uncached_ms']} != raw "
+                        f"median {unc:.4f}")
+                if abs(m["cached_ms"] - cac) > 1e-6:
+                    problems.append(
+                        f"{m['op']}: cached_ms {m['cached_ms']} != raw "
+                        f"median {cac:.4f}")
+                recomputed = round(unc / cac, 4)
+                if abs(m["speedup_x"] - recomputed) > 1e-6:
+                    problems.append(
+                        f"{m['op']}: speedup_x {m['speedup_x']} != raw-derived "
+                        f"{recomputed}")
         if not (m["uncached_ms"] > m["cached_ms"]):
             problems.append(
                 f"{m['op']}: direction wrong (uncached {m['uncached_ms']} ms <= "
@@ -185,6 +227,14 @@ def _validate(ops) -> list:
         if m["speedup_x"] < THRESHOLD:
             problems.append(
                 f"{m['op']}: speedup {m['speedup_x']}x < {THRESHOLD}x gate")
+    # Provenance health (external MINOR-4, 2026-08-08): closure_status=OK must
+    # not be written when git is unresolvable -- the artifact claims to pin a
+    # source revision, which "n/a" cannot.
+    gh = (provenance or {}).get("git_head", "") or ""
+    if gh in ("n/a", "") or len(gh) != 40:
+        problems.append(
+            f"provenance git_head invalid ({gh!r}); evidence cannot pin a "
+            f"source revision")
     return problems
 
 
@@ -276,7 +326,14 @@ def main() -> int:
     for c in _ws._CACHES:
         c.set_enabled(True)
 
-    problems = _validate(ops)
+    prov = {
+        "source": "live",
+        "git_head": git_head(),
+        "git_dirty": git_dirty(),
+        "capture_sha256": _sha([m["uncached_raw_ms"] for m in ops]
+                               + [m["cached_raw_ms"] for m in ops]),
+    }
+    problems = _validate(ops, prov)
     if problems:
         print("FAIL-CLOSED: evidence rejected, nothing written:")
         for p in problems:
@@ -303,13 +360,7 @@ def main() -> int:
         "judgement": ("speedup >= 1.2x AND bitwise_identical AND cache_reused "
                       "for every op; P3 gate"),
         "closure_status": "OK",
-        "provenance": {
-            "source": "live",
-            "git_head": git_head(),
-            "git_dirty": git_dirty(),
-            "capture_sha256": _sha([m["uncached_raw_ms"] for m in ops]
-                                   + [m["cached_raw_ms"] for m in ops]),
-        },
+        "provenance": prov,
         "disclosure": ("缓存收益来自消除 per-call 设备分配（C++ workspace 先例："
                        "cs_rank 16.4→9.17ms、rolling_ic 48.98→33.0ms；绝对收益 "
                        "与 Python 端实测一致）。注意：Python 适配层存在加性开销"

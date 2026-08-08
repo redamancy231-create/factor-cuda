@@ -76,6 +76,13 @@ class _WorkspaceCache:
         if not self._enabled:
             return None, None
         with self._guard:
+            # Re-check inside the critical section (external MINOR-5,
+            # 2026-08-08): a racing thread may have disabled the cache (a
+            # failed factory) between our outer read and acquiring _guard.
+            # Without this, we would still create + store an entry while
+            # disabled, and later calls would invoke the factory again.
+            if not self._enabled:
+                return None, None
             item = self._items.get(key)
             if item is None:
                 try:

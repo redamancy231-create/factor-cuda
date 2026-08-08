@@ -32,6 +32,7 @@
 #include <chrono>
 #include <cstdint>
 #include <cstring>
+#include <memory>
 #include <stdexcept>
 #include <string>
 #include <vector>
@@ -469,16 +470,39 @@ PYBIND11_MODULE(factor_cuda_pybind, m) {
   // via the owner MemTracker. Workspaces are NOT thread-safe -- calls sharing a
   // workspace must be serialized by the caller (the fc adapter holds one lock
   // per shape key).
-  py::class_<cs_rank_workspace>(m, "CsRankWorkspace")
+  //
+  // Custom deleters (external review MAJOR-1, 2026-08-08): the C++ workspace
+  // has a trivial destructor, so a Python handle that is GC'd without an
+  // explicit clear() would leak its device buffers. The deleter clears before
+  // delete -- dropped handles release VRAM automatically. clear() stays
+  // idempotent (a second clear on an already-cleared workspace is a no-op), so
+  // explicit clear() + GC coexist safely.
+  struct CsRankWorkspaceDeleter {
+    void operator()(cs_rank_workspace* p) const noexcept {
+      cs_rank_workspace_clear(p);
+      delete p;
+    }
+  };
+  struct RollingIcWorkspaceDeleter {
+    void operator()(rolling_ic_workspace* p) const noexcept {
+      rolling_ic_workspace_clear(p);
+      delete p;
+    }
+  };
+  py::class_<cs_rank_workspace, std::unique_ptr<cs_rank_workspace, CsRankWorkspaceDeleter>>(
+      m, "CsRankWorkspace")
       .def(py::init<>())
       .def("clear", &cs_rank_workspace_clear,
            "Release all cached device buffers (idempotent; safe on empty). "
-           "Next call re-allocates.");
-  py::class_<rolling_ic_workspace>(m, "RollingIcWorkspace")
+           "Next call re-allocates. Also called automatically when the handle "
+           "is garbage-collected.");
+  py::class_<rolling_ic_workspace, std::unique_ptr<rolling_ic_workspace, RollingIcWorkspaceDeleter>>(
+      m, "RollingIcWorkspace")
       .def(py::init<>())
       .def("clear", &rolling_ic_workspace_clear,
            "Release all cached device buffers (idempotent; safe on empty). "
-           "Next call re-allocates.");
+           "Next call re-allocates. Also called automatically when the handle "
+           "is garbage-collected.");
 
   m.def("cs_rank_f32", &cs_rank_f32, py::arg("X"), py::arg("mask") = py::none(),
         py::arg("descending") = false, py::arg("workspace") = py::none(),

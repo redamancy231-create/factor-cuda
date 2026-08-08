@@ -27,6 +27,29 @@ GPU-accelerated cross-sectional operators (pybind11 bindings + pure-Python backe
 
 Also: a static GPU-memory budget model (`docs/memory_budget_v1.json`), workspace allocation caching, corpus parity verification.
 
+## Quick Start
+
+> Source build (Windows 10/11 + CUDA Toolkit 13.3 + VS2026 MSVC + Python 3.12 + CMake/Ninja; environment in `docs/support_matrix.json`). After building the pybind11 extension modules (`-DBUILD_PYBIND11=ON`), `fc.*` is callable (auto GPU when CUDA is available).
+
+```bash
+git clone https://github.com/redamancy231-create/factor-cuda
+cd factor-cuda
+cmake -S . -B build -DBUILD_PYBIND11=ON -DPython_EXECUTABLE=<python3.12.exe>
+cmake --build build --target factor_cuda_pybind factor_corr_pybind
+```
+
+```python
+import numpy as np
+import fc                       # auto GPU when CUDA is available
+
+X = np.random.randn(1218, 5000).astype(np.float32)               # (T, N) factor panel
+mask = np.ones((1218, 5000), dtype=bool)
+
+rank = fc.cross_sectional_rank(X, mask)                          # cross-sectional rank (GPU)
+ic = fc.rolling_ic(X, np.random.randn(1218, 5000), min_valid=30) # rolling Spearman IC
+corr = fc.factor_corr(np.random.randn(1218, 5000, 4))            # factor correlation (F×F)
+```
+
 ## Architecture
 
 ```mermaid
@@ -47,6 +70,21 @@ graph LR
 
 - Environment support matrix in `docs/support_matrix.json` (single source of truth; tested CUDA Toolkit 13.3 / VS2026 MSVC 19.51 / Python 3.12.7 / compute capability 8.9, single-arch declaration).
 - CMake + Ninja (C++20); PoC tools built via `pwsh -NoProfile -File _build_poc3.ps1 <target>`.
+
+## Performance
+
+RTX 4060 Laptop (sm_89), corpus 1218×5000×12, vs the best same-semantics free alternative:
+
+| Operator | Speedup |
+|----------|---------|
+| End-to-end (committed / fresh) | 3.04× / 2.94× |
+| `factor_corr` | 13.09× |
+| `stock_corr` general (N=500 / N=2000) | 3.38× / 2.31× |
+| `parameter_scan` | 2.34× |
+| `rolling_ic` | 2.02× |
+| `cs_rank` | 1.48× |
+
+> Below the pre-registered 5× target → negative result registered as [NRR-2026-024](https://github.com/redamancy231-create/negative-results-registry/tree/main/entries/NRR-2026-024). See `benchmarks/results/phase4_bench_v1.md`.
 
 ## Documentation Index
 

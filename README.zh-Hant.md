@@ -27,6 +27,29 @@ GPU 加速橫斷面分析運算子（pybind11 綁定 + 純 Python 後端）：
 
 配套：GPU 記憶體靜態預算模型（`docs/memory_budget_v1.json`）、workspace 分配快取、corpus parity 驗證。
 
+## 快速開始
+
+> 原始碼建置（Windows 10/11 + CUDA Toolkit 13.3 + VS2026 MSVC + Python 3.12 + CMake/Ninja；環境見 `docs/support_matrix.json`）。擴充模組經 pybind11 綁定（`-DBUILD_PYBIND11=ON`）建置後，`fc.*` 即可呼叫（CUDA 可用時自動走 GPU）。
+
+```bash
+git clone https://github.com/redamancy231-create/factor-cuda
+cd factor-cuda
+cmake -S . -B build -DBUILD_PYBIND11=ON -DPython_EXECUTABLE=<python3.12.exe>
+cmake --build build --target factor_cuda_pybind factor_corr_pybind
+```
+
+```python
+import numpy as np
+import fc                       # CUDA 可用時自動走 GPU
+
+X = np.random.randn(1218, 5000).astype(np.float32)               # (T, N) 因子面板
+mask = np.ones((1218, 5000), dtype=bool)
+
+rank = fc.cross_sectional_rank(X, mask)                          # 橫斷面排序（GPU）
+ic = fc.rolling_ic(X, np.random.randn(1218, 5000), min_valid=30) # 滾動 Spearman IC
+corr = fc.factor_corr(np.random.randn(1218, 5000, 4))            # 因子相關矩陣 (F×F)
+```
+
 ## 架構
 
 ```mermaid
@@ -47,6 +70,21 @@ graph LR
 
 - 環境支援矩陣見 `docs/support_matrix.json`（單一真實來源；實測 CUDA Toolkit 13.3 / VS2026 MSVC 19.51 / Python 3.12.7 / compute capability 8.9，僅宣告單一架構）。
 - CMake + Ninja（C++20）；PoC 工具經 `pwsh -NoProfile -File _build_poc3.ps1 <target>` 建置。
+
+## 效能
+
+RTX 4060 Laptop（sm_89），corpus 1218×5000×12，vs 同語義最佳免費替代：
+
+| 運算子 | 加速比 |
+|------|-------|
+| 端到端（committed / fresh） | 3.04× / 2.94× |
+| `factor_corr` | 13.09× |
+| `stock_corr` general（N=500 / N=2000） | 3.38× / 2.31× |
+| `parameter_scan` | 2.34× |
+| `rolling_ic` | 2.02× |
+| `cs_rank` | 1.48× |
+
+> 未達 5× 優勢門檻 → 負結果登記 [NRR-2026-024](https://github.com/redamancy231-create/negative-results-registry/tree/main/entries/NRR-2026-024)。詳見 `benchmarks/results/phase4_bench_v1.md`。
 
 ## 文件索引
 

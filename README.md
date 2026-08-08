@@ -2,6 +2,7 @@
 
 > [简体中文](README.md) · [English](README.en.md) · [繁體中文](README.zh-Hant.md)
 >
+> ![简体中文](https://img.shields.io/badge/%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87-%E6%96%87%E6%A1%A3-green)
 > ![GitHub stars](https://img.shields.io/github/stars/redamancy231-create/factor-cuda)
 > ![GitHub release](https://img.shields.io/github/v/release/redamancy231-create/factor-cuda)
 > ![GitHub license](https://img.shields.io/github/license/redamancy231-create/factor-cuda)

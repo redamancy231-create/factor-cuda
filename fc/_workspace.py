@@ -64,7 +64,15 @@ class _WorkspaceCache:
         return self._enabled
 
     def _get(self, key):
-        """Return (workspace | None, lock | None). Called under no lock."""
+        """Return (workspace | None, lock | None) with the per-key lock ALREADY
+        held when workspace is non-None (use() releases it).
+
+        The acquire happens INSIDE the _guard critical section so clear() can
+        never free the workspace between _get returning and the caller's GPU
+        call starting: clear() must wait on _guard, by which time this thread
+        already holds the per-key lock, so clear() blocks until the call ends.
+        (Acquiring outside _guard would leave a window where clear() deletes
+        and frees the entry first -> dangling buffers.)"""
         if not self._enabled:
             return None, None
         with self._guard:
@@ -82,21 +90,25 @@ class _WorkspaceCache:
                 item = (ws, threading.Lock())
                 self._items[key] = item
             ws, lock = item
+            lock.acquire()
         return ws, lock
 
     @contextmanager
     def use(self, key):
-        """Yield the cached workspace (or None when disabled) with the per-key
-        lock held for the duration. Serializes same-key calls so the shared
-        (thread-unsafe) workspace is never used concurrently. Exceptions in the
-        body release the lock (and the C++ ws survives a runtime failure --
-        buffers stay cached for a retry, per the kernel's fail-path contract)."""
+        """Yield the cached workspace (or None when disabled) holding the per-key
+        lock for the whole body. Serializes same-key calls so the shared
+        (thread-unsafe) workspace is never used concurrently, and a concurrent
+        clear_workspaces() cannot free buffers mid-call. Exceptions in the body
+        release the lock (and the C++ ws survives a runtime failure -- buffers
+        stay cached for a retry, per the kernel's fail-path contract)."""
         ws, lock = self._get(key)
         if lock is None:
             yield None
             return
-        with lock:
+        try:
             yield ws
+        finally:
+            lock.release()
 
     def clear(self):
         """Release all cached device buffers and drop the entries. Takes each

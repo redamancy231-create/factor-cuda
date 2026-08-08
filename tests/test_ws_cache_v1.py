@@ -203,6 +203,34 @@ def test_concurrent_rolling_ic_calls_bitwise_identical():
         assert np.array_equal(out, expected, equal_nan=True)
 
 
+@NEED_CUDA
+def test_concurrent_clear_does_not_race_inflight_calls():
+    """clear_workspaces() during in-flight same-shape calls must not free a
+    workspace between _get and the GPU call (dangling-buffer race): every call
+    either holds its per-key lock before clear can free, or rebuilds fresh, and
+    results stay bitwise-identical."""
+    x = _panel("float32", seed=13)
+    expected = fc.cross_sectional_rank(x)
+
+    def _call(_):
+        for _ in range(4):
+            out = fc.cross_sectional_rank(x)
+            if not np.array_equal(out, expected, equal_nan=True):
+                return False
+        return True
+
+    def _clear():
+        for _ in range(4):
+            fc.clear_workspaces()
+
+    with concurrent.futures.ThreadPoolExecutor(max_workers=5) as ex:
+        call_futures = [ex.submit(_call, i) for i in range(4)]
+        clear_future = ex.submit(_clear)
+        results = [f.result() for f in call_futures]
+        clear_future.result()  # _clear returns None; only call results are asserted
+    assert all(r is True for r in results)
+
+
 # ---- 6. binding-level workspace handles ---------------------------------------
 
 @NEED_CUDA

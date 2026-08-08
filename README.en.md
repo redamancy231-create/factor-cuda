@@ -28,6 +28,22 @@ GPU-accelerated cross-sectional operators (pybind11 bindings + pure-Python backe
 
 Also: a static GPU-memory budget model (`docs/memory_budget_v1.json`), workspace allocation caching, corpus parity verification.
 
+## Architecture
+
+```mermaid
+graph LR
+    A["Factor panel (T,N,F)"] --> B["Adapter fc.*<br/>dtype / mask / device normalization"]
+    B --> C["pybind11 bindings"]
+    C --> D["CUDA kernel pipeline"]
+    D --> E["cross_sectional_rank<br/>· parameter_scan"]
+    D --> F["factor_corr<br/>· stock_corr"]
+    D --> G["rolling_ic"]
+    E --> H["Cross-sectional rank"]
+    F --> I["Correlation matrix"]
+    G --> J["Spearman IC"]
+    H & I & J --> K["Cross-sectional results"]
+```
+
 ## Build
 
 - Environment support matrix in `docs/support_matrix.json` (single source of truth; tested CUDA Toolkit 13.3 / VS2026 MSVC 19.51 / Python 3.12.7 / compute capability 8.9, single-arch declaration).

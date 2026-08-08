@@ -28,6 +28,22 @@ GPU 加速橫斷面分析運算子（pybind11 綁定 + 純 Python 後端）：
 
 配套：GPU 記憶體靜態預算模型（`docs/memory_budget_v1.json`）、workspace 分配快取、corpus parity 驗證。
 
+## 架構
+
+```mermaid
+graph LR
+    A["因子面板 (T,N,F)"] --> B["適配層 fc.*<br/>dtype / mask / device 正規化"]
+    B --> C["pybind11 綁定"]
+    C --> D["CUDA kernel 管線"]
+    D --> E["cross_sectional_rank<br/>· parameter_scan"]
+    D --> F["factor_corr<br/>· stock_corr"]
+    D --> G["rolling_ic"]
+    E --> H["橫斷面排序"]
+    F --> I["相關矩陣"]
+    G --> J["Spearman IC"]
+    H & I & J --> K["橫斷面分析結果"]
+```
+
 ## 建置
 
 - 環境支援矩陣見 `docs/support_matrix.json`（單一真實來源；實測 CUDA Toolkit 13.3 / VS2026 MSVC 19.51 / Python 3.12.7 / compute capability 8.9，僅宣告單一架構）。

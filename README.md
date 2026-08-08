@@ -32,6 +32,22 @@ GPU 加速截面分析算子（pybind11 绑定 + 纯 Python 后端）：
 
 配套：显存静态预算模型（`docs/memory_budget_v1.json`）、workspace 分配缓存、corpus parity 验证。
 
+## 架构
+
+```mermaid
+graph LR
+    A["因子面板 (T,N,F)"] --> B["适配层 fc.*<br/>dtype / mask / device 规范化"]
+    B --> C["pybind11 绑定"]
+    C --> D["CUDA kernel 流水线"]
+    D --> E["cross_sectional_rank<br/>· parameter_scan"]
+    D --> F["factor_corr<br/>· stock_corr"]
+    D --> G["rolling_ic"]
+    E --> H["截面排序 / 秩"]
+    F --> I["相关矩阵"]
+    G --> J["Spearman IC"]
+    H & I & J --> K["截面分析结果"]
+```
+
 ## 构建
 
 - 环境支持矩阵见 `docs/support_matrix.json`（单一真源；实测 CUDA Toolkit 13.3 / VS2026 MSVC 19.51 / Python 3.12.7 / compute capability 8.9，单架构声明）。

@@ -1,0 +1,23 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install numpy torch pytest
+
+      - name: Run pytest (CPU arms + contract; CUDA arms auto-skip)
+        run: python -m pytest tests/ -q
+        env:
+          PYTHONIOENCODING: utf-8

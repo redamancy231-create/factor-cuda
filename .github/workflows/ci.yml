@@ -15,7 +15,7 @@ jobs:
           python-version: '3.12'
 
       - name: Install dependencies
-        run: pip install numpy torch pytest
+        run: pip install -r requirements-ci.txt
 
       - name: Run pytest (CPU arms + contract; CUDA arms auto-skip)
         run: python -m pytest tests/ -q

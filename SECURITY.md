@@ -4,8 +4,8 @@
 
 factor-cuda 是一个开源量化工具。如发现安全漏洞（如任意代码执行、敏感信息泄漏、数据完整性破坏），请**私有报告**（勿公开 Issue）：
 
-- 通过 GitHub 私有 Issue / Security Advisory：https://github.com/redamancy231-create/factor-cuda/security
-- 或在 Issue 中标记 `[SECURITY]`（如无法私有提交）
+- 通过 GitHub Security Advisory 私密提交：https://github.com/redamancy231-create/factor-cuda/security/advisories/new
+- 或发送邮件至项目维护者（在 GitHub 仓库 About 页可见的联系方式）
 
 报告时请提供：
 1. 漏洞描述（影响/危害）

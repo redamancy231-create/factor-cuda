@@ -11,7 +11,9 @@ factor-cuda 是 **CUDA 因子截面分析加速**工具——GPU 加速量化因
 
 - 构建/运行环境支持矩阵见 `docs/support_matrix.json`（单一真源：CUDA 13.3 / VS2026 MSVC 19.51 / Python 3.12.7 / compute capability 8.9）
 - 构建：`pwsh -NoProfile -File _build_poc3.ps1 <target>`（CMake + Ninja）
-- 测试：`PYTHONIOENCODING=utf-8 python -m pytest tests/ -q`（期望 126 passed / 3 skipped）
+- 测试（Git Bash）：`PYTHONIOENCODING=utf-8 python -m pytest tests/ -q`
+- 测试（PowerShell）：`$env:PYTHONIOENCODING='utf-8'; python -m pytest tests/ -q`
+  （本地 GPU 期望 126 passed / 3 skipped；GitHub Actions 无 GPU 跑 CPU/契约臂 75 passed）
 - CUDA selfcheck：`build\poc3_*_selfcheck.exe`（每算子 ALL PASS）
 
 ## 代码约定（重要）

@@ -5,7 +5,7 @@
 - **文档优先**：先读 `README.md`（三语：简体/English/繁體）、`docs/support_matrix.json`（构建环境）、`CLAUDE.md`（操作语义契约）、`CONTRIBUTING.md`（贡献）
 - **Bug 报告**：用 `.github/ISSUE_TEMPLATE/bug_report.md` 模板开 Issue
 - **功能请求**：用 `.github/ISSUE_TEMPLATE/feature_request.md`
-- **讨论**：GitHub Discussions / Issue 评论区
+- **讨论**：GitHub Issue（交流/问题咨询请在 Issue 评论区）
 
 ## 不提供
 

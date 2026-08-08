@@ -8,10 +8,10 @@
 
 ## Status
 
-**PoC items ①–④ closed out; Phases 1–4 complete (2026-08).**
-- The operation-semantics contract is frozen (L0 Spec, CLAUDE.md); all 126 Phase 2 acceptance tests passed, and all six Phase 3 acceptance gates are marked PASS.
+**Released v1.0.1 (2026-08-08)** — PoC items ①–④ closed out; Phases 1–4 complete.
+- The operation-semantics contract is frozen (L0 Spec, CLAUDE.md); all 126 Phase 2 acceptance tests passed locally on GPU / 3 skipped (GitHub Actions runs the CPU/contract arm without GPU: 75 passed); all six Phase 3 acceptance gates are marked PASS.
 - Phase 4 benchmark end-to-end **~3.0×** (vs the best same-semantics free alternative; below the pre-registered 5× superiority threshold → **registered as negative result NRR-2026-024**).
-- The memory model's three-part block/stream design has been validated empirically: F-blocking / streaming (input streaming) / N-blocking — the F=128 case drops from 12.6 GiB (over budget) to ~6.9 GiB (within budget).
+- The memory-model "divisible" trilogy (F-blocking / streaming / N-blocking) is validated as a PoC / memory-feasibility path: factor F=128 model peak 12,645.61 MiB (over budget) → streaming measured 7,079.75 MiB (fits).
 
 ## Features
 

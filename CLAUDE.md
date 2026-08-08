@@ -1,8 +1,8 @@
 # CLAUDE.md — factor-cuda（CUDA 因子截面分析加速）
 
 > 项目类型：软件工程（C++/CUDA + Python，量化因子**截面分析**加速工具）
-> **状态：L0 Spec（已冻结）**——PoC ① 契约冻结经三轮异后端复核（GPT-5.6-Sol，34 条发现）闭合，2026-08-03 HG-2 人工批准恢复 Spec 状态。任何变更走 HG-2。
-> 本文档是 L0 Spec 入口文件（草案）。方案细节 → `PLAN.md`；变更记录 → `CHANGELOG.md`；风险 → `RISK.md`；审查 → `reviews/`。
+> **状态：L0 Spec（已冻结，当前维护规则）**——PoC ① 契约冻结经三轮异后端复核（GPT-5.6-Sol，34 条发现）闭合，2026-08-03 HG-2 人工批准恢复 Spec 状态；项目已发布 v1.0.x。任何变更走 HG-2。
+> 本文档是 L0 Spec 入口文件（冻结契约）。方案细节 → `PLAN.md`（历史方案文档，superseded）；变更记录 → `CHANGELOG.md`；风险 → `RISK.md`；审查 → `reviews/`。
 > 中文名定稿：「CUDA 因子截面分析加速」。**不是"因子计算"**——本项目不做因子计算。
 
 ## Agent 边界

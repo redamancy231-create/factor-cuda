@@ -23,13 +23,13 @@
 
 GPU 加速截面分析算子（pybind11 绑定 + 纯 Python 后端）：
 
-| 算子 | 说明 |
-|------|------|
-| `cross_sectional_rank` | 稳定序数截面排序（float32，CUB radix sort） |
-| `parameter_scan` | 方向×mask 4 组参数扫描（单次 H2D） |
-| `factor_corr` | 因子相关矩阵（F×F，含 Kahan 重算触发 + F-blocking/streaming） |
-| `stock_corr` | 股票相关矩阵（N×N，fast/general 双路径 + N-blocking） |
-| `rolling_ic` | 滚动 Spearman IC（float64 统一路径） |
+| 算子 | 输出 | dtype | backend |
+|------|------|-------|---------|
+| `cross_sectional_rank` | (T,N) 秩 1..K | f32 | GPU-only |
+| `parameter_scan` | 4×(T,N) 秩 | f32 | GPU-only |
+| `factor_corr` | (F,F) 相关矩阵 | f32/f64 | CPU / CUDA |
+| `stock_corr` | (N,N) 相关矩阵 | f32/f64 | CPU / CUDA |
+| `rolling_ic` | (T,) Spearman IC | f32/f64 | CPU / CUDA（device=None 自动） |
 
 配套：显存静态预算模型（`docs/memory_budget_v1.json`）、workspace 分配缓存、corpus parity 验证。
 
@@ -92,16 +92,42 @@ RTX 4060 Laptop（sm_89），corpus 1218×5000×12，vs 同语义最佳免费替
 
 > 未达 5× 优线 → 负结果登记 [NRR-2026-024](https://github.com/redamancy231-create/negative-results-registry/tree/main/entries/NRR-2026-024)。详见 `benchmarks/results/phase4_bench_v1.md`。
 
+## 示例
+
+确定性合成面板上的真实算子输出（RTX 4060 Laptop）：
+
+![rolling_ic](docs/img/rolling_ic.png)
+
+![factor_corr](docs/img/factor_corr.png)
+
+![perf_speedup](docs/img/perf_speedup.png)
+
 ## 文档索引
+
+### 用户与社区
 
 | 文件 | 内容 |
 |------|------|
-| `PLAN.md` | 方案设计（定位/市场验证/技术架构/实现阶段/风险） |
-| `CLAUDE.md` | 项目规范 L0 Spec（操作语义契约/停止条件/成功标准/评估/可复现/坑位） |
+| `docs/support_matrix.json` | 构建/运行环境支持矩阵（单一真源） |
+| `CONTRIBUTING.md` | 贡献指南 |
+| `SUPPORT.md` | 支持说明 |
+| `SECURITY.md` | 安全政策（漏洞报告） |
+
+### 契约与 API
+
+| 文件 | 内容 |
+|------|------|
+| `CLAUDE.md` | L0 Spec（操作语义契约/成功标准/坑位，冻结） |
+| `docs/memory_budget_v1.json` | 显存静态预算模型 |
 | `CHANGELOG.md` | 变更记录 |
-| `docs/support_matrix.json` | 构建/运行环境支持矩阵 |
-| `docs/memory_budget_v1.json` | 显存静态预算模型（含实测闭合） |
-| `reviews/` | 独立审查报告（gitignored，不发布） |
+| `PLAN.md` | 历史方案文档（superseded） |
+
+### 性能证据
+
+| 文件 | 内容 |
+|------|------|
+| `benchmarks/results/phase4_bench_v1.md` | Phase 4 E2E benchmark（3.04× / 2.94×） |
+| `benchmarks/results/acceptance_v1.md` | Phase 2-3 验收（六门 PASS） |
 
 ## 竞品与对照
 

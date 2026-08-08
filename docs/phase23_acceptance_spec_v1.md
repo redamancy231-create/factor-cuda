@@ -1,8 +1,10 @@
 # Phase 2-3 验收门槛方案 spec（综合定稿，2026-08-06）
 
+> ⚠️ **历史规格（superseded）**：已由 `benchmarks/results/acceptance_v1.*`（六门全 PASS）实现。本文档为验收门槛设计稿，供历史/审计参考，不作为当前验收状态。
+>
 > 生成：2026-08-06 · Workflow 7 agent 多视角设计（acceptance-scope / stock-verdict / script-design / evidence-provenance / independent-adversary + challenge 魔鬼代言人 + synthesize）
 > 生成模型：DeepSeek-V4-Flash (via Claude Code CLI) · 973K tokens · 159 tool calls
-> 本 spec 为内部追踪 + 验收实现依据，不公开推送。
+> 本 spec 为内部追踪 + 验收实现依据。
 
 ## 0. 定稿依据与裁决要点
 

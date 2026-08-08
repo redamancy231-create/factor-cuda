@@ -17,13 +17,13 @@
 
 GPU-accelerated cross-sectional operators (pybind11 bindings + pure-Python backends):
 
-| Operator | Description |
-|----------|-------------|
-| `cross_sectional_rank` | stable ordinal cross-sectional ranking (float32, CUB radix sort) |
-| `parameter_scan` | parameter scan over four direction × mask groups (single H2D transfer) |
-| `factor_corr` | factor correlation matrix (F×F; a trigger for Kahan recomputation + F-blocking/streaming) |
-| `stock_corr` | stock correlation matrix (N×N; separate fast and general paths + N-blocking) |
-| `rolling_ic` | rolling Spearman IC (a single unified float64 path) |
+| Operator | Output | dtype | Backend |
+|----------|--------|-------|---------|
+| `cross_sectional_rank` | (T,N) ranks 1..K | f32 | GPU-only |
+| `parameter_scan` | 4×(T,N) ranks | f32 | GPU-only |
+| `factor_corr` | (F,F) correlation matrix | f32/f64 | CPU / CUDA |
+| `stock_corr` | (N,N) correlation matrix | f32/f64 | CPU / CUDA |
+| `rolling_ic` | (T,) Spearman IC | f32/f64 | CPU / CUDA (auto via device=None) |
 
 Also: a static GPU-memory budget model (`docs/memory_budget_v1.json`), workspace allocation caching, corpus parity verification.
 
@@ -86,16 +86,42 @@ RTX 4060 Laptop (sm_89), corpus 1218×5000×12, vs the best same-semantics free 
 
 > Below the pre-registered 5× target → negative result registered as [NRR-2026-024](https://github.com/redamancy231-create/negative-results-registry/tree/main/entries/NRR-2026-024). See `benchmarks/results/phase4_bench_v1.md`.
 
+## Examples
+
+Real operator outputs on a deterministic synthetic panel (RTX 4060 Laptop):
+
+![rolling_ic](docs/img/rolling_ic.png)
+
+![factor_corr](docs/img/factor_corr.png)
+
+![perf_speedup](docs/img/perf_speedup.png)
+
 ## Documentation Index
+
+### Users & Community
 
 | File | Content |
 |------|---------|
-| `PLAN.md` | design (positioning / market validation / technical architecture / implementation phases / risks) |
-| `CLAUDE.md` | project spec L0 (operation-semantics contract / stop conditions / success criteria / evaluation / reproducibility / pitfalls) |
+| `docs/support_matrix.json` | build/runtime environment support matrix (single source of truth) |
+| `CONTRIBUTING.md` | contribution guide |
+| `SUPPORT.md` | support |
+| `SECURITY.md` | security policy (vulnerability reporting) |
+
+### Contract & API
+
+| File | Content |
+|------|---------|
+| `CLAUDE.md` | L0 Spec (operation-semantics contract / success criteria / pitfalls, frozen) |
+| `docs/memory_budget_v1.json` | static GPU-memory budget model |
 | `CHANGELOG.md` | change log |
-| `docs/support_matrix.json` | build/runtime environment support matrix |
-| `docs/memory_budget_v1.json` | static GPU-memory budget model (validated empirically) |
-| `reviews/` | independent review reports (gitignored, not published) |
+| `PLAN.md` | historical design document (superseded) |
+
+### Performance Evidence
+
+| File | Content |
+|------|---------|
+| `benchmarks/results/phase4_bench_v1.md` | Phase 4 E2E benchmark (3.04× / 2.94×) |
+| `benchmarks/results/acceptance_v1.md` | Phase 2-3 acceptance (six gates PASS) |
 
 ## Competitors & Baselines
 

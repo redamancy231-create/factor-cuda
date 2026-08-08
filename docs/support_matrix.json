@@ -16,9 +16,10 @@
   },
   "toolchain": {
     "cuda_toolkit": {
-      "tested": "13.3",
-      "declared": "13.2+",
-      "note": "CUB 在 include/cccl/（CMake find_path）；cudart64_13.dll 在 bin/x64（运行 PATH）；CCCL 须 -Xcompiler=/Zc:preprocessor；13.3 为实测构建版本，13.2+ 为声明下限"
+      "build_tested": "13.3",
+      "declared_support": "13.2+",
+      "benchmark_runtime": "cu132",
+      "note": "三种口径：build_tested=构建/编译实测版本（nvcc 13.3）；declared_support=声明支持下限（13.2+，未逐版本实测）；benchmark_runtime=Phase 4 benchmark 的 Python 运行时 torch 编译口径（cu132）。CUB 在 include/cccl/（CMake find_path）；cudart64_13.dll 在 bin/x64（运行 PATH）；CCCL 须 -Xcompiler=/Zc:preprocessor"
     },
     "msvc": {
       "tested": "VS2026 Community MSVC 19.51 (14.51.36231)",

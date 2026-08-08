@@ -1,5 +1,6 @@
-# factor-cuda — CMake 构建骨架
-# Phase 0 自检 target + 后续 src/ 扩展点（见 PLAN.md §六 模块拆分）
+# factor-cuda — CMake 构建入口（生产/研究）
+# CUDA 内核 + pybind11 绑定 + PoC selfcheck/perf 工具。单架构实测：compute
+# capability 8.9（sm_89）；其他 SM 可重编译但未验证（见 docs/support_matrix.json）。
 cmake_minimum_required(VERSION 3.22)
 project(factor_cuda LANGUAGES CXX CUDA)
 

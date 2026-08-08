@@ -17,13 +17,13 @@
 
 GPU 加速橫斷面分析運算子（pybind11 綁定 + 純 Python 後端）：
 
-| 運算子 | 說明 |
-|------|------|
-| `cross_sectional_rank` | 穩定序數橫斷面排序（float32，CUB radix sort） |
-| `parameter_scan` | 四組方向×mask 參數掃描（單次 H2D） |
-| `factor_corr` | 因子相關矩陣（F×F，含 Kahan 重算觸發 + F-blocking/streaming） |
-| `stock_corr` | 股票相關矩陣（N×N，fast/general 雙路徑 + N-blocking） |
-| `rolling_ic` | 滾動 Spearman IC（float64 統一單一路徑） |
+| 運算子 | 輸出 | dtype | backend |
+|------|------|-------|---------|
+| `cross_sectional_rank` | (T,N) 秩 1..K | f32 | GPU-only |
+| `parameter_scan` | 4×(T,N) 秩 | f32 | GPU-only |
+| `factor_corr` | (F,F) 相關矩陣 | f32/f64 | CPU / CUDA |
+| `stock_corr` | (N,N) 相關矩陣 | f32/f64 | CPU / CUDA |
+| `rolling_ic` | (T,) Spearman IC | f32/f64 | CPU / CUDA（device=None 自動） |
 
 配套：GPU 記憶體靜態預算模型（`docs/memory_budget_v1.json`）、workspace 分配快取、corpus parity 驗證。
 
@@ -86,16 +86,42 @@ RTX 4060 Laptop（sm_89），corpus 1218×5000×12，vs 同語義最佳免費替
 
 > 未達 5× 優勢門檻 → 負結果登記 [NRR-2026-024](https://github.com/redamancy231-create/negative-results-registry/tree/main/entries/NRR-2026-024)。詳見 `benchmarks/results/phase4_bench_v1.md`。
 
+## 範例
+
+確定性合成面板上的真實算子輸出（RTX 4060 Laptop）：
+
+![rolling_ic](docs/img/rolling_ic.png)
+
+![factor_corr](docs/img/factor_corr.png)
+
+![perf_speedup](docs/img/perf_speedup.png)
+
 ## 文件索引
+
+### 使用者與社群
 
 | 文件 | 內容 |
 |------|------|
-| `PLAN.md` | 方案設計（定位/市場驗證/技術架構/實作階段/風險） |
-| `CLAUDE.md` | 專案規範 L0 Spec（操作語義契約/停止條件/成功標準/評估/可重現性/常見陷阱） |
+| `docs/support_matrix.json` | 建置/執行環境支援矩陣（單一真實來源） |
+| `CONTRIBUTING.md` | 貢獻指南 |
+| `SUPPORT.md` | 支援說明 |
+| `SECURITY.md` | 安全政策（漏洞報告） |
+
+### 契約與 API
+
+| 文件 | 內容 |
+|------|------|
+| `CLAUDE.md` | L0 Spec（操作語義契約/成功標準/常見陷阱，凍結） |
+| `docs/memory_budget_v1.json` | GPU 記憶體靜態預算模型 |
 | `CHANGELOG.md` | 變更記錄 |
-| `docs/support_matrix.json` | 建置/執行環境支援矩陣 |
-| `docs/memory_budget_v1.json` | GPU 記憶體靜態預算模型（含實測驗證） |
-| `reviews/` | 獨立審查報告（gitignored，不發布） |
+| `PLAN.md` | 歷史方案文件（superseded） |
+
+### 效能證據
+
+| 文件 | 內容 |
+|------|------|
+| `benchmarks/results/phase4_bench_v1.md` | Phase 4 E2E benchmark（3.04× / 2.94×） |
+| `benchmarks/results/acceptance_v1.md` | Phase 2-3 驗收（六關全 PASS） |
 
 ## 競品與對照
 

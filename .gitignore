@@ -1,0 +1,50 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyd
+.pytest_cache/
+*.egg-info/
+dist/
+build/
+
+# CMake / C++
+cmake-build-*/
+
+# CUDA 编译产物
+*.exe
+*.obj
+poc/tmpxft*
+
+# 环境
+.venv/
+venv/
+
+# IDE
+.vscode/
+.idea/
+
+# 内部追踪（不公开推送）
+project_status.md
+poc34_workload_estimate.md
+prompts/
+reviews/
+scratch/
+
+# benchmark corpus 完整 npz（不提交；由生成脚本确定性复现 + data_sha256 锚定）
+benchmark_corpus/corpus_real_v1.npz
+benchmark_corpus/corpus_real_trial_v1.npz
+benchmark_corpus/corpus_synth_v1.npz
+# stock_corr v2 全有效面板 .bin（生成器 generate_stock_corr_panel_v1.py 确定性复现）
+benchmark_corpus/stock_corr_panel_v1_*.bin
+
+# benchmark run 产物（测试 run 不提交；正式 run 目录提交为 R2 证据链）
+benchmarks/results/runs/test_*/
+# Phase 4 gate 持久化（中间产物，由 phase4_bench_v1.py --fresh 重生成；最终证据为 phase4_bench_v1.{json,md}）
+benchmarks/results/runs/phase4_gates/
+
+# OS
+Thumbs.db
+.DS_Store
+
+# 本地实验临时面板/临时输出（不公开推送）
+scratch/corpus_parity/

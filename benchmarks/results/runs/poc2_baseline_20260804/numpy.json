@@ -1,0 +1,132 @@
+{
+ "backend": "numpy",
+ "version": "2.0.0",
+ "protocol": {
+  "samples": 20,
+  "min_valid": 30,
+  "stock_sizes": [
+   500,
+   2000,
+   5000
+  ],
+  "timing": [
+   "warm e2e",
+   "cold first-use",
+   "upload all-operands",
+   "resident pure-device"
+  ]
+ },
+ "corpus": {
+  "name": "corpus_synth_v1",
+  "data_sha256": "0A7D7AB5A6AD1F7E20A94B5E0AF871A4F28DF802AFCE3AEFC0A365B7CA598FBE",
+  "T": 1218,
+  "N": 5000,
+  "F": 12
+ },
+ "operations": {
+  "cs_rank": {
+   "status": "ok",
+   "wall_ms": 536.494149999271,
+   "q1_ms": 484.5604750007624,
+   "q3_ms": 548.6213750018578,
+   "cv": 0.06226098902321278,
+   "ci95_lo_ms": 489.45794999963255,
+   "ci95_hi_ms": 547.0987500011688,
+   "n_samples": 20
+  },
+  "cs_rank_desc": {
+   "status": "ok",
+   "wall_ms": 546.6773000007379,
+   "q1_ms": 543.4931000017968,
+   "q3_ms": 549.2949999998018,
+   "cv": 0.010952074730356677,
+   "ci95_lo_ms": 543.9481000012165,
+   "ci95_hi_ms": 549.10154999925,
+   "n_samples": 20
+  },
+  "factor_corr": {
+   "status": "ok",
+   "wall_ms": 5780.051100000492,
+   "q1_ms": 5732.858725000369,
+   "q3_ms": 5970.537850000255,
+   "cv": 0.02561159170998468,
+   "ci95_lo_ms": 5747.457599998597,
+   "ci95_hi_ms": 5910.56485000081,
+   "n_samples": 20
+  },
+  "rolling_ic": {
+   "status": "ok",
+   "wall_ms": 1025.4383999999845,
+   "q1_ms": 874.1685499999221,
+   "q3_ms": 1170.4044750013054,
+   "cv": 0.14332188985139185,
+   "ci95_lo_ms": 876.4862499992887,
+   "ci95_hi_ms": 1163.4087000002182,
+   "n_samples": 20
+  },
+  "parameter_scan(G=4)": {
+   "status": "ok",
+   "wall_ms": 1572.2093000003952,
+   "q1_ms": 1541.1081499996726,
+   "q3_ms": 1596.0256749995096,
+   "cv": 0.028846496930985135,
+   "ci95_lo_ms": 1542.3467499986145,
+   "ci95_hi_ms": 1594.1921225019541,
+   "n_samples": 20
+  },
+  "stock_corr(N=500)": {
+   "status": "ok",
+   "wall_ms": 79.02834999913466,
+   "q1_ms": 76.44920000075217,
+   "q3_ms": 80.2326750008433,
+   "cv": 0.03980440405365499,
+   "ci95_lo_ms": 76.88620000044466,
+   "ci95_hi_ms": 80.14550000007148,
+   "n_samples": 20
+  },
+  "stock_corr(N=2000)": {
+   "status": "ok",
+   "wall_ms": 852.2952000002988,
+   "q1_ms": 848.5700999990513,
+   "q3_ms": 866.161649998503,
+   "cv": 0.011721280533230282,
+   "ci95_lo_ms": 848.8398999998026,
+   "ci95_hi_ms": 863.6302499980957,
+   "n_samples": 20
+  },
+  "stock_corr(N=5000)": {
+   "status": "ok",
+   "wall_ms": 5099.866650001786,
+   "q1_ms": 5089.561700000559,
+   "q3_ms": 5135.097225001118,
+   "cv": 0.012225237609967441,
+   "ci95_lo_ms": 5089.769600001091,
+   "ci95_hi_ms": 5125.241150000875,
+   "n_samples": 20
+  }
+ },
+ "timestamp": "2026-08-04T01:03:09",
+ "run_id": "poc2_baseline_20260804",
+ "command": "perf_bench_v1.py --backend all --run-id poc2_baseline_20260804",
+ "env": {
+  "platform": "Windows-11-10.0.26100-SP0",
+  "python": "3.12.7",
+  "numpy": "2.4.4",
+  "pandas": "3.0.2",
+  "scipy": "1.17.1",
+  "torch": "2.13.0+cu132",
+  "cupy": "14.1.1",
+  "torch_cuda": true,
+  "gpu": "NVIDIA GeForce RTX 4060 Laptop GPU",
+  "cuda_version": "13.2",
+  "cupy_runtime": 13020,
+  "cpu": "13th Gen Intel(R) Core(TM) i9-13900HX",
+  "driver": "610.88",
+  "gpu_temp_c": 53.0,
+  "gpu_power_w": 25.08,
+  "gpu_clocks_sm_mhz": 2250.0,
+  "gpu_clocks_mem_mhz": 7001.0,
+  "blas": "n/a",
+  "git_commit": "09ae25ba89256fee5f445054eea370896b5d2c1b"
+ }
+}

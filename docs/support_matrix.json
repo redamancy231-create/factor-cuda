@@ -1,0 +1,57 @@
+{
+  "schema_version": "1.0.0",
+  "artifact": "docs/support_matrix.json",
+  "single_source_of_truth": true,
+  "role": "构建/运行环境支持矩阵——版本号单一真源；CLAUDE.md / README 引用本文件而非重复硬编码版本列表",
+  "generated_at": "2026-08-08",
+  "platform": {
+    "os": "Windows 11 (build 10.0.26100)",
+    "shell": "Git Bash",
+    "build_system": {
+      "cmake": "VS2026 Community 自带（Microsoft Visual Studio 18 Community）",
+      "generator": "Ninja",
+      "cpp_standard": "C++20",
+      "note": "Ninja 为推荐路径；VS generator 历史 CUDA 探测失败为限定事件（2026-07-31 全新目录 + VS generator 已复现成功），非当前阻塞"
+    }
+  },
+  "toolchain": {
+    "cuda_toolkit": {
+      "tested": "13.3",
+      "declared": "13.2+",
+      "note": "CUB 在 include/cccl/（CMake find_path）；cudart64_13.dll 在 bin/x64（运行 PATH）；CCCL 须 -Xcompiler=/Zc:preprocessor；13.3 为实测构建版本，13.2+ 为声明下限"
+    },
+    "msvc": {
+      "tested": "VS2026 Community MSVC 19.51 (14.51.36231)",
+      "declared": "VS2026 MSVC 19.51",
+      "note": "CMakeCache CMAKE_CXX_COMPILER 实测路径；nvcc host compiler 须在 PATH（vcvars64.bat）"
+    },
+    "python": {
+      "tested": "3.12.7",
+      "declared": "3.12.x",
+      "note": "NumPy 2.4.4 冻结 oracle 指纹（corr_oracle_v1.py）；DLPack 消费 dtype 为 torch dtype（torch 感知白名单）"
+    },
+    "dependencies": {
+      "numpy": "2.4.4",
+      "pybind11": "3.0.4",
+      "cupy": "可选（无 CuPy 环境 numpy 臂独立可运行）"
+    }
+  },
+  "compute_capability": {
+    "tested": ["8.9"],
+    "declared": ["8.9"],
+    "note": "CMake CUDA_ARCHITECTURES='89' 单架构（Ada）——非多架构方案；仅在本机 RTX 4060 Laptop (cc 8.9) 实测；其他 SM 需重编译并独立验证位级/性能，不在本矩阵声明内"
+  },
+  "verified": {
+    "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cc 8.9, SM 24, total 8188 MiB)",
+    "baseline_pytest": "126 passed / 3 skipped",
+    "kernels": ["cs_rank", "rolling_ic", "stock_corr (fast/general/nblock)", "factor_corr (production/fblock/streaming)", "parameter_scan"],
+    "evidence_refs": [
+      "docs/memory_budget_v1.json",
+      "benchmarks/results/poc3_calibration_v1.json",
+      "benchmarks/results/corpus_parity_v1.json",
+      "benchmarks/results/factor_fblock_hwm_v1.json",
+      "benchmarks/results/factor_stream_hwm_v1.json",
+      "benchmarks/results/stock_nblock_hwm_v1.json"
+    ]
+  }
+}

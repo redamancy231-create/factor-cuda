@@ -1,0 +1,19 @@
+{
+ "schema_version": "1.1.0",
+ "run_id": "stock_corr_general_gate_20260806",
+ "panel": "corpus_synth_v1 returns[:, :N] + mask[:, :N]",
+ "corpus_data_sha256": "0A7D7AB5A6AD1F7E20A94B5E0AF871A4F28DF802AFCE3AEFC0A365B7CA598FBE",
+ "scope": "stock_corr general-path same-panel gate (corpus returns+mask, partial-validity panels)",
+ "gates": {
+  "stock_corr_general(N=500)": {
+   "raw_wall_ms": 62.1000000010099,
+   "exact_half": 31.05000000050495,
+   "display": 31.05
+  },
+  "stock_corr_general(N=2000)": {
+   "raw_wall_ms": 577.906399999847,
+   "exact_half": 288.9531999999235,
+   "display": 288.95
+  }
+ }
+}

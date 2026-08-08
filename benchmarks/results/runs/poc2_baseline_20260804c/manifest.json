@@ -1,0 +1,21 @@
+{
+ "run_id": "poc2_baseline_20260804c",
+ "command": "perf_bench_v1.py --backend all --run-id poc2_baseline_20260804c",
+ "backends": [
+  "numpy",
+  "cupy",
+  "qgplearn"
+ ],
+ "completed": [
+  "numpy",
+  "cupy",
+  "qgplearn"
+ ],
+ "stock_sizes": [
+  500,
+  2000,
+  5000
+ ],
+ "subset": false,
+ "timestamp": "2026-08-04T02:32:35"
+}

@@ -1,0 +1,156 @@
+{
+ "backend": "qgplearn",
+ "version": "2.0.0",
+ "protocol": {
+  "samples": 20,
+  "min_valid": 30,
+  "stock_sizes": [
+   500,
+   2000,
+   5000
+  ],
+  "timing": [
+   "warm e2e",
+   "cold first-use",
+   "upload all-operands",
+   "resident pure-device"
+  ]
+ },
+ "corpus": {
+  "name": "corpus_synth_v1",
+  "data_sha256": "0A7D7AB5A6AD1F7E20A94B5E0AF871A4F28DF802AFCE3AEFC0A365B7CA598FBE",
+  "T": 1218,
+  "N": 5000,
+  "F": 12
+ },
+ "operations": {
+  "cs_rank": {
+   "cold_first_ms": 1735.502900002757,
+   "status": "ok",
+   "wall_ms": 29.76845000011963,
+   "q1_ms": 27.377924998290837,
+   "q3_ms": 34.5461749993774,
+   "cv": 0.1286564117913821,
+   "ci95_lo_ms": 27.559750000364147,
+   "ci95_hi_ms": 34.52395000022079,
+   "n_samples": 20,
+   "gpu_kernel_ms": 29.73204803466797,
+   "gpu_kernel_ci95_lo_ms": 26.38493514060974,
+   "gpu_kernel_ci95_hi_ms": 38.363245487213135,
+   "upload_ms": 3.239199999370612,
+   "resident": {
+    "resident_wall_ms": 21.486800000275252,
+    "resident_gpu_ms": 21.14508819580078,
+    "resident_gpu_ci95_lo_ms": 20.138634824752806,
+    "resident_gpu_ci95_hi_ms": 22.088473558425903,
+    "n_samples": 20,
+    "pure_device": true
+   }
+  },
+  "cs_rank_desc": {
+   "cold_first_ms": 58.49769999986165,
+   "status": "ok",
+   "wall_ms": 35.450449999189004,
+   "q1_ms": 33.953500000279746,
+   "q3_ms": 36.348174999147886,
+   "cv": 0.04355140137493531,
+   "ci95_lo_ms": 34.125599999242695,
+   "ci95_hi_ms": 36.12185000019963,
+   "n_samples": 20,
+   "gpu_kernel_ms": 35.321231842041016,
+   "gpu_kernel_ci95_lo_ms": 32.41779556274414,
+   "gpu_kernel_ci95_hi_ms": 37.74675989151001,
+   "upload_ms": 3.342500000144355,
+   "resident": {
+    "resident_wall_ms": 22.436899998865556,
+    "resident_gpu_ms": 21.87827205657959,
+    "resident_gpu_ci95_lo_ms": 21.064678478240968,
+    "resident_gpu_ci95_hi_ms": 24.201679992675782,
+    "n_samples": 20,
+    "pure_device": true
+   }
+  },
+  "factor_corr": {
+   "cold_first_ms": null,
+   "status": "na"
+  },
+  "rolling_ic": {
+   "cold_first_ms": 249.8449000013352,
+   "status": "ok",
+   "wall_ms": 64.73360000018147,
+   "q1_ms": 60.8338999982152,
+   "q3_ms": 67.74320000113221,
+   "cv": 0.09132717386824306,
+   "ci95_lo_ms": 61.642399998163455,
+   "ci95_hi_ms": 67.2766424999736,
+   "n_samples": 20,
+   "gpu_kernel_ms": 64.65024185180664,
+   "gpu_kernel_ci95_lo_ms": 52.7373067855835,
+   "gpu_kernel_ci95_hi_ms": 73.34064407348633,
+   "upload_ms": 12.257300000783289,
+   "resident": {
+    "resident_wall_ms": 54.37345000063942,
+    "resident_gpu_ms": 54.19878387451172,
+    "resident_gpu_ci95_lo_ms": 53.35096597671509,
+    "resident_gpu_ci95_hi_ms": 54.928257083892824,
+    "n_samples": 20,
+    "pure_device": true
+   }
+  },
+  "parameter_scan(G=4)": {
+   "cold_first_ms": 141.28939999864087,
+   "status": "ok",
+   "wall_ms": 140.83519999985583,
+   "q1_ms": 138.90270000047167,
+   "q3_ms": 144.25562500036904,
+   "cv": 0.026457539470727157,
+   "ci95_lo_ms": 139.08699999956298,
+   "ci95_hi_ms": 143.35019999998622,
+   "n_samples": 20,
+   "gpu_kernel_ms": 140.70989990234375,
+   "gpu_kernel_ci95_lo_ms": 134.22565803527831,
+   "gpu_kernel_ci95_hi_ms": 145.9676586151123,
+   "upload_ms": 3.9328000020759646,
+   "resident": {
+    "pure_device": false,
+    "note": "无纯设备 API（内部回拷 CPU 构造/重上传），resident 为实际口径"
+   }
+  },
+  "stock_corr(N=500)": {
+   "cold_first_ms": null,
+   "status": "na"
+  },
+  "stock_corr(N=2000)": {
+   "cold_first_ms": null,
+   "status": "na"
+  },
+  "stock_corr(N=5000)": {
+   "cold_first_ms": null,
+   "status": "na"
+  }
+ },
+ "timestamp": "2026-08-04T01:07:00",
+ "run_id": "poc2_baseline_20260804",
+ "command": "perf_bench_v1.py --backend all --run-id poc2_baseline_20260804",
+ "env": {
+  "platform": "Windows-11-10.0.26100-SP0",
+  "python": "3.12.7",
+  "numpy": "2.4.4",
+  "pandas": "3.0.2",
+  "scipy": "1.17.1",
+  "torch": "2.13.0+cu132",
+  "cupy": "14.1.1",
+  "torch_cuda": true,
+  "gpu": "NVIDIA GeForce RTX 4060 Laptop GPU",
+  "cuda_version": "13.2",
+  "cupy_runtime": 13020,
+  "cpu": "13th Gen Intel(R) Core(TM) i9-13900HX",
+  "driver": "610.88",
+  "gpu_temp_c": 53.0,
+  "gpu_power_w": 25.08,
+  "gpu_clocks_sm_mhz": 2250.0,
+  "gpu_clocks_mem_mhz": 7001.0,
+  "blas": "n/a",
+  "git_commit": "09ae25ba89256fee5f445054eea370896b5d2c1b"
+ }
+}

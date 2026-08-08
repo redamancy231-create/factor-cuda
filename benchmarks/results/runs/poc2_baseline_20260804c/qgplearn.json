@@ -1,0 +1,162 @@
+{
+ "backend": "qgplearn",
+ "version": "2.0.0",
+ "protocol": {
+  "samples": 20,
+  "min_valid": 30,
+  "stock_sizes": [
+   500,
+   2000,
+   5000
+  ],
+  "timing": [
+   "warm e2e",
+   "cold first-use",
+   "upload all-operands",
+   "resident pure-device"
+  ]
+ },
+ "corpus": {
+  "name": "corpus_synth_v1",
+  "data_sha256": "0A7D7AB5A6AD1F7E20A94B5E0AF871A4F28DF802AFCE3AEFC0A365B7CA598FBE",
+  "T": 1218,
+  "N": 5000,
+  "F": 12
+ },
+ "operations": {
+  "cs_rank": {
+   "cold_first_ms": 735.8813999962877,
+   "status": "ok",
+   "wall_ms": 27.85290000247187,
+   "q1_ms": 27.043449998018332,
+   "q3_ms": 29.573899999377318,
+   "cv": 0.07964124303219265,
+   "ci95_lo_ms": 27.1088499976031,
+   "ci95_hi_ms": 29.281600000103936,
+   "n_samples": 20,
+   "gpu_inclusive_ms": 27.80836772918701,
+   "gpu_inclusive_ci95_lo_ms": 26.691450309753417,
+   "gpu_inclusive_ci95_hi_ms": 34.189826011657715,
+   "upload_ms": 2.9529999956139363,
+   "resident": {
+    "resident_wall_ms": 16.558650000661146,
+    "resident_gpu_ms": 16.475647926330566,
+    "resident_gpu_ci95_lo_ms": 16.411443948745728,
+    "resident_gpu_ci95_hi_ms": 17.430375623703004,
+    "n_samples": 20,
+    "pure_device": true
+   }
+  },
+  "cs_rank_desc": {
+   "cold_first_ms": 35.16620000300463,
+   "status": "ok",
+   "wall_ms": 27.52580000378657,
+   "q1_ms": 26.671924999391194,
+   "q3_ms": 28.238999995664926,
+   "cv": 0.033032405704538526,
+   "ci95_lo_ms": 26.916200000414392,
+   "ci95_hi_ms": 28.17550124864283,
+   "n_samples": 20,
+   "gpu_inclusive_ms": 27.492496490478516,
+   "gpu_inclusive_ci95_lo_ms": 26.416173219680786,
+   "gpu_inclusive_ci95_hi_ms": 29.322900342941285,
+   "upload_ms": 2.835600003891159,
+   "resident": {
+    "resident_wall_ms": 16.673049998644274,
+    "resident_gpu_ms": 16.61542320251465,
+    "resident_gpu_ci95_lo_ms": 16.545253896713255,
+    "resident_gpu_ci95_hi_ms": 17.28505516052246,
+    "n_samples": 20,
+    "pure_device": true
+   }
+  },
+  "factor_corr": {
+   "cold_first_ms": null,
+   "status": "na"
+  },
+  "rolling_ic": {
+   "cold_first_ms": 145.0494000018807,
+   "status": "ok",
+   "wall_ms": 54.67555000359425,
+   "q1_ms": 53.70920000132173,
+   "q3_ms": 56.21072499525326,
+   "cv": 0.033395606811850866,
+   "ci95_lo_ms": 53.87730000074953,
+   "ci95_hi_ms": 55.84349999844562,
+   "n_samples": 20,
+   "gpu_inclusive_ms": 54.60243225097656,
+   "gpu_inclusive_ci95_lo_ms": 51.914724063873294,
+   "gpu_inclusive_ci95_hi_ms": 58.09086952209473,
+   "upload_ms": 7.640399999218062,
+   "resident": {
+    "resident_wall_ms": 42.490750001888955,
+    "resident_gpu_ms": 42.4539852142334,
+    "resident_gpu_ci95_lo_ms": 41.89135341644287,
+    "resident_gpu_ci95_hi_ms": 43.18069972991943,
+    "n_samples": 20,
+    "pure_device": true
+   }
+  },
+  "parameter_scan(G=4)": {
+   "cold_first_ms": 126.70870000147261,
+   "status": "ok",
+   "wall_ms": 110.68555000019842,
+   "q1_ms": 109.52457500025048,
+   "q3_ms": 111.84842500006198,
+   "cv": 0.01834393766732193,
+   "ci95_lo_ms": 109.64319999766303,
+   "ci95_hi_ms": 111.67270000078133,
+   "n_samples": 20,
+   "gpu_inclusive_ms": 110.58422470092773,
+   "gpu_inclusive_ci95_lo_ms": 106.78735809326172,
+   "gpu_inclusive_ci95_hi_ms": 114.46531562805175,
+   "upload_ms": 2.8655000060098246,
+   "resident": {
+    "pure_device": false,
+    "note": "无纯设备 API（内部回拷 CPU 构造/重上传），resident 为实际口径"
+   }
+  },
+  "stock_corr(N=500)": {
+   "cold_first_ms": null,
+   "status": "na",
+   "requested_N": 500,
+   "actual_N": 500
+  },
+  "stock_corr(N=2000)": {
+   "cold_first_ms": null,
+   "status": "na",
+   "requested_N": 2000,
+   "actual_N": 2000
+  },
+  "stock_corr(N=5000)": {
+   "cold_first_ms": null,
+   "status": "na",
+   "requested_N": 5000,
+   "actual_N": 5000
+  }
+ },
+ "timestamp": "2026-08-04T02:32:35",
+ "run_id": "poc2_baseline_20260804c",
+ "command": "perf_bench_v1.py --backend all --run-id poc2_baseline_20260804c",
+ "env": {
+  "platform": "Windows-11-10.0.26100-SP0",
+  "python": "3.12.7",
+  "numpy": "2.4.4",
+  "pandas": "3.0.2",
+  "scipy": "1.17.1",
+  "torch": "2.13.0+cu132",
+  "cupy": "14.1.1",
+  "torch_cuda": true,
+  "gpu": "NVIDIA GeForce RTX 4060 Laptop GPU",
+  "cuda_version": "13.2",
+  "cupy_runtime": 13020,
+  "cpu": "13th Gen Intel(R) Core(TM) i9-13900HX",
+  "driver": "610.88",
+  "gpu_temp_c": 52.0,
+  "gpu_power_w": 25.06,
+  "gpu_clocks_sm_mhz": 2250.0,
+  "gpu_clocks_mem_mhz": 7001.0,
+  "blas": "n/a",
+  "git_commit": "7b30bf4e88338ae36fa0afda1a171a00c3dd3229"
+ }
+}

@@ -1,0 +1,2801 @@
+{
+  "schema_version": "1.0.0",
+  "generator": "tests/fixtures/generate_corr_math_trace_v1.py",
+  "generator_sha256": "f025c72cfdc8c1a2ef74bf50fbe65159489d5fef9fcc4982641dc2d755f8be3e",
+  "math_source": "tests/fixtures/corr_math_v1.py",
+  "math_source_sha256": "70cb26d773765887c46bf82a5b6283a1da889e8b542ea78ef74968c04095e2a4",
+  "binary_frontier": {
+    "leaf_counts": [
+      {
+        "leaf_count": 0,
+        "steps": [],
+        "final": null,
+        "expected": null
+      },
+      {
+        "leaf_count": 1,
+        "steps": [
+          {
+            "leaf_index": 0,
+            "after": {
+              "next_expected_index": 1,
+              "occupied": [
+                {
+                  "level": 0,
+                  "node": "0"
+                }
+              ]
+            }
+          }
+        ],
+        "final": "0",
+        "expected": "0"
+      },
+      {
+        "leaf_count": 2,
+        "steps": [
+          {
+            "leaf_index": 0,
+            "after": {
+              "next_expected_index": 1,
+              "occupied": [
+                {
+                  "level": 0,
+                  "node": "0"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 1,
+            "after": {
+              "next_expected_index": 2,
+              "occupied": [
+                {
+                  "level": 1,
+                  "node": "(0,1)"
+                }
+              ]
+            }
+          }
+        ],
+        "final": "(0,1)",
+        "expected": "(0,1)"
+      },
+      {
+        "leaf_count": 3,
+        "steps": [
+          {
+            "leaf_index": 0,
+            "after": {
+              "next_expected_index": 1,
+              "occupied": [
+                {
+                  "level": 0,
+                  "node": "0"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 1,
+            "after": {
+              "next_expected_index": 2,
+              "occupied": [
+                {
+                  "level": 1,
+                  "node": "(0,1)"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 2,
+            "after": {
+              "next_expected_index": 3,
+              "occupied": [
+                {
+                  "level": 0,
+                  "node": "2"
+                },
+                {
+                  "level": 1,
+                  "node": "(0,1)"
+                }
+              ]
+            }
+          }
+        ],
+        "final": "((0,1),2)",
+        "expected": "((0,1),2)"
+      },
+      {
+        "leaf_count": 4,
+        "steps": [
+          {
+            "leaf_index": 0,
+            "after": {
+              "next_expected_index": 1,
+              "occupied": [
+                {
+                  "level": 0,
+                  "node": "0"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 1,
+            "after": {
+              "next_expected_index": 2,
+              "occupied": [
+                {
+                  "level": 1,
+                  "node": "(0,1)"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 2,
+            "after": {
+              "next_expected_index": 3,
+              "occupied": [
+                {
+                  "level": 0,
+                  "node": "2"
+                },
+                {
+                  "level": 1,
+                  "node": "(0,1)"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 3,
+            "after": {
+              "next_expected_index": 4,
+              "occupied": [
+                {
+                  "level": 2,
+                  "node": "((0,1),(2,3))"
+                }
+              ]
+            }
+          }
+        ],
+        "final": "((0,1),(2,3))",
+        "expected": "((0,1),(2,3))"
+      },
+      {
+        "leaf_count": 5,
+        "steps": [
+          {
+            "leaf_index": 0,
+            "after": {
+              "next_expected_index": 1,
+              "occupied": [
+                {
+                  "level": 0,
+                  "node": "0"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 1,
+            "after": {
+              "next_expected_index": 2,
+              "occupied": [
+                {
+                  "level": 1,
+                  "node": "(0,1)"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 2,
+            "after": {
+              "next_expected_index": 3,
+              "occupied": [
+                {
+                  "level": 0,
+                  "node": "2"
+                },
+                {
+                  "level": 1,
+                  "node": "(0,1)"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 3,
+            "after": {
+              "next_expected_index": 4,
+              "occupied": [
+                {
+                  "level": 2,
+                  "node": "((0,1),(2,3))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 4,
+            "after": {
+              "next_expected_index": 5,
+              "occupied": [
+                {
+                  "level": 0,
+                  "node": "4"
+                },
+                {
+                  "level": 2,
+                  "node": "((0,1),(2,3))"
+                }
+              ]
+            }
+          }
+        ],
+        "final": "(((0,1),(2,3)),4)",
+        "expected": "(((0,1),(2,3)),4)"
+      },
+      {
+        "leaf_count": 6,
+        "steps": [
+          {
+            "leaf_index": 0,
+            "after": {
+              "next_expected_index": 1,
+              "occupied": [
+                {
+                  "level": 0,
+                  "node": "0"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 1,
+            "after": {
+              "next_expected_index": 2,
+              "occupied": [
+                {
+                  "level": 1,
+                  "node": "(0,1)"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 2,
+            "after": {
+              "next_expected_index": 3,
+              "occupied": [
+                {
+                  "level": 0,
+                  "node": "2"
+                },
+                {
+                  "level": 1,
+                  "node": "(0,1)"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 3,
+            "after": {
+              "next_expected_index": 4,
+              "occupied": [
+                {
+                  "level": 2,
+                  "node": "((0,1),(2,3))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 4,
+            "after": {
+              "next_expected_index": 5,
+              "occupied": [
+                {
+                  "level": 0,
+                  "node": "4"
+                },
+                {
+                  "level": 2,
+                  "node": "((0,1),(2,3))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 5,
+            "after": {
+              "next_expected_index": 6,
+              "occupied": [
+                {
+                  "level": 1,
+                  "node": "(4,5)"
+                },
+                {
+                  "level": 2,
+                  "node": "((0,1),(2,3))"
+                }
+              ]
+            }
+          }
+        ],
+        "final": "(((0,1),(2,3)),(4,5))",
+        "expected": "(((0,1),(2,3)),(4,5))"
+      },
+      {
+        "leaf_count": 7,
+        "steps": [
+          {
+            "leaf_index": 0,
+            "after": {
+              "next_expected_index": 1,
+              "occupied": [
+                {
+                  "level": 0,
+                  "node": "0"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 1,
+            "after": {
+              "next_expected_index": 2,
+              "occupied": [
+                {
+                  "level": 1,
+                  "node": "(0,1)"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 2,
+            "after": {
+              "next_expected_index": 3,
+              "occupied": [
+                {
+                  "level": 0,
+                  "node": "2"
+                },
+                {
+                  "level": 1,
+                  "node": "(0,1)"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 3,
+            "after": {
+              "next_expected_index": 4,
+              "occupied": [
+                {
+                  "level": 2,
+                  "node": "((0,1),(2,3))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 4,
+            "after": {
+              "next_expected_index": 5,
+              "occupied": [
+                {
+                  "level": 0,
+                  "node": "4"
+                },
+                {
+                  "level": 2,
+                  "node": "((0,1),(2,3))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 5,
+            "after": {
+              "next_expected_index": 6,
+              "occupied": [
+                {
+                  "level": 1,
+                  "node": "(4,5)"
+                },
+                {
+                  "level": 2,
+                  "node": "((0,1),(2,3))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 6,
+            "after": {
+              "next_expected_index": 7,
+              "occupied": [
+                {
+                  "level": 0,
+                  "node": "6"
+                },
+                {
+                  "level": 1,
+                  "node": "(4,5)"
+                },
+                {
+                  "level": 2,
+                  "node": "((0,1),(2,3))"
+                }
+              ]
+            }
+          }
+        ],
+        "final": "((((0,1),(2,3)),(4,5)),6)",
+        "expected": "((((0,1),(2,3)),(4,5)),6)"
+      },
+      {
+        "leaf_count": 8,
+        "steps": [
+          {
+            "leaf_index": 0,
+            "after": {
+              "next_expected_index": 1,
+              "occupied": [
+                {
+                  "level": 0,
+                  "node": "0"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 1,
+            "after": {
+              "next_expected_index": 2,
+              "occupied": [
+                {
+                  "level": 1,
+                  "node": "(0,1)"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 2,
+            "after": {
+              "next_expected_index": 3,
+              "occupied": [
+                {
+                  "level": 0,
+                  "node": "2"
+                },
+                {
+                  "level": 1,
+                  "node": "(0,1)"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 3,
+            "after": {
+              "next_expected_index": 4,
+              "occupied": [
+                {
+                  "level": 2,
+                  "node": "((0,1),(2,3))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 4,
+            "after": {
+              "next_expected_index": 5,
+              "occupied": [
+                {
+                  "level": 0,
+                  "node": "4"
+                },
+                {
+                  "level": 2,
+                  "node": "((0,1),(2,3))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 5,
+            "after": {
+              "next_expected_index": 6,
+              "occupied": [
+                {
+                  "level": 1,
+                  "node": "(4,5)"
+                },
+                {
+                  "level": 2,
+                  "node": "((0,1),(2,3))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 6,
+            "after": {
+              "next_expected_index": 7,
+              "occupied": [
+                {
+                  "level": 0,
+                  "node": "6"
+                },
+                {
+                  "level": 1,
+                  "node": "(4,5)"
+                },
+                {
+                  "level": 2,
+                  "node": "((0,1),(2,3))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 7,
+            "after": {
+              "next_expected_index": 8,
+              "occupied": [
+                {
+                  "level": 3,
+                  "node": "(((0,1),(2,3)),((4,5),(6,7)))"
+                }
+              ]
+            }
+          }
+        ],
+        "final": "(((0,1),(2,3)),((4,5),(6,7)))",
+        "expected": "(((0,1),(2,3)),((4,5),(6,7)))"
+      },
+      {
+        "leaf_count": 9,
+        "steps": [
+          {
+            "leaf_index": 0,
+            "after": {
+              "next_expected_index": 1,
+              "occupied": [
+                {
+                  "level": 0,
+                  "node": "0"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 1,
+            "after": {
+              "next_expected_index": 2,
+              "occupied": [
+                {
+                  "level": 1,
+                  "node": "(0,1)"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 2,
+            "after": {
+              "next_expected_index": 3,
+              "occupied": [
+                {
+                  "level": 0,
+                  "node": "2"
+                },
+                {
+                  "level": 1,
+                  "node": "(0,1)"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 3,
+            "after": {
+              "next_expected_index": 4,
+              "occupied": [
+                {
+                  "level": 2,
+                  "node": "((0,1),(2,3))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 4,
+            "after": {
+              "next_expected_index": 5,
+              "occupied": [
+                {
+                  "level": 0,
+                  "node": "4"
+                },
+                {
+                  "level": 2,
+                  "node": "((0,1),(2,3))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 5,
+            "after": {
+              "next_expected_index": 6,
+              "occupied": [
+                {
+                  "level": 1,
+                  "node": "(4,5)"
+                },
+                {
+                  "level": 2,
+                  "node": "((0,1),(2,3))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 6,
+            "after": {
+              "next_expected_index": 7,
+              "occupied": [
+                {
+                  "level": 0,
+                  "node": "6"
+                },
+                {
+                  "level": 1,
+                  "node": "(4,5)"
+                },
+                {
+                  "level": 2,
+                  "node": "((0,1),(2,3))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 7,
+            "after": {
+              "next_expected_index": 8,
+              "occupied": [
+                {
+                  "level": 3,
+                  "node": "(((0,1),(2,3)),((4,5),(6,7)))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 8,
+            "after": {
+              "next_expected_index": 9,
+              "occupied": [
+                {
+                  "level": 0,
+                  "node": "8"
+                },
+                {
+                  "level": 3,
+                  "node": "(((0,1),(2,3)),((4,5),(6,7)))"
+                }
+              ]
+            }
+          }
+        ],
+        "final": "((((0,1),(2,3)),((4,5),(6,7))),8)",
+        "expected": "((((0,1),(2,3)),((4,5),(6,7))),8)"
+      },
+      {
+        "leaf_count": 10,
+        "steps": [
+          {
+            "leaf_index": 0,
+            "after": {
+              "next_expected_index": 1,
+              "occupied": [
+                {
+                  "level": 0,
+                  "node": "0"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 1,
+            "after": {
+              "next_expected_index": 2,
+              "occupied": [
+                {
+                  "level": 1,
+                  "node": "(0,1)"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 2,
+            "after": {
+              "next_expected_index": 3,
+              "occupied": [
+                {
+                  "level": 0,
+                  "node": "2"
+                },
+                {
+                  "level": 1,
+                  "node": "(0,1)"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 3,
+            "after": {
+              "next_expected_index": 4,
+              "occupied": [
+                {
+                  "level": 2,
+                  "node": "((0,1),(2,3))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 4,
+            "after": {
+              "next_expected_index": 5,
+              "occupied": [
+                {
+                  "level": 0,
+                  "node": "4"
+                },
+                {
+                  "level": 2,
+                  "node": "((0,1),(2,3))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 5,
+            "after": {
+              "next_expected_index": 6,
+              "occupied": [
+                {
+                  "level": 1,
+                  "node": "(4,5)"
+                },
+                {
+                  "level": 2,
+                  "node": "((0,1),(2,3))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 6,
+            "after": {
+              "next_expected_index": 7,
+              "occupied": [
+                {
+                  "level": 0,
+                  "node": "6"
+                },
+                {
+                  "level": 1,
+                  "node": "(4,5)"
+                },
+                {
+                  "level": 2,
+                  "node": "((0,1),(2,3))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 7,
+            "after": {
+              "next_expected_index": 8,
+              "occupied": [
+                {
+                  "level": 3,
+                  "node": "(((0,1),(2,3)),((4,5),(6,7)))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 8,
+            "after": {
+              "next_expected_index": 9,
+              "occupied": [
+                {
+                  "level": 0,
+                  "node": "8"
+                },
+                {
+                  "level": 3,
+                  "node": "(((0,1),(2,3)),((4,5),(6,7)))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 9,
+            "after": {
+              "next_expected_index": 10,
+              "occupied": [
+                {
+                  "level": 1,
+                  "node": "(8,9)"
+                },
+                {
+                  "level": 3,
+                  "node": "(((0,1),(2,3)),((4,5),(6,7)))"
+                }
+              ]
+            }
+          }
+        ],
+        "final": "((((0,1),(2,3)),((4,5),(6,7))),(8,9))",
+        "expected": "((((0,1),(2,3)),((4,5),(6,7))),(8,9))"
+      },
+      {
+        "leaf_count": 11,
+        "steps": [
+          {
+            "leaf_index": 0,
+            "after": {
+              "next_expected_index": 1,
+              "occupied": [
+                {
+                  "level": 0,
+                  "node": "0"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 1,
+            "after": {
+              "next_expected_index": 2,
+              "occupied": [
+                {
+                  "level": 1,
+                  "node": "(0,1)"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 2,
+            "after": {
+              "next_expected_index": 3,
+              "occupied": [
+                {
+                  "level": 0,
+                  "node": "2"
+                },
+                {
+                  "level": 1,
+                  "node": "(0,1)"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 3,
+            "after": {
+              "next_expected_index": 4,
+              "occupied": [
+                {
+                  "level": 2,
+                  "node": "((0,1),(2,3))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 4,
+            "after": {
+              "next_expected_index": 5,
+              "occupied": [
+                {
+                  "level": 0,
+                  "node": "4"
+                },
+                {
+                  "level": 2,
+                  "node": "((0,1),(2,3))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 5,
+            "after": {
+              "next_expected_index": 6,
+              "occupied": [
+                {
+                  "level": 1,
+                  "node": "(4,5)"
+                },
+                {
+                  "level": 2,
+                  "node": "((0,1),(2,3))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 6,
+            "after": {
+              "next_expected_index": 7,
+              "occupied": [
+                {
+                  "level": 0,
+                  "node": "6"
+                },
+                {
+                  "level": 1,
+                  "node": "(4,5)"
+                },
+                {
+                  "level": 2,
+                  "node": "((0,1),(2,3))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 7,
+            "after": {
+              "next_expected_index": 8,
+              "occupied": [
+                {
+                  "level": 3,
+                  "node": "(((0,1),(2,3)),((4,5),(6,7)))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 8,
+            "after": {
+              "next_expected_index": 9,
+              "occupied": [
+                {
+                  "level": 0,
+                  "node": "8"
+                },
+                {
+                  "level": 3,
+                  "node": "(((0,1),(2,3)),((4,5),(6,7)))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 9,
+            "after": {
+              "next_expected_index": 10,
+              "occupied": [
+                {
+                  "level": 1,
+                  "node": "(8,9)"
+                },
+                {
+                  "level": 3,
+                  "node": "(((0,1),(2,3)),((4,5),(6,7)))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 10,
+            "after": {
+              "next_expected_index": 11,
+              "occupied": [
+                {
+                  "level": 0,
+                  "node": "10"
+                },
+                {
+                  "level": 1,
+                  "node": "(8,9)"
+                },
+                {
+                  "level": 3,
+                  "node": "(((0,1),(2,3)),((4,5),(6,7)))"
+                }
+              ]
+            }
+          }
+        ],
+        "final": "(((((0,1),(2,3)),((4,5),(6,7))),(8,9)),10)",
+        "expected": "(((((0,1),(2,3)),((4,5),(6,7))),(8,9)),10)"
+      },
+      {
+        "leaf_count": 12,
+        "steps": [
+          {
+            "leaf_index": 0,
+            "after": {
+              "next_expected_index": 1,
+              "occupied": [
+                {
+                  "level": 0,
+                  "node": "0"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 1,
+            "after": {
+              "next_expected_index": 2,
+              "occupied": [
+                {
+                  "level": 1,
+                  "node": "(0,1)"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 2,
+            "after": {
+              "next_expected_index": 3,
+              "occupied": [
+                {
+                  "level": 0,
+                  "node": "2"
+                },
+                {
+                  "level": 1,
+                  "node": "(0,1)"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 3,
+            "after": {
+              "next_expected_index": 4,
+              "occupied": [
+                {
+                  "level": 2,
+                  "node": "((0,1),(2,3))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 4,
+            "after": {
+              "next_expected_index": 5,
+              "occupied": [
+                {
+                  "level": 0,
+                  "node": "4"
+                },
+                {
+                  "level": 2,
+                  "node": "((0,1),(2,3))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 5,
+            "after": {
+              "next_expected_index": 6,
+              "occupied": [
+                {
+                  "level": 1,
+                  "node": "(4,5)"
+                },
+                {
+                  "level": 2,
+                  "node": "((0,1),(2,3))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 6,
+            "after": {
+              "next_expected_index": 7,
+              "occupied": [
+                {
+                  "level": 0,
+                  "node": "6"
+                },
+                {
+                  "level": 1,
+                  "node": "(4,5)"
+                },
+                {
+                  "level": 2,
+                  "node": "((0,1),(2,3))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 7,
+            "after": {
+              "next_expected_index": 8,
+              "occupied": [
+                {
+                  "level": 3,
+                  "node": "(((0,1),(2,3)),((4,5),(6,7)))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 8,
+            "after": {
+              "next_expected_index": 9,
+              "occupied": [
+                {
+                  "level": 0,
+                  "node": "8"
+                },
+                {
+                  "level": 3,
+                  "node": "(((0,1),(2,3)),((4,5),(6,7)))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 9,
+            "after": {
+              "next_expected_index": 10,
+              "occupied": [
+                {
+                  "level": 1,
+                  "node": "(8,9)"
+                },
+                {
+                  "level": 3,
+                  "node": "(((0,1),(2,3)),((4,5),(6,7)))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 10,
+            "after": {
+              "next_expected_index": 11,
+              "occupied": [
+                {
+                  "level": 0,
+                  "node": "10"
+                },
+                {
+                  "level": 1,
+                  "node": "(8,9)"
+                },
+                {
+                  "level": 3,
+                  "node": "(((0,1),(2,3)),((4,5),(6,7)))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 11,
+            "after": {
+              "next_expected_index": 12,
+              "occupied": [
+                {
+                  "level": 2,
+                  "node": "((8,9),(10,11))"
+                },
+                {
+                  "level": 3,
+                  "node": "(((0,1),(2,3)),((4,5),(6,7)))"
+                }
+              ]
+            }
+          }
+        ],
+        "final": "((((0,1),(2,3)),((4,5),(6,7))),((8,9),(10,11)))",
+        "expected": "((((0,1),(2,3)),((4,5),(6,7))),((8,9),(10,11)))"
+      },
+      {
+        "leaf_count": 13,
+        "steps": [
+          {
+            "leaf_index": 0,
+            "after": {
+              "next_expected_index": 1,
+              "occupied": [
+                {
+                  "level": 0,
+                  "node": "0"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 1,
+            "after": {
+              "next_expected_index": 2,
+              "occupied": [
+                {
+                  "level": 1,
+                  "node": "(0,1)"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 2,
+            "after": {
+              "next_expected_index": 3,
+              "occupied": [
+                {
+                  "level": 0,
+                  "node": "2"
+                },
+                {
+                  "level": 1,
+                  "node": "(0,1)"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 3,
+            "after": {
+              "next_expected_index": 4,
+              "occupied": [
+                {
+                  "level": 2,
+                  "node": "((0,1),(2,3))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 4,
+            "after": {
+              "next_expected_index": 5,
+              "occupied": [
+                {
+                  "level": 0,
+                  "node": "4"
+                },
+                {
+                  "level": 2,
+                  "node": "((0,1),(2,3))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 5,
+            "after": {
+              "next_expected_index": 6,
+              "occupied": [
+                {
+                  "level": 1,
+                  "node": "(4,5)"
+                },
+                {
+                  "level": 2,
+                  "node": "((0,1),(2,3))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 6,
+            "after": {
+              "next_expected_index": 7,
+              "occupied": [
+                {
+                  "level": 0,
+                  "node": "6"
+                },
+                {
+                  "level": 1,
+                  "node": "(4,5)"
+                },
+                {
+                  "level": 2,
+                  "node": "((0,1),(2,3))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 7,
+            "after": {
+              "next_expected_index": 8,
+              "occupied": [
+                {
+                  "level": 3,
+                  "node": "(((0,1),(2,3)),((4,5),(6,7)))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 8,
+            "after": {
+              "next_expected_index": 9,
+              "occupied": [
+                {
+                  "level": 0,
+                  "node": "8"
+                },
+                {
+                  "level": 3,
+                  "node": "(((0,1),(2,3)),((4,5),(6,7)))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 9,
+            "after": {
+              "next_expected_index": 10,
+              "occupied": [
+                {
+                  "level": 1,
+                  "node": "(8,9)"
+                },
+                {
+                  "level": 3,
+                  "node": "(((0,1),(2,3)),((4,5),(6,7)))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 10,
+            "after": {
+              "next_expected_index": 11,
+              "occupied": [
+                {
+                  "level": 0,
+                  "node": "10"
+                },
+                {
+                  "level": 1,
+                  "node": "(8,9)"
+                },
+                {
+                  "level": 3,
+                  "node": "(((0,1),(2,3)),((4,5),(6,7)))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 11,
+            "after": {
+              "next_expected_index": 12,
+              "occupied": [
+                {
+                  "level": 2,
+                  "node": "((8,9),(10,11))"
+                },
+                {
+                  "level": 3,
+                  "node": "(((0,1),(2,3)),((4,5),(6,7)))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 12,
+            "after": {
+              "next_expected_index": 13,
+              "occupied": [
+                {
+                  "level": 0,
+                  "node": "12"
+                },
+                {
+                  "level": 2,
+                  "node": "((8,9),(10,11))"
+                },
+                {
+                  "level": 3,
+                  "node": "(((0,1),(2,3)),((4,5),(6,7)))"
+                }
+              ]
+            }
+          }
+        ],
+        "final": "(((((0,1),(2,3)),((4,5),(6,7))),((8,9),(10,11))),12)",
+        "expected": "(((((0,1),(2,3)),((4,5),(6,7))),((8,9),(10,11))),12)"
+      },
+      {
+        "leaf_count": 14,
+        "steps": [
+          {
+            "leaf_index": 0,
+            "after": {
+              "next_expected_index": 1,
+              "occupied": [
+                {
+                  "level": 0,
+                  "node": "0"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 1,
+            "after": {
+              "next_expected_index": 2,
+              "occupied": [
+                {
+                  "level": 1,
+                  "node": "(0,1)"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 2,
+            "after": {
+              "next_expected_index": 3,
+              "occupied": [
+                {
+                  "level": 0,
+                  "node": "2"
+                },
+                {
+                  "level": 1,
+                  "node": "(0,1)"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 3,
+            "after": {
+              "next_expected_index": 4,
+              "occupied": [
+                {
+                  "level": 2,
+                  "node": "((0,1),(2,3))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 4,
+            "after": {
+              "next_expected_index": 5,
+              "occupied": [
+                {
+                  "level": 0,
+                  "node": "4"
+                },
+                {
+                  "level": 2,
+                  "node": "((0,1),(2,3))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 5,
+            "after": {
+              "next_expected_index": 6,
+              "occupied": [
+                {
+                  "level": 1,
+                  "node": "(4,5)"
+                },
+                {
+                  "level": 2,
+                  "node": "((0,1),(2,3))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 6,
+            "after": {
+              "next_expected_index": 7,
+              "occupied": [
+                {
+                  "level": 0,
+                  "node": "6"
+                },
+                {
+                  "level": 1,
+                  "node": "(4,5)"
+                },
+                {
+                  "level": 2,
+                  "node": "((0,1),(2,3))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 7,
+            "after": {
+              "next_expected_index": 8,
+              "occupied": [
+                {
+                  "level": 3,
+                  "node": "(((0,1),(2,3)),((4,5),(6,7)))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 8,
+            "after": {
+              "next_expected_index": 9,
+              "occupied": [
+                {
+                  "level": 0,
+                  "node": "8"
+                },
+                {
+                  "level": 3,
+                  "node": "(((0,1),(2,3)),((4,5),(6,7)))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 9,
+            "after": {
+              "next_expected_index": 10,
+              "occupied": [
+                {
+                  "level": 1,
+                  "node": "(8,9)"
+                },
+                {
+                  "level": 3,
+                  "node": "(((0,1),(2,3)),((4,5),(6,7)))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 10,
+            "after": {
+              "next_expected_index": 11,
+              "occupied": [
+                {
+                  "level": 0,
+                  "node": "10"
+                },
+                {
+                  "level": 1,
+                  "node": "(8,9)"
+                },
+                {
+                  "level": 3,
+                  "node": "(((0,1),(2,3)),((4,5),(6,7)))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 11,
+            "after": {
+              "next_expected_index": 12,
+              "occupied": [
+                {
+                  "level": 2,
+                  "node": "((8,9),(10,11))"
+                },
+                {
+                  "level": 3,
+                  "node": "(((0,1),(2,3)),((4,5),(6,7)))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 12,
+            "after": {
+              "next_expected_index": 13,
+              "occupied": [
+                {
+                  "level": 0,
+                  "node": "12"
+                },
+                {
+                  "level": 2,
+                  "node": "((8,9),(10,11))"
+                },
+                {
+                  "level": 3,
+                  "node": "(((0,1),(2,3)),((4,5),(6,7)))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 13,
+            "after": {
+              "next_expected_index": 14,
+              "occupied": [
+                {
+                  "level": 1,
+                  "node": "(12,13)"
+                },
+                {
+                  "level": 2,
+                  "node": "((8,9),(10,11))"
+                },
+                {
+                  "level": 3,
+                  "node": "(((0,1),(2,3)),((4,5),(6,7)))"
+                }
+              ]
+            }
+          }
+        ],
+        "final": "(((((0,1),(2,3)),((4,5),(6,7))),((8,9),(10,11))),(12,13))",
+        "expected": "(((((0,1),(2,3)),((4,5),(6,7))),((8,9),(10,11))),(12,13))"
+      },
+      {
+        "leaf_count": 15,
+        "steps": [
+          {
+            "leaf_index": 0,
+            "after": {
+              "next_expected_index": 1,
+              "occupied": [
+                {
+                  "level": 0,
+                  "node": "0"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 1,
+            "after": {
+              "next_expected_index": 2,
+              "occupied": [
+                {
+                  "level": 1,
+                  "node": "(0,1)"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 2,
+            "after": {
+              "next_expected_index": 3,
+              "occupied": [
+                {
+                  "level": 0,
+                  "node": "2"
+                },
+                {
+                  "level": 1,
+                  "node": "(0,1)"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 3,
+            "after": {
+              "next_expected_index": 4,
+              "occupied": [
+                {
+                  "level": 2,
+                  "node": "((0,1),(2,3))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 4,
+            "after": {
+              "next_expected_index": 5,
+              "occupied": [
+                {
+                  "level": 0,
+                  "node": "4"
+                },
+                {
+                  "level": 2,
+                  "node": "((0,1),(2,3))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 5,
+            "after": {
+              "next_expected_index": 6,
+              "occupied": [
+                {
+                  "level": 1,
+                  "node": "(4,5)"
+                },
+                {
+                  "level": 2,
+                  "node": "((0,1),(2,3))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 6,
+            "after": {
+              "next_expected_index": 7,
+              "occupied": [
+                {
+                  "level": 0,
+                  "node": "6"
+                },
+                {
+                  "level": 1,
+                  "node": "(4,5)"
+                },
+                {
+                  "level": 2,
+                  "node": "((0,1),(2,3))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 7,
+            "after": {
+              "next_expected_index": 8,
+              "occupied": [
+                {
+                  "level": 3,
+                  "node": "(((0,1),(2,3)),((4,5),(6,7)))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 8,
+            "after": {
+              "next_expected_index": 9,
+              "occupied": [
+                {
+                  "level": 0,
+                  "node": "8"
+                },
+                {
+                  "level": 3,
+                  "node": "(((0,1),(2,3)),((4,5),(6,7)))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 9,
+            "after": {
+              "next_expected_index": 10,
+              "occupied": [
+                {
+                  "level": 1,
+                  "node": "(8,9)"
+                },
+                {
+                  "level": 3,
+                  "node": "(((0,1),(2,3)),((4,5),(6,7)))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 10,
+            "after": {
+              "next_expected_index": 11,
+              "occupied": [
+                {
+                  "level": 0,
+                  "node": "10"
+                },
+                {
+                  "level": 1,
+                  "node": "(8,9)"
+                },
+                {
+                  "level": 3,
+                  "node": "(((0,1),(2,3)),((4,5),(6,7)))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 11,
+            "after": {
+              "next_expected_index": 12,
+              "occupied": [
+                {
+                  "level": 2,
+                  "node": "((8,9),(10,11))"
+                },
+                {
+                  "level": 3,
+                  "node": "(((0,1),(2,3)),((4,5),(6,7)))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 12,
+            "after": {
+              "next_expected_index": 13,
+              "occupied": [
+                {
+                  "level": 0,
+                  "node": "12"
+                },
+                {
+                  "level": 2,
+                  "node": "((8,9),(10,11))"
+                },
+                {
+                  "level": 3,
+                  "node": "(((0,1),(2,3)),((4,5),(6,7)))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 13,
+            "after": {
+              "next_expected_index": 14,
+              "occupied": [
+                {
+                  "level": 1,
+                  "node": "(12,13)"
+                },
+                {
+                  "level": 2,
+                  "node": "((8,9),(10,11))"
+                },
+                {
+                  "level": 3,
+                  "node": "(((0,1),(2,3)),((4,5),(6,7)))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 14,
+            "after": {
+              "next_expected_index": 15,
+              "occupied": [
+                {
+                  "level": 0,
+                  "node": "14"
+                },
+                {
+                  "level": 1,
+                  "node": "(12,13)"
+                },
+                {
+                  "level": 2,
+                  "node": "((8,9),(10,11))"
+                },
+                {
+                  "level": 3,
+                  "node": "(((0,1),(2,3)),((4,5),(6,7)))"
+                }
+              ]
+            }
+          }
+        ],
+        "final": "((((((0,1),(2,3)),((4,5),(6,7))),((8,9),(10,11))),(12,13)),14)",
+        "expected": "((((((0,1),(2,3)),((4,5),(6,7))),((8,9),(10,11))),(12,13)),14)"
+      },
+      {
+        "leaf_count": 16,
+        "steps": [
+          {
+            "leaf_index": 0,
+            "after": {
+              "next_expected_index": 1,
+              "occupied": [
+                {
+                  "level": 0,
+                  "node": "0"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 1,
+            "after": {
+              "next_expected_index": 2,
+              "occupied": [
+                {
+                  "level": 1,
+                  "node": "(0,1)"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 2,
+            "after": {
+              "next_expected_index": 3,
+              "occupied": [
+                {
+                  "level": 0,
+                  "node": "2"
+                },
+                {
+                  "level": 1,
+                  "node": "(0,1)"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 3,
+            "after": {
+              "next_expected_index": 4,
+              "occupied": [
+                {
+                  "level": 2,
+                  "node": "((0,1),(2,3))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 4,
+            "after": {
+              "next_expected_index": 5,
+              "occupied": [
+                {
+                  "level": 0,
+                  "node": "4"
+                },
+                {
+                  "level": 2,
+                  "node": "((0,1),(2,3))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 5,
+            "after": {
+              "next_expected_index": 6,
+              "occupied": [
+                {
+                  "level": 1,
+                  "node": "(4,5)"
+                },
+                {
+                  "level": 2,
+                  "node": "((0,1),(2,3))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 6,
+            "after": {
+              "next_expected_index": 7,
+              "occupied": [
+                {
+                  "level": 0,
+                  "node": "6"
+                },
+                {
+                  "level": 1,
+                  "node": "(4,5)"
+                },
+                {
+                  "level": 2,
+                  "node": "((0,1),(2,3))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 7,
+            "after": {
+              "next_expected_index": 8,
+              "occupied": [
+                {
+                  "level": 3,
+                  "node": "(((0,1),(2,3)),((4,5),(6,7)))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 8,
+            "after": {
+              "next_expected_index": 9,
+              "occupied": [
+                {
+                  "level": 0,
+                  "node": "8"
+                },
+                {
+                  "level": 3,
+                  "node": "(((0,1),(2,3)),((4,5),(6,7)))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 9,
+            "after": {
+              "next_expected_index": 10,
+              "occupied": [
+                {
+                  "level": 1,
+                  "node": "(8,9)"
+                },
+                {
+                  "level": 3,
+                  "node": "(((0,1),(2,3)),((4,5),(6,7)))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 10,
+            "after": {
+              "next_expected_index": 11,
+              "occupied": [
+                {
+                  "level": 0,
+                  "node": "10"
+                },
+                {
+                  "level": 1,
+                  "node": "(8,9)"
+                },
+                {
+                  "level": 3,
+                  "node": "(((0,1),(2,3)),((4,5),(6,7)))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 11,
+            "after": {
+              "next_expected_index": 12,
+              "occupied": [
+                {
+                  "level": 2,
+                  "node": "((8,9),(10,11))"
+                },
+                {
+                  "level": 3,
+                  "node": "(((0,1),(2,3)),((4,5),(6,7)))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 12,
+            "after": {
+              "next_expected_index": 13,
+              "occupied": [
+                {
+                  "level": 0,
+                  "node": "12"
+                },
+                {
+                  "level": 2,
+                  "node": "((8,9),(10,11))"
+                },
+                {
+                  "level": 3,
+                  "node": "(((0,1),(2,3)),((4,5),(6,7)))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 13,
+            "after": {
+              "next_expected_index": 14,
+              "occupied": [
+                {
+                  "level": 1,
+                  "node": "(12,13)"
+                },
+                {
+                  "level": 2,
+                  "node": "((8,9),(10,11))"
+                },
+                {
+                  "level": 3,
+                  "node": "(((0,1),(2,3)),((4,5),(6,7)))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 14,
+            "after": {
+              "next_expected_index": 15,
+              "occupied": [
+                {
+                  "level": 0,
+                  "node": "14"
+                },
+                {
+                  "level": 1,
+                  "node": "(12,13)"
+                },
+                {
+                  "level": 2,
+                  "node": "((8,9),(10,11))"
+                },
+                {
+                  "level": 3,
+                  "node": "(((0,1),(2,3)),((4,5),(6,7)))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 15,
+            "after": {
+              "next_expected_index": 16,
+              "occupied": [
+                {
+                  "level": 4,
+                  "node": "((((0,1),(2,3)),((4,5),(6,7))),(((8,9),(10,11)),((12,13),(14,15))))"
+                }
+              ]
+            }
+          }
+        ],
+        "final": "((((0,1),(2,3)),((4,5),(6,7))),(((8,9),(10,11)),((12,13),(14,15))))",
+        "expected": "((((0,1),(2,3)),((4,5),(6,7))),(((8,9),(10,11)),((12,13),(14,15))))"
+      },
+      {
+        "leaf_count": 17,
+        "steps": [
+          {
+            "leaf_index": 0,
+            "after": {
+              "next_expected_index": 1,
+              "occupied": [
+                {
+                  "level": 0,
+                  "node": "0"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 1,
+            "after": {
+              "next_expected_index": 2,
+              "occupied": [
+                {
+                  "level": 1,
+                  "node": "(0,1)"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 2,
+            "after": {
+              "next_expected_index": 3,
+              "occupied": [
+                {
+                  "level": 0,
+                  "node": "2"
+                },
+                {
+                  "level": 1,
+                  "node": "(0,1)"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 3,
+            "after": {
+              "next_expected_index": 4,
+              "occupied": [
+                {
+                  "level": 2,
+                  "node": "((0,1),(2,3))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 4,
+            "after": {
+              "next_expected_index": 5,
+              "occupied": [
+                {
+                  "level": 0,
+                  "node": "4"
+                },
+                {
+                  "level": 2,
+                  "node": "((0,1),(2,3))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 5,
+            "after": {
+              "next_expected_index": 6,
+              "occupied": [
+                {
+                  "level": 1,
+                  "node": "(4,5)"
+                },
+                {
+                  "level": 2,
+                  "node": "((0,1),(2,3))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 6,
+            "after": {
+              "next_expected_index": 7,
+              "occupied": [
+                {
+                  "level": 0,
+                  "node": "6"
+                },
+                {
+                  "level": 1,
+                  "node": "(4,5)"
+                },
+                {
+                  "level": 2,
+                  "node": "((0,1),(2,3))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 7,
+            "after": {
+              "next_expected_index": 8,
+              "occupied": [
+                {
+                  "level": 3,
+                  "node": "(((0,1),(2,3)),((4,5),(6,7)))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 8,
+            "after": {
+              "next_expected_index": 9,
+              "occupied": [
+                {
+                  "level": 0,
+                  "node": "8"
+                },
+                {
+                  "level": 3,
+                  "node": "(((0,1),(2,3)),((4,5),(6,7)))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 9,
+            "after": {
+              "next_expected_index": 10,
+              "occupied": [
+                {
+                  "level": 1,
+                  "node": "(8,9)"
+                },
+                {
+                  "level": 3,
+                  "node": "(((0,1),(2,3)),((4,5),(6,7)))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 10,
+            "after": {
+              "next_expected_index": 11,
+              "occupied": [
+                {
+                  "level": 0,
+                  "node": "10"
+                },
+                {
+                  "level": 1,
+                  "node": "(8,9)"
+                },
+                {
+                  "level": 3,
+                  "node": "(((0,1),(2,3)),((4,5),(6,7)))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 11,
+            "after": {
+              "next_expected_index": 12,
+              "occupied": [
+                {
+                  "level": 2,
+                  "node": "((8,9),(10,11))"
+                },
+                {
+                  "level": 3,
+                  "node": "(((0,1),(2,3)),((4,5),(6,7)))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 12,
+            "after": {
+              "next_expected_index": 13,
+              "occupied": [
+                {
+                  "level": 0,
+                  "node": "12"
+                },
+                {
+                  "level": 2,
+                  "node": "((8,9),(10,11))"
+                },
+                {
+                  "level": 3,
+                  "node": "(((0,1),(2,3)),((4,5),(6,7)))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 13,
+            "after": {
+              "next_expected_index": 14,
+              "occupied": [
+                {
+                  "level": 1,
+                  "node": "(12,13)"
+                },
+                {
+                  "level": 2,
+                  "node": "((8,9),(10,11))"
+                },
+                {
+                  "level": 3,
+                  "node": "(((0,1),(2,3)),((4,5),(6,7)))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 14,
+            "after": {
+              "next_expected_index": 15,
+              "occupied": [
+                {
+                  "level": 0,
+                  "node": "14"
+                },
+                {
+                  "level": 1,
+                  "node": "(12,13)"
+                },
+                {
+                  "level": 2,
+                  "node": "((8,9),(10,11))"
+                },
+                {
+                  "level": 3,
+                  "node": "(((0,1),(2,3)),((4,5),(6,7)))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 15,
+            "after": {
+              "next_expected_index": 16,
+              "occupied": [
+                {
+                  "level": 4,
+                  "node": "((((0,1),(2,3)),((4,5),(6,7))),(((8,9),(10,11)),((12,13),(14,15))))"
+                }
+              ]
+            }
+          },
+          {
+            "leaf_index": 16,
+            "after": {
+              "next_expected_index": 17,
+              "occupied": [
+                {
+                  "level": 0,
+                  "node": "16"
+                },
+                {
+                  "level": 4,
+                  "node": "((((0,1),(2,3)),((4,5),(6,7))),(((8,9),(10,11)),((12,13),(14,15))))"
+                }
+              ]
+            }
+          }
+        ],
+        "final": "(((((0,1),(2,3)),((4,5),(6,7))),(((8,9),(10,11)),((12,13),(14,15)))),16)",
+        "expected": "(((((0,1),(2,3)),((4,5),(6,7))),(((8,9),(10,11)),((12,13),(14,15)))),16)"
+      }
+    ],
+    "cross_chunk": {
+      "chunks": [
+        {
+          "chunk_index": 0,
+          "leaf_indices": [
+            0,
+            1,
+            2
+          ],
+          "flush_snapshot": {
+            "next_expected_index": 3,
+            "occupied": [
+              {
+                "level": 0,
+                "node": "2"
+              },
+              {
+                "level": 1,
+                "node": "(0,1)"
+              }
+            ]
+          }
+        },
+        {
+          "chunk_index": 1,
+          "leaf_indices": [
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "flush_snapshot": {
+            "next_expected_index": 8,
+            "occupied": [
+              {
+                "level": 3,
+                "node": "(((0,1),(2,3)),((4,5),(6,7)))"
+              }
+            ]
+          }
+        },
+        {
+          "chunk_index": 2,
+          "leaf_indices": [
+            8,
+            9,
+            10
+          ],
+          "flush_snapshot": {
+            "next_expected_index": 11,
+            "occupied": [
+              {
+                "level": 0,
+                "node": "10"
+              },
+              {
+                "level": 1,
+                "node": "(8,9)"
+              },
+              {
+                "level": 3,
+                "node": "(((0,1),(2,3)),((4,5),(6,7)))"
+              }
+            ]
+          }
+        },
+        {
+          "chunk_index": 3,
+          "leaf_indices": [
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17
+          ],
+          "flush_snapshot": {
+            "next_expected_index": 18,
+            "occupied": [
+              {
+                "level": 1,
+                "node": "(16,17)"
+              },
+              {
+                "level": 4,
+                "node": "((((0,1),(2,3)),((4,5),(6,7))),(((8,9),(10,11)),((12,13),(14,15))))"
+              }
+            ]
+          }
+        }
+      ],
+      "final": "(((((0,1),(2,3)),((4,5),(6,7))),(((8,9),(10,11)),((12,13),(14,15)))),(16,17))",
+      "expected": "(((((0,1),(2,3)),((4,5),(6,7))),(((8,9),(10,11)),((12,13),(14,15)))),(16,17))"
+    },
+    "guards": {
+      "capacity": 16,
+      "full_tree": "((((0,1),(2,3)),((4,5),(6,7))),(((8,9),(10,11)),((12,13),(14,15))))",
+      "overflow": {
+        "type": "OverflowError",
+        "message": "BinaryFrontier leaf capacity exceeded"
+      },
+      "sequence": {
+        "type": "ValueError",
+        "message": "leaf_index=1 != next_expected_index=0"
+      }
+    }
+  },
+  "compensated_sum": {
+    "left_values": [
+      -1e+16
+    ],
+    "right_values": [
+      1e+16,
+      1.0
+    ],
+    "left_state": {
+      "sum": -1e+16,
+      "c": 0.0,
+      "represented": -1e+16
+    },
+    "right_state": {
+      "sum": 1e+16,
+      "c": -1.0,
+      "represented": 1e+16
+    },
+    "correct_merge": {
+      "replay": [
+        "right.sum",
+        "-right.c"
+      ],
+      "represented": 1.0
+    },
+    "wrong_sign_counterexample": {
+      "replay": [
+        "right.sum",
+        "right.c"
+      ],
+      "represented": -1.0
+    }
+  },
+  "safe_pearson": {
+    "inputs": {
+      "Sxy": 8.163535225534784e+199,
+      "Sxx": 4.794141230732863e+198,
+      "Syy": 7.080783202392912e+201
+    },
+    "expression": "corr = (Sxy/sqrt(Sxx)) / sqrt(Syy)",
+    "sequential_hex": "0x1.c5b6c7cd447e1p-2",
+    "root_product_hex": "0x1.c5b6c7cd447e0p-2",
+    "distinguishable": true
+  },
+  "ordinal": {
+    "zero_ties": {
+      "float32": {
+        "sign_bits": [
+          1,
+          0
+        ],
+        "canonical_keys": [
+          2147483648,
+          2147483648
+        ],
+        "ascending_order": [
+          0,
+          1
+        ],
+        "descending_order": [
+          0,
+          1
+        ],
+        "large_tie_count": 600,
+        "large_tie_ascending_stable": true,
+        "large_tie_descending_stable": true
+      },
+      "float64": {
+        "sign_bits": [
+          1,
+          0
+        ],
+        "canonical_keys": [
+          9223372036854775808,
+          9223372036854775808
+        ],
+        "ascending_order": [
+          0,
+          1
+        ],
+        "descending_order": [
+          0,
+          1
+        ],
+        "large_tie_count": 600,
+        "large_tie_ascending_stable": true,
+        "large_tie_descending_stable": true
+      }
+    },
+    "adjacent_ulp_boundary": {
+      "float32": {
+        "left_index": 255,
+        "right_index": 256,
+        "left_value_hex": "0x1.0000000000000p+0",
+        "right_value_hex": "0x1.0000020000000p+0",
+        "sorted_positions": [
+          0,
+          1
+        ],
+        "crosses_microtile_256": true
+      },
+      "float64": {
+        "left_index": 255,
+        "right_index": 256,
+        "left_value_hex": "0x1.0000000000000p+0",
+        "right_value_hex": "0x1.0000000000001p+0",
+        "sorted_positions": [
+          0,
+          1
+        ],
+        "crosses_microtile_256": true
+      }
+    }
+  },
+  "checked_offsets": {
+    "scatter_out_base": {
+      "row_base": 429496,
+      "N": 5000,
+      "exact": 2147480000,
+      "overflow_next_row": "OverflowError"
+    },
+    "global_element_offset": {
+      "row_base": 10,
+      "local_row": 2,
+      "N": 5000,
+      "local_column": 4999,
+      "exact": 64999
+    },
+    "byte_offset": {
+      "element_offset": 2305843009213693951,
+      "item_size": 8,
+      "exact": 18446744073709551608,
+      "overflow_next_element": "OverflowError"
+    }
+  },
+  "aliasability": {
+    "factor": {
+      "full_width_aliasable": true,
+      "full_width_path": "f64_alias",
+      "retained_base_stride_subblock_failures": [
+        "strides"
+      ],
+      "retained_base_stride_subblock_path": "f64_gather",
+      "f32_path": "f32_conversion"
+    },
+    "stock": {
+      "full_width_aliasable": true,
+      "full_width_path": "f64_alias",
+      "retained_base_stride_subblock_failures": [
+        "strides"
+      ],
+      "retained_base_stride_subblock_path": "f64_gather",
+      "f32_path": "f32_conversion"
+    },
+    "predicate_dimensions": [
+      "dtype",
+      "shape",
+      "strides",
+      "alignment",
+      "byte_offset",
+      "device",
+      "storage_bounds",
+      "owner",
+      "sync_lifetime"
+    ]
+  },
+  "struct_abi": {
+    "Partial1": {
+      "size_B": 56,
+      "alignment_B": 8,
+      "offsets_B": {
+        "count": 0,
+        "sum_x": 8,
+        "sum_y": 16,
+        "min_x": 24,
+        "max_x": 32,
+        "min_y": 40,
+        "max_y": 48
+      }
+    },
+    "Partial2": {
+      "size_B": 24,
+      "alignment_B": 8,
+      "offsets_B": {
+        "sxx": 0,
+        "syy": 8,
+        "sxy": 16
+      }
+    },
+    "PartialK1": {
+      "size_B": 40,
+      "alignment_B": 8,
+      "offsets_B": {
+        "count": 0,
+        "sum_x": 8,
+        "c_x": 16,
+        "sum_y": 24,
+        "c_y": 32
+      }
+    },
+    "PartialK2": {
+      "size_B": 48,
+      "alignment_B": 8,
+      "offsets_B": {
+        "sxx": 0,
+        "c_xx": 8,
+        "syy": 16,
+        "c_yy": 24,
+        "sxy": 32,
+        "c_xy": 40
+      }
+    }
+  }
+}

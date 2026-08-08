@@ -1,0 +1,1602 @@
+{
+  "schema_version": "1.0.0",
+  "manifest_version": "1.1.0",
+  "execution_date": "2026-08-04",
+  "schema_path": "tests/fixtures/test_cases_v1.schema.json",
+  "schema_sha256": "559514670b1c1c2d8c9d53d655b0a4d36c095b687394bbcf7d0bbde58b8cf237",
+  "generator_path": "tests/fixtures/generate_test_cases_v1.py",
+  "generator_sha256": "084eda0722153223741f37a57d6bca07a0310abdad70198fb0ca9c5ef7bdd6ae",
+  "fixture_sha256_kind": "sha256(canonical-json-without-fixture_sha256)",
+  "recoverable_launch_errors": [
+    "cudaErrorInvalidConfiguration",
+    "cudaErrorLaunchOutOfResources"
+  ],
+  "fatal_faults": [
+    {
+      "id": "setup",
+      "class": "fatal",
+      "stage": "setup",
+      "error": "cudaErrorInitializationError"
+    },
+    {
+      "id": "allocator",
+      "class": "fatal",
+      "stage": "allocator",
+      "error": "cudaErrorMemoryAllocation"
+    },
+    {
+      "id": "h2d",
+      "class": "fatal",
+      "stage": "h2d",
+      "error": "cudaErrorInvalidValue"
+    },
+    {
+      "id": "event",
+      "class": "fatal",
+      "stage": "event",
+      "error": "cudaErrorInvalidResourceHandle"
+    },
+    {
+      "id": "launch",
+      "class": "fatal",
+      "stage": "launch",
+      "error": "cudaErrorInvalidDeviceFunction"
+    },
+    {
+      "id": "sync",
+      "class": "fatal",
+      "stage": "sync",
+      "error": "cudaErrorUnknown"
+    },
+    {
+      "id": "async",
+      "class": "fatal",
+      "stage": "async",
+      "error": "cudaErrorUnknown"
+    },
+    {
+      "id": "d2h",
+      "class": "fatal",
+      "stage": "d2h",
+      "error": "cudaErrorECCUncorrectable"
+    },
+    {
+      "id": "result_allocation",
+      "class": "fatal",
+      "stage": "result_allocation",
+      "error": "MemoryError"
+    },
+    {
+      "id": "context",
+      "class": "fatal",
+      "stage": "context",
+      "error": "cudaErrorContextIsDestroyed"
+    },
+    {
+      "id": "illegal_address",
+      "class": "fatal",
+      "stage": "illegal address",
+      "error": "cudaErrorIllegalAddress"
+    },
+    {
+      "id": "device_assert",
+      "class": "fatal",
+      "stage": "device assert",
+      "error": "cudaErrorAssert"
+    },
+    {
+      "id": "launch_failure",
+      "class": "fatal",
+      "stage": "launch failure",
+      "error": "cudaErrorLaunchFailure"
+    }
+  ],
+  "wildcard_templates": [
+    {
+      "template_id": "binary_frontier_leaf_count",
+      "case_id_pattern": "binary_frontier_{leaf_count}",
+      "target": "tests/fixtures/generate_corr_math_trace_v1.py",
+      "axes": {
+        "leaf_count": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17
+        ]
+      },
+      "input": {
+        "leaf_count": "{leaf_count}",
+        "absolute_leaf_start": 0,
+        "chunk_plan": [
+          1,
+          3,
+          5,
+          8
+        ]
+      },
+      "injection": {
+        "kind": "none",
+        "continuous_absolute_leaf_order": true
+      },
+      "expect": {
+        "fixed_tree_equal": true,
+        "capacity_guard": true,
+        "final_live_slots": "popcount(leaf_count)"
+      }
+    },
+    {
+      "template_id": "recoverable_launch_whitelist",
+      "case_id_pattern": "recoverable_{error}",
+      "target": "tests/fixtures/validate_test_cases_v1.py",
+      "axes": {
+        "error": [
+          "cudaErrorInvalidConfiguration",
+          "cudaErrorLaunchOutOfResources"
+        ]
+      },
+      "input": {
+        "operation": "parameter_scan",
+        "group_index": 1
+      },
+      "injection": {
+        "stage": "launch",
+        "error": "{error}"
+      },
+      "expect": {
+        "classification": "recoverable",
+        "group_status": "failed",
+        "scan_continues": true
+      }
+    },
+    {
+      "template_id": "fatal_fault_matrix",
+      "case_id_pattern": "fatal_{fault}",
+      "target": "tests/fixtures/validate_test_cases_v1.py",
+      "axes": {
+        "fault": [
+          "setup",
+          "allocator",
+          "h2d",
+          "event",
+          "launch",
+          "sync",
+          "async",
+          "d2h",
+          "result_allocation",
+          "context",
+          "illegal_address",
+          "device_assert",
+          "launch_failure"
+        ]
+      },
+      "input": {
+        "operation": "parameter_scan",
+        "group_index": 0
+      },
+      "injection": {
+        "fault_id": "{fault}",
+        "classification": "fatal"
+      },
+      "expect": {
+        "raises": "RuntimeError",
+        "no_partial_results": true,
+        "raii_cleanup": true
+      }
+    },
+    {
+      "template_id": "rolling_mixed_dtype",
+      "case_id_pattern": "rolling_{prediction_dtype}_{label_dtype}",
+      "target": "benchmarks/compute_workspace_v1.py",
+      "axes": {
+        "prediction_dtype": [
+          "float32",
+          "float64"
+        ],
+        "label_dtype": [
+          "float32",
+          "float64"
+        ]
+      },
+      "input": {
+        "T": 1218,
+        "N": 5000,
+        "prediction_dtype": "{prediction_dtype}",
+        "label_dtype": "{label_dtype}"
+      },
+      "injection": {
+        "output_modes": [
+          "cpu",
+          "cuda_device"
+        ],
+        "accumulation": [
+          "normal",
+          "kahan"
+        ]
+      },
+      "expect": {
+        "levels_current": 20,
+        "levels_next": 10,
+        "cub_query_recorded": true,
+        "timeline_complete": true
+      }
+    },
+    {
+      "template_id": "alias_path_matrix",
+      "case_id_pattern": "alias_{operation}_{path}",
+      "target": "tests/fixtures/corr_math_v1.py",
+      "axes": {
+        "operation": [
+          "factor",
+          "stock"
+        ],
+        "path": [
+          "f32_conversion",
+          "f64_alias",
+          "f64_gather"
+        ]
+      },
+      "input": {
+        "operation": "{operation}",
+        "dtype_path": "{path}"
+      },
+      "injection": {
+        "layout_counterexamples": [
+          "dtype",
+          "strides",
+          "alignment",
+          "offset",
+          "device",
+          "owner",
+          "lifetime"
+        ]
+      },
+      "expect": {
+        "selected_path": "{path}",
+        "independent_predicate": true
+      }
+    },
+    {
+      "template_id": "output_contract",
+      "case_id_pattern": "output_{output_mode}",
+      "target": "benchmarks/compute_workspace_v1.py",
+      "axes": {
+        "output_mode": [
+          "cpu",
+          "cuda_device"
+        ]
+      },
+      "input": {
+        "backend": "cuda",
+        "output_mode": "{output_mode}"
+      },
+      "injection": {
+        "input_origin": "cpu_host"
+      },
+      "expect": {
+        "cpu": {
+          "container": "numpy.ndarray",
+          "device_hwm": "tile_staging_only"
+        },
+        "cuda_device": {
+          "container": "torch.Tensor",
+          "dtype": "float64",
+          "device": "mirror_input"
+        }
+      }
+    },
+    {
+      "template_id": "artifact_validation",
+      "case_id_pattern": "artifact_{fixture[id]}",
+      "target": "{fixture[target]}",
+      "axes": {
+        "fixture": [
+          {
+            "id": "corr_corpus",
+            "target": "tests/fixtures/validate_corr_corpus_v1.py"
+          },
+          {
+            "id": "corr_math",
+            "target": "tests/fixtures/generate_corr_math_trace_v1.py"
+          },
+          {
+            "id": "workspace",
+            "target": "benchmarks/compute_workspace_v1.py"
+          },
+          {
+            "id": "calibration",
+            "target": "tests/fixtures/generate_calibration_trace_v1.py"
+          },
+          {
+            "id": "gate",
+            "target": "benchmarks/generate_gate_config_v1.py"
+          }
+        ]
+      },
+      "input": {
+        "artifact": "{fixture[id]}",
+        "repo_relative_target": "{fixture[target]}"
+      },
+      "injection": {
+        "kind": "none"
+      },
+      "expect": {
+        "exit_code": 0,
+        "deterministic_bytes": true
+      }
+    }
+  ],
+  "expanded_case_count": 50,
+  "target_count": 7,
+  "expanded_cases": [
+    {
+      "id": "binary_frontier_0",
+      "template_id": "binary_frontier_leaf_count",
+      "target": "tests/fixtures/generate_corr_math_trace_v1.py",
+      "axes": {
+        "leaf_count": 0
+      },
+      "input": {
+        "leaf_count": 0,
+        "absolute_leaf_start": 0,
+        "chunk_plan": [
+          1,
+          3,
+          5,
+          8
+        ]
+      },
+      "injection": {
+        "kind": "none",
+        "continuous_absolute_leaf_order": true
+      },
+      "expect": {
+        "fixed_tree_equal": true,
+        "capacity_guard": true,
+        "final_live_slots": "popcount(leaf_count)"
+      }
+    },
+    {
+      "id": "binary_frontier_1",
+      "template_id": "binary_frontier_leaf_count",
+      "target": "tests/fixtures/generate_corr_math_trace_v1.py",
+      "axes": {
+        "leaf_count": 1
+      },
+      "input": {
+        "leaf_count": 1,
+        "absolute_leaf_start": 0,
+        "chunk_plan": [
+          1,
+          3,
+          5,
+          8
+        ]
+      },
+      "injection": {
+        "kind": "none",
+        "continuous_absolute_leaf_order": true
+      },
+      "expect": {
+        "fixed_tree_equal": true,
+        "capacity_guard": true,
+        "final_live_slots": "popcount(leaf_count)"
+      }
+    },
+    {
+      "id": "binary_frontier_2",
+      "template_id": "binary_frontier_leaf_count",
+      "target": "tests/fixtures/generate_corr_math_trace_v1.py",
+      "axes": {
+        "leaf_count": 2
+      },
+      "input": {
+        "leaf_count": 2,
+        "absolute_leaf_start": 0,
+        "chunk_plan": [
+          1,
+          3,
+          5,
+          8
+        ]
+      },
+      "injection": {
+        "kind": "none",
+        "continuous_absolute_leaf_order": true
+      },
+      "expect": {
+        "fixed_tree_equal": true,
+        "capacity_guard": true,
+        "final_live_slots": "popcount(leaf_count)"
+      }
+    },
+    {
+      "id": "binary_frontier_3",
+      "template_id": "binary_frontier_leaf_count",
+      "target": "tests/fixtures/generate_corr_math_trace_v1.py",
+      "axes": {
+        "leaf_count": 3
+      },
+      "input": {
+        "leaf_count": 3,
+        "absolute_leaf_start": 0,
+        "chunk_plan": [
+          1,
+          3,
+          5,
+          8
+        ]
+      },
+      "injection": {
+        "kind": "none",
+        "continuous_absolute_leaf_order": true
+      },
+      "expect": {
+        "fixed_tree_equal": true,
+        "capacity_guard": true,
+        "final_live_slots": "popcount(leaf_count)"
+      }
+    },
+    {
+      "id": "binary_frontier_4",
+      "template_id": "binary_frontier_leaf_count",
+      "target": "tests/fixtures/generate_corr_math_trace_v1.py",
+      "axes": {
+        "leaf_count": 4
+      },
+      "input": {
+        "leaf_count": 4,
+        "absolute_leaf_start": 0,
+        "chunk_plan": [
+          1,
+          3,
+          5,
+          8
+        ]
+      },
+      "injection": {
+        "kind": "none",
+        "continuous_absolute_leaf_order": true
+      },
+      "expect": {
+        "fixed_tree_equal": true,
+        "capacity_guard": true,
+        "final_live_slots": "popcount(leaf_count)"
+      }
+    },
+    {
+      "id": "binary_frontier_5",
+      "template_id": "binary_frontier_leaf_count",
+      "target": "tests/fixtures/generate_corr_math_trace_v1.py",
+      "axes": {
+        "leaf_count": 5
+      },
+      "input": {
+        "leaf_count": 5,
+        "absolute_leaf_start": 0,
+        "chunk_plan": [
+          1,
+          3,
+          5,
+          8
+        ]
+      },
+      "injection": {
+        "kind": "none",
+        "continuous_absolute_leaf_order": true
+      },
+      "expect": {
+        "fixed_tree_equal": true,
+        "capacity_guard": true,
+        "final_live_slots": "popcount(leaf_count)"
+      }
+    },
+    {
+      "id": "binary_frontier_6",
+      "template_id": "binary_frontier_leaf_count",
+      "target": "tests/fixtures/generate_corr_math_trace_v1.py",
+      "axes": {
+        "leaf_count": 6
+      },
+      "input": {
+        "leaf_count": 6,
+        "absolute_leaf_start": 0,
+        "chunk_plan": [
+          1,
+          3,
+          5,
+          8
+        ]
+      },
+      "injection": {
+        "kind": "none",
+        "continuous_absolute_leaf_order": true
+      },
+      "expect": {
+        "fixed_tree_equal": true,
+        "capacity_guard": true,
+        "final_live_slots": "popcount(leaf_count)"
+      }
+    },
+    {
+      "id": "binary_frontier_7",
+      "template_id": "binary_frontier_leaf_count",
+      "target": "tests/fixtures/generate_corr_math_trace_v1.py",
+      "axes": {
+        "leaf_count": 7
+      },
+      "input": {
+        "leaf_count": 7,
+        "absolute_leaf_start": 0,
+        "chunk_plan": [
+          1,
+          3,
+          5,
+          8
+        ]
+      },
+      "injection": {
+        "kind": "none",
+        "continuous_absolute_leaf_order": true
+      },
+      "expect": {
+        "fixed_tree_equal": true,
+        "capacity_guard": true,
+        "final_live_slots": "popcount(leaf_count)"
+      }
+    },
+    {
+      "id": "binary_frontier_8",
+      "template_id": "binary_frontier_leaf_count",
+      "target": "tests/fixtures/generate_corr_math_trace_v1.py",
+      "axes": {
+        "leaf_count": 8
+      },
+      "input": {
+        "leaf_count": 8,
+        "absolute_leaf_start": 0,
+        "chunk_plan": [
+          1,
+          3,
+          5,
+          8
+        ]
+      },
+      "injection": {
+        "kind": "none",
+        "continuous_absolute_leaf_order": true
+      },
+      "expect": {
+        "fixed_tree_equal": true,
+        "capacity_guard": true,
+        "final_live_slots": "popcount(leaf_count)"
+      }
+    },
+    {
+      "id": "binary_frontier_9",
+      "template_id": "binary_frontier_leaf_count",
+      "target": "tests/fixtures/generate_corr_math_trace_v1.py",
+      "axes": {
+        "leaf_count": 9
+      },
+      "input": {
+        "leaf_count": 9,
+        "absolute_leaf_start": 0,
+        "chunk_plan": [
+          1,
+          3,
+          5,
+          8
+        ]
+      },
+      "injection": {
+        "kind": "none",
+        "continuous_absolute_leaf_order": true
+      },
+      "expect": {
+        "fixed_tree_equal": true,
+        "capacity_guard": true,
+        "final_live_slots": "popcount(leaf_count)"
+      }
+    },
+    {
+      "id": "binary_frontier_10",
+      "template_id": "binary_frontier_leaf_count",
+      "target": "tests/fixtures/generate_corr_math_trace_v1.py",
+      "axes": {
+        "leaf_count": 10
+      },
+      "input": {
+        "leaf_count": 10,
+        "absolute_leaf_start": 0,
+        "chunk_plan": [
+          1,
+          3,
+          5,
+          8
+        ]
+      },
+      "injection": {
+        "kind": "none",
+        "continuous_absolute_leaf_order": true
+      },
+      "expect": {
+        "fixed_tree_equal": true,
+        "capacity_guard": true,
+        "final_live_slots": "popcount(leaf_count)"
+      }
+    },
+    {
+      "id": "binary_frontier_11",
+      "template_id": "binary_frontier_leaf_count",
+      "target": "tests/fixtures/generate_corr_math_trace_v1.py",
+      "axes": {
+        "leaf_count": 11
+      },
+      "input": {
+        "leaf_count": 11,
+        "absolute_leaf_start": 0,
+        "chunk_plan": [
+          1,
+          3,
+          5,
+          8
+        ]
+      },
+      "injection": {
+        "kind": "none",
+        "continuous_absolute_leaf_order": true
+      },
+      "expect": {
+        "fixed_tree_equal": true,
+        "capacity_guard": true,
+        "final_live_slots": "popcount(leaf_count)"
+      }
+    },
+    {
+      "id": "binary_frontier_12",
+      "template_id": "binary_frontier_leaf_count",
+      "target": "tests/fixtures/generate_corr_math_trace_v1.py",
+      "axes": {
+        "leaf_count": 12
+      },
+      "input": {
+        "leaf_count": 12,
+        "absolute_leaf_start": 0,
+        "chunk_plan": [
+          1,
+          3,
+          5,
+          8
+        ]
+      },
+      "injection": {
+        "kind": "none",
+        "continuous_absolute_leaf_order": true
+      },
+      "expect": {
+        "fixed_tree_equal": true,
+        "capacity_guard": true,
+        "final_live_slots": "popcount(leaf_count)"
+      }
+    },
+    {
+      "id": "binary_frontier_13",
+      "template_id": "binary_frontier_leaf_count",
+      "target": "tests/fixtures/generate_corr_math_trace_v1.py",
+      "axes": {
+        "leaf_count": 13
+      },
+      "input": {
+        "leaf_count": 13,
+        "absolute_leaf_start": 0,
+        "chunk_plan": [
+          1,
+          3,
+          5,
+          8
+        ]
+      },
+      "injection": {
+        "kind": "none",
+        "continuous_absolute_leaf_order": true
+      },
+      "expect": {
+        "fixed_tree_equal": true,
+        "capacity_guard": true,
+        "final_live_slots": "popcount(leaf_count)"
+      }
+    },
+    {
+      "id": "binary_frontier_14",
+      "template_id": "binary_frontier_leaf_count",
+      "target": "tests/fixtures/generate_corr_math_trace_v1.py",
+      "axes": {
+        "leaf_count": 14
+      },
+      "input": {
+        "leaf_count": 14,
+        "absolute_leaf_start": 0,
+        "chunk_plan": [
+          1,
+          3,
+          5,
+          8
+        ]
+      },
+      "injection": {
+        "kind": "none",
+        "continuous_absolute_leaf_order": true
+      },
+      "expect": {
+        "fixed_tree_equal": true,
+        "capacity_guard": true,
+        "final_live_slots": "popcount(leaf_count)"
+      }
+    },
+    {
+      "id": "binary_frontier_15",
+      "template_id": "binary_frontier_leaf_count",
+      "target": "tests/fixtures/generate_corr_math_trace_v1.py",
+      "axes": {
+        "leaf_count": 15
+      },
+      "input": {
+        "leaf_count": 15,
+        "absolute_leaf_start": 0,
+        "chunk_plan": [
+          1,
+          3,
+          5,
+          8
+        ]
+      },
+      "injection": {
+        "kind": "none",
+        "continuous_absolute_leaf_order": true
+      },
+      "expect": {
+        "fixed_tree_equal": true,
+        "capacity_guard": true,
+        "final_live_slots": "popcount(leaf_count)"
+      }
+    },
+    {
+      "id": "binary_frontier_16",
+      "template_id": "binary_frontier_leaf_count",
+      "target": "tests/fixtures/generate_corr_math_trace_v1.py",
+      "axes": {
+        "leaf_count": 16
+      },
+      "input": {
+        "leaf_count": 16,
+        "absolute_leaf_start": 0,
+        "chunk_plan": [
+          1,
+          3,
+          5,
+          8
+        ]
+      },
+      "injection": {
+        "kind": "none",
+        "continuous_absolute_leaf_order": true
+      },
+      "expect": {
+        "fixed_tree_equal": true,
+        "capacity_guard": true,
+        "final_live_slots": "popcount(leaf_count)"
+      }
+    },
+    {
+      "id": "binary_frontier_17",
+      "template_id": "binary_frontier_leaf_count",
+      "target": "tests/fixtures/generate_corr_math_trace_v1.py",
+      "axes": {
+        "leaf_count": 17
+      },
+      "input": {
+        "leaf_count": 17,
+        "absolute_leaf_start": 0,
+        "chunk_plan": [
+          1,
+          3,
+          5,
+          8
+        ]
+      },
+      "injection": {
+        "kind": "none",
+        "continuous_absolute_leaf_order": true
+      },
+      "expect": {
+        "fixed_tree_equal": true,
+        "capacity_guard": true,
+        "final_live_slots": "popcount(leaf_count)"
+      }
+    },
+    {
+      "id": "recoverable_cudaErrorInvalidConfiguration",
+      "template_id": "recoverable_launch_whitelist",
+      "target": "tests/fixtures/validate_test_cases_v1.py",
+      "axes": {
+        "error": "cudaErrorInvalidConfiguration"
+      },
+      "input": {
+        "operation": "parameter_scan",
+        "group_index": 1
+      },
+      "injection": {
+        "stage": "launch",
+        "error": "cudaErrorInvalidConfiguration"
+      },
+      "expect": {
+        "classification": "recoverable",
+        "group_status": "failed",
+        "scan_continues": true
+      }
+    },
+    {
+      "id": "recoverable_cudaErrorLaunchOutOfResources",
+      "template_id": "recoverable_launch_whitelist",
+      "target": "tests/fixtures/validate_test_cases_v1.py",
+      "axes": {
+        "error": "cudaErrorLaunchOutOfResources"
+      },
+      "input": {
+        "operation": "parameter_scan",
+        "group_index": 1
+      },
+      "injection": {
+        "stage": "launch",
+        "error": "cudaErrorLaunchOutOfResources"
+      },
+      "expect": {
+        "classification": "recoverable",
+        "group_status": "failed",
+        "scan_continues": true
+      }
+    },
+    {
+      "id": "fatal_setup",
+      "template_id": "fatal_fault_matrix",
+      "target": "tests/fixtures/validate_test_cases_v1.py",
+      "axes": {
+        "fault": "setup"
+      },
+      "input": {
+        "operation": "parameter_scan",
+        "group_index": 0
+      },
+      "injection": {
+        "fault_id": "setup",
+        "classification": "fatal"
+      },
+      "expect": {
+        "raises": "RuntimeError",
+        "no_partial_results": true,
+        "raii_cleanup": true
+      }
+    },
+    {
+      "id": "fatal_allocator",
+      "template_id": "fatal_fault_matrix",
+      "target": "tests/fixtures/validate_test_cases_v1.py",
+      "axes": {
+        "fault": "allocator"
+      },
+      "input": {
+        "operation": "parameter_scan",
+        "group_index": 0
+      },
+      "injection": {
+        "fault_id": "allocator",
+        "classification": "fatal"
+      },
+      "expect": {
+        "raises": "RuntimeError",
+        "no_partial_results": true,
+        "raii_cleanup": true
+      }
+    },
+    {
+      "id": "fatal_h2d",
+      "template_id": "fatal_fault_matrix",
+      "target": "tests/fixtures/validate_test_cases_v1.py",
+      "axes": {
+        "fault": "h2d"
+      },
+      "input": {
+        "operation": "parameter_scan",
+        "group_index": 0
+      },
+      "injection": {
+        "fault_id": "h2d",
+        "classification": "fatal"
+      },
+      "expect": {
+        "raises": "RuntimeError",
+        "no_partial_results": true,
+        "raii_cleanup": true
+      }
+    },
+    {
+      "id": "fatal_event",
+      "template_id": "fatal_fault_matrix",
+      "target": "tests/fixtures/validate_test_cases_v1.py",
+      "axes": {
+        "fault": "event"
+      },
+      "input": {
+        "operation": "parameter_scan",
+        "group_index": 0
+      },
+      "injection": {
+        "fault_id": "event",
+        "classification": "fatal"
+      },
+      "expect": {
+        "raises": "RuntimeError",
+        "no_partial_results": true,
+        "raii_cleanup": true
+      }
+    },
+    {
+      "id": "fatal_launch",
+      "template_id": "fatal_fault_matrix",
+      "target": "tests/fixtures/validate_test_cases_v1.py",
+      "axes": {
+        "fault": "launch"
+      },
+      "input": {
+        "operation": "parameter_scan",
+        "group_index": 0
+      },
+      "injection": {
+        "fault_id": "launch",
+        "classification": "fatal"
+      },
+      "expect": {
+        "raises": "RuntimeError",
+        "no_partial_results": true,
+        "raii_cleanup": true
+      }
+    },
+    {
+      "id": "fatal_sync",
+      "template_id": "fatal_fault_matrix",
+      "target": "tests/fixtures/validate_test_cases_v1.py",
+      "axes": {
+        "fault": "sync"
+      },
+      "input": {
+        "operation": "parameter_scan",
+        "group_index": 0
+      },
+      "injection": {
+        "fault_id": "sync",
+        "classification": "fatal"
+      },
+      "expect": {
+        "raises": "RuntimeError",
+        "no_partial_results": true,
+        "raii_cleanup": true
+      }
+    },
+    {
+      "id": "fatal_async",
+      "template_id": "fatal_fault_matrix",
+      "target": "tests/fixtures/validate_test_cases_v1.py",
+      "axes": {
+        "fault": "async"
+      },
+      "input": {
+        "operation": "parameter_scan",
+        "group_index": 0
+      },
+      "injection": {
+        "fault_id": "async",
+        "classification": "fatal"
+      },
+      "expect": {
+        "raises": "RuntimeError",
+        "no_partial_results": true,
+        "raii_cleanup": true
+      }
+    },
+    {
+      "id": "fatal_d2h",
+      "template_id": "fatal_fault_matrix",
+      "target": "tests/fixtures/validate_test_cases_v1.py",
+      "axes": {
+        "fault": "d2h"
+      },
+      "input": {
+        "operation": "parameter_scan",
+        "group_index": 0
+      },
+      "injection": {
+        "fault_id": "d2h",
+        "classification": "fatal"
+      },
+      "expect": {
+        "raises": "RuntimeError",
+        "no_partial_results": true,
+        "raii_cleanup": true
+      }
+    },
+    {
+      "id": "fatal_result_allocation",
+      "template_id": "fatal_fault_matrix",
+      "target": "tests/fixtures/validate_test_cases_v1.py",
+      "axes": {
+        "fault": "result_allocation"
+      },
+      "input": {
+        "operation": "parameter_scan",
+        "group_index": 0
+      },
+      "injection": {
+        "fault_id": "result_allocation",
+        "classification": "fatal"
+      },
+      "expect": {
+        "raises": "RuntimeError",
+        "no_partial_results": true,
+        "raii_cleanup": true
+      }
+    },
+    {
+      "id": "fatal_context",
+      "template_id": "fatal_fault_matrix",
+      "target": "tests/fixtures/validate_test_cases_v1.py",
+      "axes": {
+        "fault": "context"
+      },
+      "input": {
+        "operation": "parameter_scan",
+        "group_index": 0
+      },
+      "injection": {
+        "fault_id": "context",
+        "classification": "fatal"
+      },
+      "expect": {
+        "raises": "RuntimeError",
+        "no_partial_results": true,
+        "raii_cleanup": true
+      }
+    },
+    {
+      "id": "fatal_illegal_address",
+      "template_id": "fatal_fault_matrix",
+      "target": "tests/fixtures/validate_test_cases_v1.py",
+      "axes": {
+        "fault": "illegal_address"
+      },
+      "input": {
+        "operation": "parameter_scan",
+        "group_index": 0
+      },
+      "injection": {
+        "fault_id": "illegal_address",
+        "classification": "fatal"
+      },
+      "expect": {
+        "raises": "RuntimeError",
+        "no_partial_results": true,
+        "raii_cleanup": true
+      }
+    },
+    {
+      "id": "fatal_device_assert",
+      "template_id": "fatal_fault_matrix",
+      "target": "tests/fixtures/validate_test_cases_v1.py",
+      "axes": {
+        "fault": "device_assert"
+      },
+      "input": {
+        "operation": "parameter_scan",
+        "group_index": 0
+      },
+      "injection": {
+        "fault_id": "device_assert",
+        "classification": "fatal"
+      },
+      "expect": {
+        "raises": "RuntimeError",
+        "no_partial_results": true,
+        "raii_cleanup": true
+      }
+    },
+    {
+      "id": "fatal_launch_failure",
+      "template_id": "fatal_fault_matrix",
+      "target": "tests/fixtures/validate_test_cases_v1.py",
+      "axes": {
+        "fault": "launch_failure"
+      },
+      "input": {
+        "operation": "parameter_scan",
+        "group_index": 0
+      },
+      "injection": {
+        "fault_id": "launch_failure",
+        "classification": "fatal"
+      },
+      "expect": {
+        "raises": "RuntimeError",
+        "no_partial_results": true,
+        "raii_cleanup": true
+      }
+    },
+    {
+      "id": "rolling_float32_float32",
+      "template_id": "rolling_mixed_dtype",
+      "target": "benchmarks/compute_workspace_v1.py",
+      "axes": {
+        "prediction_dtype": "float32",
+        "label_dtype": "float32"
+      },
+      "input": {
+        "T": 1218,
+        "N": 5000,
+        "prediction_dtype": "float32",
+        "label_dtype": "float32"
+      },
+      "injection": {
+        "output_modes": [
+          "cpu",
+          "cuda_device"
+        ],
+        "accumulation": [
+          "normal",
+          "kahan"
+        ]
+      },
+      "expect": {
+        "levels_current": 20,
+        "levels_next": 10,
+        "cub_query_recorded": true,
+        "timeline_complete": true
+      }
+    },
+    {
+      "id": "rolling_float32_float64",
+      "template_id": "rolling_mixed_dtype",
+      "target": "benchmarks/compute_workspace_v1.py",
+      "axes": {
+        "prediction_dtype": "float32",
+        "label_dtype": "float64"
+      },
+      "input": {
+        "T": 1218,
+        "N": 5000,
+        "prediction_dtype": "float32",
+        "label_dtype": "float64"
+      },
+      "injection": {
+        "output_modes": [
+          "cpu",
+          "cuda_device"
+        ],
+        "accumulation": [
+          "normal",
+          "kahan"
+        ]
+      },
+      "expect": {
+        "levels_current": 20,
+        "levels_next": 10,
+        "cub_query_recorded": true,
+        "timeline_complete": true
+      }
+    },
+    {
+      "id": "rolling_float64_float32",
+      "template_id": "rolling_mixed_dtype",
+      "target": "benchmarks/compute_workspace_v1.py",
+      "axes": {
+        "prediction_dtype": "float64",
+        "label_dtype": "float32"
+      },
+      "input": {
+        "T": 1218,
+        "N": 5000,
+        "prediction_dtype": "float64",
+        "label_dtype": "float32"
+      },
+      "injection": {
+        "output_modes": [
+          "cpu",
+          "cuda_device"
+        ],
+        "accumulation": [
+          "normal",
+          "kahan"
+        ]
+      },
+      "expect": {
+        "levels_current": 20,
+        "levels_next": 10,
+        "cub_query_recorded": true,
+        "timeline_complete": true
+      }
+    },
+    {
+      "id": "rolling_float64_float64",
+      "template_id": "rolling_mixed_dtype",
+      "target": "benchmarks/compute_workspace_v1.py",
+      "axes": {
+        "prediction_dtype": "float64",
+        "label_dtype": "float64"
+      },
+      "input": {
+        "T": 1218,
+        "N": 5000,
+        "prediction_dtype": "float64",
+        "label_dtype": "float64"
+      },
+      "injection": {
+        "output_modes": [
+          "cpu",
+          "cuda_device"
+        ],
+        "accumulation": [
+          "normal",
+          "kahan"
+        ]
+      },
+      "expect": {
+        "levels_current": 20,
+        "levels_next": 10,
+        "cub_query_recorded": true,
+        "timeline_complete": true
+      }
+    },
+    {
+      "id": "alias_factor_f32_conversion",
+      "template_id": "alias_path_matrix",
+      "target": "tests/fixtures/corr_math_v1.py",
+      "axes": {
+        "operation": "factor",
+        "path": "f32_conversion"
+      },
+      "input": {
+        "operation": "factor",
+        "dtype_path": "f32_conversion"
+      },
+      "injection": {
+        "layout_counterexamples": [
+          "dtype",
+          "strides",
+          "alignment",
+          "offset",
+          "device",
+          "owner",
+          "lifetime"
+        ]
+      },
+      "expect": {
+        "selected_path": "f32_conversion",
+        "independent_predicate": true
+      }
+    },
+    {
+      "id": "alias_factor_f64_alias",
+      "template_id": "alias_path_matrix",
+      "target": "tests/fixtures/corr_math_v1.py",
+      "axes": {
+        "operation": "factor",
+        "path": "f64_alias"
+      },
+      "input": {
+        "operation": "factor",
+        "dtype_path": "f64_alias"
+      },
+      "injection": {
+        "layout_counterexamples": [
+          "dtype",
+          "strides",
+          "alignment",
+          "offset",
+          "device",
+          "owner",
+          "lifetime"
+        ]
+      },
+      "expect": {
+        "selected_path": "f64_alias",
+        "independent_predicate": true
+      }
+    },
+    {
+      "id": "alias_factor_f64_gather",
+      "template_id": "alias_path_matrix",
+      "target": "tests/fixtures/corr_math_v1.py",
+      "axes": {
+        "operation": "factor",
+        "path": "f64_gather"
+      },
+      "input": {
+        "operation": "factor",
+        "dtype_path": "f64_gather"
+      },
+      "injection": {
+        "layout_counterexamples": [
+          "dtype",
+          "strides",
+          "alignment",
+          "offset",
+          "device",
+          "owner",
+          "lifetime"
+        ]
+      },
+      "expect": {
+        "selected_path": "f64_gather",
+        "independent_predicate": true
+      }
+    },
+    {
+      "id": "alias_stock_f32_conversion",
+      "template_id": "alias_path_matrix",
+      "target": "tests/fixtures/corr_math_v1.py",
+      "axes": {
+        "operation": "stock",
+        "path": "f32_conversion"
+      },
+      "input": {
+        "operation": "stock",
+        "dtype_path": "f32_conversion"
+      },
+      "injection": {
+        "layout_counterexamples": [
+          "dtype",
+          "strides",
+          "alignment",
+          "offset",
+          "device",
+          "owner",
+          "lifetime"
+        ]
+      },
+      "expect": {
+        "selected_path": "f32_conversion",
+        "independent_predicate": true
+      }
+    },
+    {
+      "id": "alias_stock_f64_alias",
+      "template_id": "alias_path_matrix",
+      "target": "tests/fixtures/corr_math_v1.py",
+      "axes": {
+        "operation": "stock",
+        "path": "f64_alias"
+      },
+      "input": {
+        "operation": "stock",
+        "dtype_path": "f64_alias"
+      },
+      "injection": {
+        "layout_counterexamples": [
+          "dtype",
+          "strides",
+          "alignment",
+          "offset",
+          "device",
+          "owner",
+          "lifetime"
+        ]
+      },
+      "expect": {
+        "selected_path": "f64_alias",
+        "independent_predicate": true
+      }
+    },
+    {
+      "id": "alias_stock_f64_gather",
+      "template_id": "alias_path_matrix",
+      "target": "tests/fixtures/corr_math_v1.py",
+      "axes": {
+        "operation": "stock",
+        "path": "f64_gather"
+      },
+      "input": {
+        "operation": "stock",
+        "dtype_path": "f64_gather"
+      },
+      "injection": {
+        "layout_counterexamples": [
+          "dtype",
+          "strides",
+          "alignment",
+          "offset",
+          "device",
+          "owner",
+          "lifetime"
+        ]
+      },
+      "expect": {
+        "selected_path": "f64_gather",
+        "independent_predicate": true
+      }
+    },
+    {
+      "id": "output_cpu",
+      "template_id": "output_contract",
+      "target": "benchmarks/compute_workspace_v1.py",
+      "axes": {
+        "output_mode": "cpu"
+      },
+      "input": {
+        "backend": "cuda",
+        "output_mode": "cpu"
+      },
+      "injection": {
+        "input_origin": "cpu_host"
+      },
+      "expect": {
+        "cpu": {
+          "container": "numpy.ndarray",
+          "device_hwm": "tile_staging_only"
+        },
+        "cuda_device": {
+          "container": "torch.Tensor",
+          "dtype": "float64",
+          "device": "mirror_input"
+        }
+      }
+    },
+    {
+      "id": "output_cuda_device",
+      "template_id": "output_contract",
+      "target": "benchmarks/compute_workspace_v1.py",
+      "axes": {
+        "output_mode": "cuda_device"
+      },
+      "input": {
+        "backend": "cuda",
+        "output_mode": "cuda_device"
+      },
+      "injection": {
+        "input_origin": "cpu_host"
+      },
+      "expect": {
+        "cpu": {
+          "container": "numpy.ndarray",
+          "device_hwm": "tile_staging_only"
+        },
+        "cuda_device": {
+          "container": "torch.Tensor",
+          "dtype": "float64",
+          "device": "mirror_input"
+        }
+      }
+    },
+    {
+      "id": "artifact_corr_corpus",
+      "template_id": "artifact_validation",
+      "target": "tests/fixtures/validate_corr_corpus_v1.py",
+      "axes": {
+        "fixture": {
+          "id": "corr_corpus",
+          "target": "tests/fixtures/validate_corr_corpus_v1.py"
+        }
+      },
+      "input": {
+        "artifact": "corr_corpus",
+        "repo_relative_target": "tests/fixtures/validate_corr_corpus_v1.py"
+      },
+      "injection": {
+        "kind": "none"
+      },
+      "expect": {
+        "exit_code": 0,
+        "deterministic_bytes": true
+      }
+    },
+    {
+      "id": "artifact_corr_math",
+      "template_id": "artifact_validation",
+      "target": "tests/fixtures/generate_corr_math_trace_v1.py",
+      "axes": {
+        "fixture": {
+          "id": "corr_math",
+          "target": "tests/fixtures/generate_corr_math_trace_v1.py"
+        }
+      },
+      "input": {
+        "artifact": "corr_math",
+        "repo_relative_target": "tests/fixtures/generate_corr_math_trace_v1.py"
+      },
+      "injection": {
+        "kind": "none"
+      },
+      "expect": {
+        "exit_code": 0,
+        "deterministic_bytes": true
+      }
+    },
+    {
+      "id": "artifact_workspace",
+      "template_id": "artifact_validation",
+      "target": "benchmarks/compute_workspace_v1.py",
+      "axes": {
+        "fixture": {
+          "id": "workspace",
+          "target": "benchmarks/compute_workspace_v1.py"
+        }
+      },
+      "input": {
+        "artifact": "workspace",
+        "repo_relative_target": "benchmarks/compute_workspace_v1.py"
+      },
+      "injection": {
+        "kind": "none"
+      },
+      "expect": {
+        "exit_code": 0,
+        "deterministic_bytes": true
+      }
+    },
+    {
+      "id": "artifact_calibration",
+      "template_id": "artifact_validation",
+      "target": "tests/fixtures/generate_calibration_trace_v1.py",
+      "axes": {
+        "fixture": {
+          "id": "calibration",
+          "target": "tests/fixtures/generate_calibration_trace_v1.py"
+        }
+      },
+      "input": {
+        "artifact": "calibration",
+        "repo_relative_target": "tests/fixtures/generate_calibration_trace_v1.py"
+      },
+      "injection": {
+        "kind": "none"
+      },
+      "expect": {
+        "exit_code": 0,
+        "deterministic_bytes": true
+      }
+    },
+    {
+      "id": "artifact_gate",
+      "template_id": "artifact_validation",
+      "target": "benchmarks/generate_gate_config_v1.py",
+      "axes": {
+        "fixture": {
+          "id": "gate",
+          "target": "benchmarks/generate_gate_config_v1.py"
+        }
+      },
+      "input": {
+        "artifact": "gate",
+        "repo_relative_target": "benchmarks/generate_gate_config_v1.py"
+      },
+      "injection": {
+        "kind": "none"
+      },
+      "expect": {
+        "exit_code": 0,
+        "deterministic_bytes": true
+      }
+    }
+  ],
+  "fixture_sha256": "1106646e4caa2d8c716bb99288a7abf55ae00cf6cac54247b0fb74e373e02a93"
+}

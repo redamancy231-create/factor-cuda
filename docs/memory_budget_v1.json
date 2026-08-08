@@ -1,0 +1,543 @@
+{
+  "name": "memory_budget_v1",
+  "schema_version": "1.0.0",
+  "generator_sha256": "ED5FE7EF264DF1188FED1625EAAC489C6647B1D2CA7C9B95DCB03FE67F71F687",
+  "memory_budget": {
+    "total_MiB": 8188,
+    "reserve_MiB": 512,
+    "available_MiB": 7676
+  },
+  "calibration_verification": {
+    "all_match": true,
+    "rows": [
+      {
+        "key": [
+          "factor_corr",
+          5000,
+          12
+        ],
+        "calibration_MiB": 1191,
+        "model_MiB": 1190.63,
+        "delta_MiB": -0.37,
+        "ok": true
+      },
+      {
+        "key": [
+          "factor_corr",
+          10000,
+          12
+        ],
+        "calibration_MiB": 2381,
+        "model_MiB": 2381.25,
+        "delta_MiB": 0.25,
+        "ok": true
+      },
+      {
+        "key": [
+          "stock_corr",
+          2000
+        ],
+        "calibration_MiB": 119,
+        "model_MiB": 119.22,
+        "delta_MiB": 0.22,
+        "ok": true
+      },
+      {
+        "key": [
+          "stock_corr",
+          5000
+        ],
+        "calibration_MiB": 527,
+        "model_MiB": 526.93,
+        "delta_MiB": -0.07,
+        "ok": true
+      },
+      {
+        "key": [
+          "stock_corr",
+          10000
+        ],
+        "calibration_MiB": 1817,
+        "model_MiB": 1816.81,
+        "delta_MiB": -0.19,
+        "ok": true
+      }
+    ]
+  },
+  "scenarios": [
+    {
+      "op": "factor_corr",
+      "N": 5000,
+      "F": 12,
+      "label": "canonical",
+      "model_prediction": true,
+      "measured_fblock": {
+        "block": 6,
+        "driver_peak_MiB": 1194.0,
+        "model_MiB": 1190.63,
+        "delta_MiB": 3.37,
+        "margin_MiB": 5912.0,
+        "fits": true,
+        "vram_exhausted": false,
+        "rc": 0
+      },
+      "measured_stream": {
+        "max_transpose_rows": 4096,
+        "driver_peak_MiB": 636.0,
+        "model_MiB": 634.98,
+        "delta_MiB": 1.02,
+        "margin_MiB": 6470.0,
+        "fits": true,
+        "rc": 0
+      },
+      "current_peak_MiB": 1190.63,
+      "streaming_peak_MiB": 634.98,
+      "streaming_config": {
+        "max_transpose_rows": 4096
+      },
+      "fblock": {
+        "block": 6,
+        "n_blocks": 2,
+        "n_tiles": 3,
+        "peak_MiB": 1190.63
+      },
+      "fblock_candidates": [
+        {
+          "block": 12,
+          "peak_MiB": 2375.47,
+          "n_blocks": 1,
+          "n_tiles": 1,
+          "fits": true
+        },
+        {
+          "block": 6,
+          "peak_MiB": 1190.63,
+          "n_blocks": 2,
+          "n_tiles": 3,
+          "fits": true
+        },
+        {
+          "block": 3,
+          "peak_MiB": 598.22,
+          "n_blocks": 4,
+          "n_tiles": 10,
+          "fits": true
+        },
+        {
+          "block": 1,
+          "peak_MiB": 203.28,
+          "n_blocks": 12,
+          "n_tiles": 78,
+          "fits": true
+        },
+        {
+          "block": 1,
+          "peak_MiB": 203.28,
+          "n_blocks": 12,
+          "n_tiles": 78,
+          "fits": true
+        }
+      ],
+      "dpp": {
+        "P": 78,
+        "blockDim": 256,
+        "kahan_acc_B": 16,
+        "struct_bytes_lane": 80,
+        "dpp_B": 1597440,
+        "dpp_MiB": 1.5234375
+      },
+      "fits_current": true,
+      "fits_streaming": true,
+      "fits_fblock": true,
+      "note": "审查 M1 修正：fblock 含 d_F_tile 输入缓冲（与 d_Xt_tile 同驻留）；F128/B64 超预算（~12.6 GiB），B32 可 fit；生产 F-blocking 若逐 tile 流式上传+转置+释放 d_F_tile（项②机制）才命中更小峰值。 fblock(项③) 已实测闭合（block=6, 1194.0 MiB vs 模型 1190.63 MiB）。 streaming(项②) 已实测闭合（tt=4096, 636.0 MiB vs 模型 634.98 MiB）。"
+    },
+    {
+      "op": "factor_corr",
+      "N": 5000,
+      "F": 128,
+      "label": "F128",
+      "model_prediction": true,
+      "measured_fblock": {
+        "block": 32,
+        "driver_peak_MiB": 6588.11,
+        "model_MiB": 6325.11,
+        "delta_MiB": 263.0,
+        "margin_MiB": 517.89,
+        "fits": true,
+        "vram_exhausted": false,
+        "rc": 0
+      },
+      "measured_stream": {
+        "max_transpose_rows": 4096,
+        "driver_peak_MiB": 7079.75,
+        "model_MiB": 6863.6,
+        "delta_MiB": 216.15,
+        "margin_MiB": 26.25,
+        "fits": true,
+        "rc": 0
+      },
+      "current_peak_MiB": 12645.61,
+      "streaming_peak_MiB": 6863.6,
+      "streaming_config": {
+        "max_transpose_rows": 4096
+      },
+      "fblock": {
+        "block": 32,
+        "n_blocks": 4,
+        "n_tiles": 10,
+        "peak_MiB": 6325.11
+      },
+      "fblock_candidates": [
+        {
+          "block": 64,
+          "peak_MiB": 12645.05,
+          "n_blocks": 2,
+          "n_tiles": 3,
+          "fits": false
+        },
+        {
+          "block": 32,
+          "peak_MiB": 6325.11,
+          "n_blocks": 4,
+          "n_tiles": 10,
+          "fits": true
+        },
+        {
+          "block": 16,
+          "peak_MiB": 3165.38,
+          "n_blocks": 8,
+          "n_tiles": 36,
+          "fits": true
+        },
+        {
+          "block": 8,
+          "peak_MiB": 1585.57,
+          "n_blocks": 16,
+          "n_tiles": 136,
+          "fits": true
+        },
+        {
+          "block": 1,
+          "peak_MiB": 203.28,
+          "n_blocks": 128,
+          "n_tiles": 8256,
+          "fits": true
+        }
+      ],
+      "dpp": {
+        "P": 8256,
+        "blockDim": 256,
+        "kahan_acc_B": 16,
+        "struct_bytes_lane": 80,
+        "dpp_B": 169082880,
+        "dpp_MiB": 161.25
+      },
+      "fits_current": false,
+      "fits_streaming": true,
+      "fits_fblock": true,
+      "note": "审查 M1 修正：fblock 含 d_F_tile 输入缓冲（与 d_Xt_tile 同驻留）；F128/B64 超预算（~12.6 GiB），B32 可 fit；生产 F-blocking 若逐 tile 流式上传+转置+释放 d_F_tile（项②机制）才命中更小峰值。 fblock(项③) 已实测闭合（block=32, 6588.1 MiB vs 模型 6325.11 MiB）。 streaming(项②) 已实测闭合（tt=4096, 7079.8 MiB vs 模型 6863.60 MiB）。"
+    },
+    {
+      "op": "factor_corr",
+      "N": 10000,
+      "F": 12,
+      "label": "N10000",
+      "model_prediction": true,
+      "measured_fblock": {
+        "block": 6,
+        "driver_peak_MiB": 2386.0,
+        "model_MiB": 2381.24,
+        "delta_MiB": 4.76,
+        "margin_MiB": 4720.0,
+        "fits": true,
+        "vram_exhausted": false,
+        "rc": 0
+      },
+      "measured_stream": {
+        "max_transpose_rows": 4096,
+        "driver_peak_MiB": 1270.0,
+        "model_MiB": 1268.03,
+        "delta_MiB": 1.97,
+        "margin_MiB": 5836.0,
+        "fits": true,
+        "rc": 0
+      },
+      "current_peak_MiB": 2381.25,
+      "streaming_peak_MiB": 1268.03,
+      "streaming_config": {
+        "max_transpose_rows": 4096
+      },
+      "fblock": {
+        "block": 6,
+        "n_blocks": 2,
+        "n_tiles": 3,
+        "peak_MiB": 2381.24
+      },
+      "fblock_candidates": [
+        {
+          "block": 12,
+          "peak_MiB": 4750.89,
+          "n_blocks": 1,
+          "n_tiles": 1,
+          "fits": true
+        },
+        {
+          "block": 6,
+          "peak_MiB": 2381.24,
+          "n_blocks": 2,
+          "n_tiles": 3,
+          "fits": true
+        },
+        {
+          "block": 3,
+          "peak_MiB": 1196.43,
+          "n_blocks": 4,
+          "n_tiles": 10,
+          "fits": true
+        },
+        {
+          "block": 1,
+          "peak_MiB": 406.55,
+          "n_blocks": 12,
+          "n_tiles": 78,
+          "fits": true
+        },
+        {
+          "block": 1,
+          "peak_MiB": 406.55,
+          "n_blocks": 12,
+          "n_tiles": 78,
+          "fits": true
+        }
+      ],
+      "dpp": {
+        "P": 78,
+        "blockDim": 256,
+        "kahan_acc_B": 16,
+        "struct_bytes_lane": 80,
+        "dpp_B": 1597440,
+        "dpp_MiB": 1.5234375
+      },
+      "fits_current": true,
+      "fits_streaming": true,
+      "fits_fblock": true,
+      "note": "审查 M1 修正：fblock 含 d_F_tile 输入缓冲（与 d_Xt_tile 同驻留）；F128/B64 超预算（~12.6 GiB），B32 可 fit；生产 F-blocking 若逐 tile 流式上传+转置+释放 d_F_tile（项②机制）才命中更小峰值。 fblock(项③) 已实测闭合（block=6, 2386.0 MiB vs 模型 2381.24 MiB）。 streaming(项②) 已实测闭合（tt=4096, 1270.0 MiB vs 模型 1268.03 MiB）。"
+    },
+    {
+      "op": "stock_corr",
+      "N": 5000,
+      "label": "N5000",
+      "model_prediction": true,
+      "current_peak_MiB": 526.93,
+      "output_full2_MiB": 381.47,
+      "nblock": {
+        "block": 256,
+        "n_blocks": 20,
+        "n_tiles": 210,
+        "peak_MiB": 16.9
+      },
+      "nblock_candidates": [
+        {
+          "block": 256,
+          "peak_MiB": 16.9,
+          "n_blocks": 20,
+          "n_tiles": 210,
+          "fits": true
+        },
+        {
+          "block": 128,
+          "peak_MiB": 7.95,
+          "n_blocks": 40,
+          "n_tiles": 820,
+          "fits": true
+        },
+        {
+          "block": 64,
+          "peak_MiB": 3.85,
+          "n_blocks": 79,
+          "n_tiles": 3160,
+          "fits": true
+        },
+        {
+          "block": 32,
+          "peak_MiB": 1.89,
+          "n_blocks": 157,
+          "n_tiles": 12403,
+          "fits": true
+        },
+        {
+          "block": 16,
+          "peak_MiB": 0.94,
+          "n_blocks": 313,
+          "n_tiles": 49141,
+          "fits": true
+        },
+        {
+          "block": 8,
+          "peak_MiB": 0.47,
+          "n_blocks": 625,
+          "n_tiles": 195625,
+          "fits": true
+        }
+      ],
+      "measured_nblock": {
+        "N_measured": 5000,
+        "driver_peak_MiB": 22.0,
+        "model_MiB": 16.9,
+        "delta_MiB": 5.1,
+        "margin_MiB": 7084.0,
+        "fits": true,
+        "rc": 0
+      },
+      "fits_current": true,
+      "fits_nblock": true,
+      "note": "审查 M4 修正：output d_corr+d_out 各分配 N*N*8（完整矩阵，非上三角），N=22600 两输出合计 ~7793 MiB 已超预算 → N-blocking 须同时分块/stream 输出（改变输出驻留契约），不能只分输入/工作区；N-blocking 模型基于 poc3_stock_corr_selfcheck.cu 的 stock_corr_gpu_nblock 分配链（tile 级驻留 + 逐 tile 输出流式化，无 N*N device 输出缓冲）；**nblock 峰值已实测闭合**（N=5000 block=256 driver 22.0 MiB vs 模型 16.90 MiB，device 峰值 N 无关（N≥2*block 限定）→ N=22600 同值；N=22600 实际运行未实测——host 峰值 ~8.4 GB（两个 N*N 输出 buffer 并存）+ O(N²·T) 计算）；审查 M4-2 披露：本预算只量化 device 驻留，nblock 额外付出 host pass-1 O(T*N) 预扫描 + 逐 tile host 抽列/写回（生产路径无此 host 成本）——device 内存换 host 预扫描的权衡未计入。"
+    },
+    {
+      "op": "stock_corr",
+      "N": 10000,
+      "label": "N10000",
+      "model_prediction": true,
+      "current_peak_MiB": 1816.81,
+      "output_full2_MiB": 1525.88,
+      "nblock": {
+        "block": 256,
+        "n_blocks": 40,
+        "n_tiles": 820,
+        "peak_MiB": 16.9
+      },
+      "nblock_candidates": [
+        {
+          "block": 256,
+          "peak_MiB": 16.9,
+          "n_blocks": 40,
+          "n_tiles": 820,
+          "fits": true
+        },
+        {
+          "block": 128,
+          "peak_MiB": 7.95,
+          "n_blocks": 79,
+          "n_tiles": 3160,
+          "fits": true
+        },
+        {
+          "block": 64,
+          "peak_MiB": 3.85,
+          "n_blocks": 157,
+          "n_tiles": 12403,
+          "fits": true
+        },
+        {
+          "block": 32,
+          "peak_MiB": 1.89,
+          "n_blocks": 313,
+          "n_tiles": 49141,
+          "fits": true
+        },
+        {
+          "block": 16,
+          "peak_MiB": 0.94,
+          "n_blocks": 625,
+          "n_tiles": 195625,
+          "fits": true
+        },
+        {
+          "block": 8,
+          "peak_MiB": 0.47,
+          "n_blocks": 1250,
+          "n_tiles": 781875,
+          "fits": true
+        }
+      ],
+      "measured_nblock": {
+        "N_measured": 5000,
+        "driver_peak_MiB": 22.0,
+        "model_MiB": 16.9,
+        "delta_MiB": 5.1,
+        "margin_MiB": 7084.0,
+        "fits": true,
+        "rc": 0
+      },
+      "fits_current": true,
+      "fits_nblock": true,
+      "note": "审查 M4 修正：output d_corr+d_out 各分配 N*N*8（完整矩阵，非上三角），N=22600 两输出合计 ~7793 MiB 已超预算 → N-blocking 须同时分块/stream 输出（改变输出驻留契约），不能只分输入/工作区；N-blocking 模型基于 poc3_stock_corr_selfcheck.cu 的 stock_corr_gpu_nblock 分配链（tile 级驻留 + 逐 tile 输出流式化，无 N*N device 输出缓冲）；**nblock 峰值已实测闭合**（N=5000 block=256 driver 22.0 MiB vs 模型 16.90 MiB，device 峰值 N 无关（N≥2*block 限定）→ N=22600 同值；N=22600 实际运行未实测——host 峰值 ~8.4 GB（两个 N*N 输出 buffer 并存）+ O(N²·T) 计算）；审查 M4-2 披露：本预算只量化 device 驻留，nblock 额外付出 host pass-1 O(T*N) 预扫描 + 逐 tile host 抽列/写回（生产路径无此 host 成本）——device 内存换 host 预扫描的权衡未计入。"
+    },
+    {
+      "op": "stock_corr",
+      "N": 22600,
+      "label": "N22600",
+      "model_prediction": true,
+      "current_peak_MiB": 8451.08,
+      "output_full2_MiB": 7793.58,
+      "nblock": {
+        "block": 256,
+        "n_blocks": 89,
+        "n_tiles": 4005,
+        "peak_MiB": 16.9
+      },
+      "nblock_candidates": [
+        {
+          "block": 256,
+          "peak_MiB": 16.9,
+          "n_blocks": 89,
+          "n_tiles": 4005,
+          "fits": true
+        },
+        {
+          "block": 128,
+          "peak_MiB": 7.95,
+          "n_blocks": 177,
+          "n_tiles": 15753,
+          "fits": true
+        },
+        {
+          "block": 64,
+          "peak_MiB": 3.85,
+          "n_blocks": 354,
+          "n_tiles": 62835,
+          "fits": true
+        },
+        {
+          "block": 32,
+          "peak_MiB": 1.89,
+          "n_blocks": 707,
+          "n_tiles": 250278,
+          "fits": true
+        },
+        {
+          "block": 16,
+          "peak_MiB": 0.94,
+          "n_blocks": 1413,
+          "n_tiles": 998991,
+          "fits": true
+        },
+        {
+          "block": 8,
+          "peak_MiB": 0.47,
+          "n_blocks": 2825,
+          "n_tiles": 3991725,
+          "fits": true
+        }
+      ],
+      "measured_nblock": {
+        "N_measured": 5000,
+        "driver_peak_MiB": 22.0,
+        "model_MiB": 16.9,
+        "delta_MiB": 5.1,
+        "margin_MiB": 7084.0,
+        "fits": true,
+        "rc": 0
+      },
+      "fits_current": false,
+      "fits_nblock": true,
+      "note": "审查 M4 修正：output d_corr+d_out 各分配 N*N*8（完整矩阵，非上三角），N=22600 两输出合计 ~7793 MiB 已超预算 → N-blocking 须同时分块/stream 输出（改变输出驻留契约），不能只分输入/工作区；N-blocking 模型基于 poc3_stock_corr_selfcheck.cu 的 stock_corr_gpu_nblock 分配链（tile 级驻留 + 逐 tile 输出流式化，无 N*N device 输出缓冲）；**nblock 峰值已实测闭合**（N=5000 block=256 driver 22.0 MiB vs 模型 16.90 MiB，device 峰值 N 无关（N≥2*block 限定）→ N=22600 同值；N=22600 实际运行未实测——host 峰值 ~8.4 GB（两个 N*N 输出 buffer 并存）+ O(N²·T) 计算）；审查 M4-2 披露：本预算只量化 device 驻留，nblock 额外付出 host pass-1 O(T*N) 预扫描 + 逐 tile host 抽列/写回（生产路径无此 host 成本）——device 内存换 host 预扫描的权衡未计入。"
+    }
+  ],
+  "kahan_v2_closure": {
+    "d_valid_lifetime": "d_valid 与 d_Xt 同驻留（Kahan 重跑读两者）；流式化/F-blocking 均须含 d_valid",
+    "transpose_overlap": "峰值 = 转置前 d_F/d_X + d_Xt + d_valid + d_mask 重叠（校准 2381 MiB 实证）",
+    "dpp_scale": "d_pp = P×blockDim×struct_bytes_lane(Partial1+Partial2=80B/lane)；F=128 → 161.25 MiB（见 scenarios dpp）",
+    "cross_block_pair": "F-blocking 2D tile 驻留 (B_a+B_b)×R×(8+1) + tile pair 工作区（见 scenarios fblock）"
+  }
+}

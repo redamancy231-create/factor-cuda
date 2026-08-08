@@ -1,0 +1,23 @@
+{
+ "schema_version": "1.1.0",
+ "run_id": "stock_corr_v2_rebaseline_20260805",
+ "panel": "benchmark_corpus\\stock_corr_panel_v1_5000.bin",
+ "scope": "v2 fast-path same-panel gate (fully-valid returns panel)",
+ "gates": {
+  "stock_corr(N=500)": {
+   "raw_wall_ms": 52.69680000128574,
+   "exact_half": 26.34840000064287,
+   "display": 26.34
+  },
+  "stock_corr(N=2000)": {
+   "raw_wall_ms": 718.7035999995715,
+   "exact_half": 359.3517999997857,
+   "display": 359.35
+  },
+  "stock_corr(N=5000)": {
+   "raw_wall_ms": 4764.733799998794,
+   "exact_half": 2382.366899999397,
+   "display": 2382.36
+  }
+ }
+}

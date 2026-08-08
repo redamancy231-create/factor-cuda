@@ -1,0 +1,863 @@
+{
+  "corpus_id": "parity_anchors_v1",
+  "family": "parity_anchors",
+  "version": "v1",
+  "protocol_version": "1",
+  "shapes": {
+    "T": 3,
+    "N": 35,
+    "F": 4
+  },
+  "arrays": [
+    {
+      "name": "rank_tie",
+      "dtype": "float32",
+      "shape": [
+        3
+      ]
+    },
+    {
+      "name": "rank_zero",
+      "dtype": "float32",
+      "shape": [
+        3
+      ]
+    },
+    {
+      "name": "rank_nan_inf",
+      "dtype": "float32",
+      "shape": [
+        5
+      ]
+    },
+    {
+      "name": "rank_mask",
+      "dtype": "float32",
+      "shape": [
+        4
+      ]
+    },
+    {
+      "name": "rank_mask_m",
+      "dtype": "bool",
+      "shape": [
+        4
+      ]
+    },
+    {
+      "name": "ic_29_f",
+      "dtype": "float32",
+      "shape": [
+        35
+      ]
+    },
+    {
+      "name": "ic_29_r",
+      "dtype": "float64",
+      "shape": [
+        35
+      ]
+    },
+    {
+      "name": "ic_30_f",
+      "dtype": "float32",
+      "shape": [
+        35
+      ]
+    },
+    {
+      "name": "ic_30_r",
+      "dtype": "float64",
+      "shape": [
+        35
+      ]
+    },
+    {
+      "name": "ic_31_f",
+      "dtype": "float32",
+      "shape": [
+        35
+      ]
+    },
+    {
+      "name": "ic_31_r",
+      "dtype": "float64",
+      "shape": [
+        35
+      ]
+    },
+    {
+      "name": "ic_all_invalid_f",
+      "dtype": "float32",
+      "shape": [
+        35
+      ]
+    },
+    {
+      "name": "ic_all_invalid_r",
+      "dtype": "float64",
+      "shape": [
+        35
+      ]
+    },
+    {
+      "name": "ic_tie_f",
+      "dtype": "float32",
+      "shape": [
+        3
+      ]
+    },
+    {
+      "name": "ic_tie_r1",
+      "dtype": "float64",
+      "shape": [
+        3
+      ]
+    },
+    {
+      "name": "ic_tie_r2",
+      "dtype": "float64",
+      "shape": [
+        3
+      ]
+    },
+    {
+      "name": "ic_nan_f",
+      "dtype": "float32",
+      "shape": [
+        5
+      ]
+    },
+    {
+      "name": "ic_nan_r",
+      "dtype": "float64",
+      "shape": [
+        5
+      ]
+    },
+    {
+      "name": "ic_inf_f",
+      "dtype": "float32",
+      "shape": [
+        5
+      ]
+    },
+    {
+      "name": "ic_neginf_r",
+      "dtype": "float64",
+      "shape": [
+        5
+      ]
+    },
+    {
+      "name": "ic_tradable_nan_f",
+      "dtype": "float32",
+      "shape": [
+        4
+      ]
+    },
+    {
+      "name": "ic_tradable_nan_r",
+      "dtype": "float64",
+      "shape": [
+        4
+      ]
+    },
+    {
+      "name": "corr_a",
+      "dtype": "float64",
+      "shape": [
+        3
+      ]
+    },
+    {
+      "name": "corr_b",
+      "dtype": "float64",
+      "shape": [
+        3
+      ]
+    },
+    {
+      "name": "corr_c",
+      "dtype": "float64",
+      "shape": [
+        3
+      ]
+    },
+    {
+      "name": "corr_n2",
+      "dtype": "float64",
+      "shape": [
+        2
+      ]
+    },
+    {
+      "name": "corr_n2_rev",
+      "dtype": "float64",
+      "shape": [
+        2
+      ]
+    },
+    {
+      "name": "corr_const",
+      "dtype": "float64",
+      "shape": [
+        3
+      ]
+    },
+    {
+      "name": "corr_a32",
+      "dtype": "float32",
+      "shape": [
+        3
+      ]
+    },
+    {
+      "name": "corr_c32",
+      "dtype": "float32",
+      "shape": [
+        3
+      ]
+    },
+    {
+      "name": "corr_mask_false_finite",
+      "dtype": "float64",
+      "shape": [
+        4
+      ]
+    },
+    {
+      "name": "corr_mask_false_finite_m",
+      "dtype": "bool",
+      "shape": [
+        4
+      ]
+    },
+    {
+      "name": "corr_no_common_a",
+      "dtype": "float64",
+      "shape": [
+        3
+      ]
+    },
+    {
+      "name": "corr_no_common_b",
+      "dtype": "float64",
+      "shape": [
+        3
+      ]
+    },
+    {
+      "name": "corr_underflow",
+      "dtype": "float64",
+      "shape": [
+        2
+      ]
+    },
+    {
+      "name": "scan_x",
+      "dtype": "float32",
+      "shape": [
+        3,
+        3
+      ]
+    },
+    {
+      "name": "scan_mask",
+      "dtype": "bool",
+      "shape": [
+        3,
+        3
+      ]
+    },
+    {
+      "name": "err_domain_x",
+      "dtype": "float64",
+      "shape": [
+        4
+      ]
+    },
+    {
+      "name": "err_domain_y",
+      "dtype": "float64",
+      "shape": [
+        4
+      ]
+    }
+  ],
+  "generation": {
+    "script": "benchmark_corpus\\generate_parity_anchors_v1.py"
+  },
+  "generation_params": {
+    "mode": "parity_anchors",
+    "variant": "anchors"
+  },
+  "seeds": {
+    "seeds_ref": "seeds.json"
+  },
+  "hash": {
+    "data_sha256": "B88DCE67A25863F76CB88EB4DC7DCAB30C335D2FFB3551DA268329AFD13D5555",
+    "algorithm": "SHA-256"
+  },
+  "stats": {},
+  "labels": {
+    "h": 5,
+    "lag": 1,
+    "W": 21,
+    "benchmark_row_range": {
+      "start": 21,
+      "stop": "T-(h+lag)",
+      "stop_exclusive": true
+    }
+  },
+  "env": {
+    "python": "3.12.7",
+    "numpy": "2.4.4",
+    "env_fingerprint": "python-3.12.7_numpy-2.4.4"
+  },
+  "case_schema": [
+    {
+      "id": "rank_tie_asc",
+      "operation": "cs_rank",
+      "array_ref": [
+        "rank_tie"
+      ],
+      "inputs": [
+        "rank_tie"
+      ],
+      "masks": {},
+      "params": {
+        "descending": false
+      },
+      "expected": [
+        2.0,
+        3.0,
+        1.0
+      ],
+      "dtype": "float32",
+      "tolerance": "exact"
+    },
+    {
+      "id": "rank_tie_desc",
+      "operation": "cs_rank",
+      "array_ref": [
+        "rank_tie"
+      ],
+      "inputs": [
+        "rank_tie"
+      ],
+      "masks": {},
+      "params": {
+        "descending": true
+      },
+      "expected": [
+        1.0,
+        2.0,
+        3.0
+      ],
+      "dtype": "float32",
+      "tolerance": "exact"
+    },
+    {
+      "id": "rank_zero_asc",
+      "operation": "cs_rank",
+      "array_ref": [
+        "rank_zero"
+      ],
+      "inputs": [
+        "rank_zero"
+      ],
+      "masks": {},
+      "params": {
+        "descending": false
+      },
+      "expected": [
+        1.0,
+        2.0,
+        3.0
+      ],
+      "dtype": "float32",
+      "tolerance": "exact"
+    },
+    {
+      "id": "rank_nan_inf_asc",
+      "operation": "cs_rank",
+      "array_ref": [
+        "rank_nan_inf"
+      ],
+      "inputs": [
+        "rank_nan_inf"
+      ],
+      "masks": {},
+      "params": {
+        "descending": false
+      },
+      "expected": [
+        1.0,
+        "nan",
+        "nan",
+        "nan",
+        2.0
+      ],
+      "dtype": "float32",
+      "tolerance": "exact",
+      "nan_payload": "0x7fc00000"
+    },
+    {
+      "id": "rank_mask_mismatch_asc",
+      "operation": "cs_rank",
+      "array_ref": [
+        "rank_mask",
+        "rank_mask_m"
+      ],
+      "inputs": [
+        "rank_mask"
+      ],
+      "masks": {
+        "mask": "rank_mask_m"
+      },
+      "params": {
+        "descending": false
+      },
+      "expected": [
+        1.0,
+        "nan",
+        2.0,
+        3.0
+      ],
+      "dtype": "float32",
+      "tolerance": "exact"
+    },
+    {
+      "id": "ic_valid_29",
+      "operation": "rolling_ic",
+      "array_ref": [
+        "ic_29_f",
+        "ic_29_r"
+      ],
+      "inputs": [
+        "ic_29_f",
+        "ic_29_r"
+      ],
+      "masks": {},
+      "params": {
+        "min_valid": 30
+      },
+      "expected": "nan",
+      "dtype": "float32",
+      "tolerance": "exact"
+    },
+    {
+      "id": "ic_valid_30",
+      "operation": "rolling_ic",
+      "array_ref": [
+        "ic_30_f",
+        "ic_30_r"
+      ],
+      "inputs": [
+        "ic_30_f",
+        "ic_30_r"
+      ],
+      "masks": {},
+      "params": {
+        "min_valid": 30
+      },
+      "expected": 1.0,
+      "dtype": "float32",
+      "tolerance": "1e-12"
+    },
+    {
+      "id": "ic_valid_31",
+      "operation": "rolling_ic",
+      "array_ref": [
+        "ic_31_f",
+        "ic_31_r"
+      ],
+      "inputs": [
+        "ic_31_f",
+        "ic_31_r"
+      ],
+      "masks": {},
+      "params": {
+        "min_valid": 30
+      },
+      "expected": 1.0,
+      "dtype": "float32",
+      "tolerance": "1e-12"
+    },
+    {
+      "id": "ic_all_invalid",
+      "operation": "rolling_ic",
+      "array_ref": [
+        "ic_all_invalid_f",
+        "ic_all_invalid_r"
+      ],
+      "inputs": [
+        "ic_all_invalid_f",
+        "ic_all_invalid_r"
+      ],
+      "masks": {},
+      "params": {
+        "min_valid": 30
+      },
+      "expected": "nan",
+      "dtype": "float32",
+      "tolerance": "exact"
+    },
+    {
+      "id": "ic_two_sided_nan_inf_mask",
+      "operation": "rolling_ic",
+      "array_ref": [
+        "ic_inf_f",
+        "ic_neginf_r"
+      ],
+      "inputs": [
+        "ic_inf_f",
+        "ic_neginf_r"
+      ],
+      "masks": {},
+      "params": {
+        "min_valid": 2
+      },
+      "expected": 1.0,
+      "dtype": "float32",
+      "tolerance": "1e-12"
+    },
+    {
+      "id": "ic_factor_scatter_nan",
+      "operation": "rolling_ic",
+      "array_ref": [
+        "ic_nan_f",
+        "ic_nan_r"
+      ],
+      "inputs": [
+        "ic_nan_f",
+        "ic_nan_r"
+      ],
+      "masks": {},
+      "params": {
+        "min_valid": 2
+      },
+      "expected": 1.0,
+      "dtype": "float32",
+      "tolerance": "1e-12"
+    },
+    {
+      "id": "ic_tie1",
+      "operation": "rolling_ic",
+      "array_ref": [
+        "ic_tie_f",
+        "ic_tie_r1"
+      ],
+      "inputs": [
+        "ic_tie_f",
+        "ic_tie_r1"
+      ],
+      "masks": {},
+      "params": {
+        "min_valid": 2
+      },
+      "expected": 1.0,
+      "dtype": "float32",
+      "tolerance": "1e-12"
+    },
+    {
+      "id": "ic_tie2",
+      "operation": "rolling_ic",
+      "array_ref": [
+        "ic_tie_f",
+        "ic_tie_r2"
+      ],
+      "inputs": [
+        "ic_tie_f",
+        "ic_tie_r2"
+      ],
+      "masks": {},
+      "params": {
+        "min_valid": 2
+      },
+      "expected": 0.5,
+      "dtype": "float32",
+      "tolerance": "1e-12"
+    },
+    {
+      "id": "ic_factor_tradable_nan",
+      "operation": "rolling_ic",
+      "array_ref": [
+        "ic_tradable_nan_f",
+        "ic_tradable_nan_r"
+      ],
+      "inputs": [
+        "ic_tradable_nan_f",
+        "ic_tradable_nan_r"
+      ],
+      "masks": {},
+      "params": {
+        "min_valid": 2
+      },
+      "expected": 1.0,
+      "dtype": "float32",
+      "tolerance": "1e-12"
+    },
+    {
+      "id": "corr_a_b",
+      "operation": "factor_corr",
+      "array_ref": [
+        "corr_a",
+        "corr_b"
+      ],
+      "inputs": [
+        "corr_a",
+        "corr_b"
+      ],
+      "masks": {},
+      "params": {},
+      "expected": "nan",
+      "dtype": "float64",
+      "tolerance": "exact"
+    },
+    {
+      "id": "corr_a_c",
+      "operation": "factor_corr",
+      "array_ref": [
+        "corr_a",
+        "corr_c"
+      ],
+      "inputs": [
+        "corr_a",
+        "corr_c"
+      ],
+      "masks": {},
+      "params": {},
+      "expected": 0.8660254037844385,
+      "dtype": "float64",
+      "tolerance": "1e-12"
+    },
+    {
+      "id": "corr_n2_self",
+      "operation": "factor_corr",
+      "array_ref": [
+        "corr_n2",
+        "corr_n2"
+      ],
+      "inputs": [
+        "corr_n2",
+        "corr_n2"
+      ],
+      "masks": {},
+      "params": {},
+      "expected": 0.9999999999999999,
+      "dtype": "float64",
+      "tolerance": "1e-12"
+    },
+    {
+      "id": "corr_n2_reverse",
+      "operation": "factor_corr",
+      "array_ref": [
+        "corr_n2",
+        "corr_n2_rev"
+      ],
+      "inputs": [
+        "corr_n2",
+        "corr_n2_rev"
+      ],
+      "masks": {},
+      "params": {},
+      "expected": -0.9999999999999999,
+      "dtype": "float64",
+      "tolerance": "1e-12"
+    },
+    {
+      "id": "corr_const_self",
+      "operation": "factor_corr",
+      "array_ref": [
+        "corr_const",
+        "corr_const"
+      ],
+      "inputs": [
+        "corr_const",
+        "corr_const"
+      ],
+      "masks": {},
+      "params": {},
+      "expected": "nan",
+      "dtype": "float64",
+      "tolerance": "exact"
+    },
+    {
+      "id": "corr_float32_ac",
+      "operation": "factor_corr",
+      "array_ref": [
+        "corr_a32",
+        "corr_c32"
+      ],
+      "inputs": [
+        "corr_a32",
+        "corr_c32"
+      ],
+      "masks": {},
+      "params": {},
+      "expected": 0.8660254037844385,
+      "dtype": "float32",
+      "tolerance": "1e-12"
+    },
+    {
+      "id": "corr_mask_false_finite",
+      "operation": "factor_corr",
+      "array_ref": [
+        "corr_mask_false_finite",
+        "corr_mask_false_finite_m"
+      ],
+      "inputs": [
+        "corr_mask_false_finite"
+      ],
+      "masks": {
+        "mask": "corr_mask_false_finite_m"
+      },
+      "params": {},
+      "expected": 0.9999999999999999,
+      "dtype": "float64",
+      "tolerance": "1e-12"
+    },
+    {
+      "id": "corr_no_common_valid",
+      "operation": "factor_corr",
+      "array_ref": [
+        "corr_no_common_a",
+        "corr_no_common_b"
+      ],
+      "inputs": [
+        "corr_no_common_a",
+        "corr_no_common_b"
+      ],
+      "masks": {},
+      "params": {},
+      "expected": "nan",
+      "dtype": "float64",
+      "tolerance": "exact"
+    },
+    {
+      "id": "corr_underflow_domain",
+      "operation": "factor_corr",
+      "array_ref": [
+        "corr_underflow",
+        "corr_underflow"
+      ],
+      "inputs": [
+        "corr_underflow",
+        "corr_underflow"
+      ],
+      "masks": {},
+      "params": {},
+      "expected": "ValueError",
+      "dtype": "float64",
+      "tolerance": "exception"
+    },
+    {
+      "id": "corr_dtype_variant",
+      "operation": "factor_corr",
+      "array_ref": [
+        "corr_a",
+        "corr_c"
+      ],
+      "inputs": [
+        "corr_a",
+        "corr_c"
+      ],
+      "masks": {},
+      "params": {
+        "dtype": "float64"
+      },
+      "expected": 0.8660254037844385,
+      "dtype": "float64",
+      "tolerance": "1e-12"
+    },
+    {
+      "id": "corr_shape_error",
+      "operation": "factor_corr",
+      "array_ref": [
+        "corr_a"
+      ],
+      "inputs": [
+        "corr_a"
+      ],
+      "masks": {},
+      "params": {},
+      "expected": "ValueError",
+      "dtype": "float64",
+      "tolerance": "exception"
+    },
+    {
+      "id": "err_out_of_domain",
+      "operation": "factor_corr",
+      "array_ref": [
+        "err_domain_x",
+        "err_domain_y"
+      ],
+      "inputs": [
+        "err_domain_x",
+        "err_domain_y"
+      ],
+      "masks": {},
+      "params": {},
+      "expected": "ValueError",
+      "dtype": "float64",
+      "tolerance": "exception"
+    },
+    {
+      "id": "scan_container",
+      "operation": "parameter_scan",
+      "array_ref": [
+        "scan_x",
+        "scan_mask"
+      ],
+      "inputs": [
+        "scan_x"
+      ],
+      "masks": {
+        "mask": "scan_mask"
+      },
+      "params": {
+        "axes": [
+          [
+            "direction",
+            [
+              "ascending",
+              "descending"
+            ]
+          ],
+          [
+            "mask_mode",
+            [
+              "masked",
+              "unmasked"
+            ]
+          ]
+        ],
+        "G": 4
+      },
+      "expected": {
+        "groups": [
+          "(ascending,masked)",
+          "(ascending,unmasked)",
+          "(descending,masked)",
+          "(descending,unmasked)"
+        ],
+        "result_shape": "(T,N) float32",
+        "summary_fields": [
+          "total_groups",
+          "n_failed"
+        ]
+      },
+      "dtype": "float32",
+      "tolerance": "schema"
+    }
+  ],
+  "groups": [
+    "rank",
+    "rolling_ic",
+    "correlation",
+    "error",
+    "parameter_scan"
+  ]
+}

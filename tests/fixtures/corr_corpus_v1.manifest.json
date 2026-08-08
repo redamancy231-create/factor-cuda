@@ -1,0 +1,432 @@
+{
+  "corpus_id": "corr_corpus_v1",
+  "family": "adversarial",
+  "version": "1.2.0",
+  "seed": 20260804,
+  "case_count": 16,
+  "safe_pearson_source": "tests/fixtures/corr_math_v1.py::safe_pearson",
+  "oracle": "corr_oracle_v1",
+  "oracle_sha256": "8b7a80a35c53f0b6c069c6102315b8fca6adc39615e985a6cbdda6e5afa3050f",
+  "math_source_sha256": "70cb26d773765887c46bf82a5b6283a1da889e8b542ea78ef74968c04095e2a4",
+  "generator_sha256": "486b8a80605af8e52fc8ad422ef2409be3d6a30ec6c6421e30c1f778f2093346",
+  "npz_sha256": "b1196a107b6df0a643546d9fee444f2264b57316b012f3343618def2644bfebf",
+  "npz_format": {
+    "zip_entries_sorted": true,
+    "zip_timestamp": "1980-01-01T00:00:00",
+    "compression": "deflate-9"
+  },
+  "cases": [
+    {
+      "id": "bias_1e12",
+      "desc": "base=1e12 偏置触发 Kahan",
+      "dtype": "float64",
+      "shape": [
+        100
+      ],
+      "a_sha256": "bb788479f637d1bcf4efa1727a5d90448387e162d4b62149339c75dcf321f9e1",
+      "b_sha256": "570febc2529e14f04f000efdb2a8b929b9d897b7c42c67736d72389cf75b580c",
+      "mask_a_sha256": null,
+      "mask_b_sha256": null,
+      "valid_count": 100,
+      "trigger": {
+        "bias_metric": 1031071971930.7872,
+        "ratio": 6.00626707780476e+24,
+        "r": 0.15539887173499523
+      },
+      "trigger_threshold": 100000000.0,
+      "expected": 0.15539887173499525,
+      "expected_is_nan": false,
+      "branch": "kahan",
+      "stable_tie": null
+    },
+    {
+      "id": "bias_1e15",
+      "desc": "base=1e15 偏置触发 Kahan",
+      "dtype": "float64",
+      "shape": [
+        100
+      ],
+      "a_sha256": "9fd7d8c6c7f5d5b2bc1d2aca6e2f21c91056066db55947a0d31ce19e96fa5107",
+      "b_sha256": "dad3bf7fe8a1441654affa4d7400509806c0be2e7ac45c3ad6800c954ab9abe2",
+      "mask_a_sha256": null,
+      "mask_b_sha256": null,
+      "valid_count": 100,
+      "trigger": {
+        "bias_metric": 1027840643411228.8,
+        "ratio": 5.947961338289959e+30,
+        "r": 0.15623083567557375
+      },
+      "trigger_threshold": 100000000.0,
+      "expected": 0.15623083567557378,
+      "expected_is_nan": false,
+      "branch": "kahan",
+      "stable_tie": null
+    },
+    {
+      "id": "near_plus1",
+      "desc": "近 +1 相关",
+      "dtype": "float64",
+      "shape": [
+        100
+      ],
+      "a_sha256": "1e2c5fb076ca25e9ae570e2232c381daadbfe3b88ba9170d5e3a293ad10badd8",
+      "b_sha256": "b7995d2fba9879ee909009524686b3126739b58933edbc8dda7af221c68a2594",
+      "mask_a_sha256": null,
+      "mask_b_sha256": null,
+      "valid_count": 100,
+      "trigger": {
+        "bias_metric": 3.738416183765708,
+        "ratio": 0.043656899064356214,
+        "r": 0.9999999247883999
+      },
+      "trigger_threshold": 100000000.0,
+      "expected": 0.9999999247884004,
+      "expected_is_nan": false,
+      "branch": "normal",
+      "stable_tie": null
+    },
+    {
+      "id": "near_minus1",
+      "desc": "近 -1 相关",
+      "dtype": "float64",
+      "shape": [
+        100
+      ],
+      "a_sha256": "1e2c5fb076ca25e9ae570e2232c381daadbfe3b88ba9170d5e3a293ad10badd8",
+      "b_sha256": "64f766af474a5f1962484056adbef79da0898e1e25f64dbbdfdb8803aaf6ca56",
+      "mask_a_sha256": null,
+      "mask_b_sha256": null,
+      "valid_count": 100,
+      "trigger": {
+        "bias_metric": 3.738217588150931,
+        "ratio": 0.038897345628077284,
+        "r": -0.9921511482413731
+      },
+      "trigger_threshold": 100000000.0,
+      "expected": -0.9921511482413726,
+      "expected_is_nan": false,
+      "branch": "normal",
+      "stable_tie": null
+    },
+    {
+      "id": "near_zero_var",
+      "desc": "近零方差",
+      "dtype": "float64",
+      "shape": [
+        100
+      ],
+      "a_sha256": "1e2c5fb076ca25e9ae570e2232c381daadbfe3b88ba9170d5e3a293ad10badd8",
+      "b_sha256": "4d405351d0ca8cd0d8e3e669c4a3a1fb45fc40ce047f777877282d9e83bf4b8f",
+      "mask_a_sha256": null,
+      "mask_b_sha256": null,
+      "valid_count": 100,
+      "trigger": {
+        "bias_metric": 1064559245.7833828,
+        "ratio": 2960359569.312399,
+        "r": 0.07512408115660378
+      },
+      "trigger_threshold": 100000000.0,
+      "expected": 0.07512408115660378,
+      "expected_is_nan": false,
+      "branch": "kahan",
+      "stable_tie": null
+    },
+    {
+      "id": "sparse_mask",
+      "desc": "稀疏交错 mask",
+      "dtype": "float64",
+      "shape": [
+        100
+      ],
+      "a_sha256": "1e2c5fb076ca25e9ae570e2232c381daadbfe3b88ba9170d5e3a293ad10badd8",
+      "b_sha256": "54aff1f21bde70cb4b7bc0cddcc096bd1f73f6ad182060690cd8507a77c70fa7",
+      "mask_a_sha256": "e4c55ed44e0eeeeb5b61d9e68f8129915d5df13a610c3516d839a6ca7d07ab7c",
+      "mask_b_sha256": "e4c55ed44e0eeeeb5b61d9e68f8129915d5df13a610c3516d839a6ca7d07ab7c",
+      "valid_count": 35,
+      "trigger": {
+        "bias_metric": 3.384989838473424,
+        "ratio": 0.6704302996778686,
+        "r": 0.17477534431940994
+      },
+      "trigger_threshold": 100000000.0,
+      "expected": 0.17477534431940986,
+      "expected_is_nan": false,
+      "branch": "normal",
+      "stable_tie": null
+    },
+    {
+      "id": "f32_ulp_bias",
+      "desc": "f32 大偏置量化坍缩",
+      "dtype": "float32",
+      "shape": [
+        100
+      ],
+      "a_sha256": "a757f78d03dece7b92a252c2cd28935d19e769977d5fd77fbdb1b36de9aafbda",
+      "b_sha256": "a757f78d03dece7b92a252c2cd28935d19e769977d5fd77fbdb1b36de9aafbda",
+      "mask_a_sha256": null,
+      "mask_b_sha256": null,
+      "valid_count": 100,
+      "trigger": {
+        "bias_metric": null,
+        "ratio": null,
+        "r": null
+      },
+      "trigger_threshold": 100000000.0,
+      "expected": null,
+      "expected_is_nan": true,
+      "branch": "nan",
+      "stable_tie": null
+    },
+    {
+      "id": "f64_ulp_bias",
+      "desc": "f64 大偏置 ULP",
+      "dtype": "float64",
+      "shape": [
+        100
+      ],
+      "a_sha256": "9fd7d8c6c7f5d5b2bc1d2aca6e2f21c91056066db55947a0d31ce19e96fa5107",
+      "b_sha256": "7524fc9fa007a865eaa599bd59b334517b4d920722b2aefdd362c21d060b432e",
+      "mask_a_sha256": null,
+      "mask_b_sha256": null,
+      "valid_count": 100,
+      "trigger": {
+        "bias_metric": 904084671494415.6,
+        "ratio": 8.163265306122444e+29,
+        "r": 0.9999371252296024
+      },
+      "trigger_threshold": 100000000.0,
+      "expected": 0.9999371252296025,
+      "expected_is_nan": false,
+      "branch": "kahan",
+      "stable_tie": null
+    },
+    {
+      "id": "constant_col",
+      "desc": "常量列",
+      "dtype": "float64",
+      "shape": [
+        100
+      ],
+      "a_sha256": "1e2c5fb076ca25e9ae570e2232c381daadbfe3b88ba9170d5e3a293ad10badd8",
+      "b_sha256": "41b91ddbd3162563e9b525135920d276f56e4d8746875601c442a9bf4b2970aa",
+      "mask_a_sha256": null,
+      "mask_b_sha256": null,
+      "valid_count": 100,
+      "trigger": {
+        "bias_metric": null,
+        "ratio": null,
+        "r": null
+      },
+      "trigger_threshold": 100000000.0,
+      "expected": null,
+      "expected_is_nan": true,
+      "branch": "nan",
+      "stable_tie": null
+    },
+    {
+      "id": "all_invalid",
+      "desc": "全无效",
+      "dtype": "float64",
+      "shape": [
+        100
+      ],
+      "a_sha256": "1e2c5fb076ca25e9ae570e2232c381daadbfe3b88ba9170d5e3a293ad10badd8",
+      "b_sha256": "54aff1f21bde70cb4b7bc0cddcc096bd1f73f6ad182060690cd8507a77c70fa7",
+      "mask_a_sha256": "cd00e292c5970d3c5e2f0ffa5171e555bc46bfc4faddfb4a418b6840b86e79a3",
+      "mask_b_sha256": null,
+      "valid_count": 0,
+      "trigger": {
+        "bias_metric": null,
+        "ratio": null,
+        "r": null
+      },
+      "trigger_threshold": 100000000.0,
+      "expected": null,
+      "expected_is_nan": true,
+      "branch": "nan",
+      "stable_tie": null
+    },
+    {
+      "id": "n_lt_2",
+      "desc": "有效数小于 2",
+      "dtype": "float64",
+      "shape": [
+        100
+      ],
+      "a_sha256": "1e2c5fb076ca25e9ae570e2232c381daadbfe3b88ba9170d5e3a293ad10badd8",
+      "b_sha256": "54aff1f21bde70cb4b7bc0cddcc096bd1f73f6ad182060690cd8507a77c70fa7",
+      "mask_a_sha256": "17bc51c088edde5ab1da2f36cac94f7ac9d45a9e23c18ae7d5332a0bafd66f34",
+      "mask_b_sha256": null,
+      "valid_count": 1,
+      "trigger": {
+        "bias_metric": null,
+        "ratio": null,
+        "r": null
+      },
+      "trigger_threshold": 100000000.0,
+      "expected": null,
+      "expected_is_nan": true,
+      "branch": "nan",
+      "stable_tie": null
+    },
+    {
+      "id": "f1_self",
+      "desc": "单因子自相关",
+      "dtype": "float64",
+      "shape": [
+        100
+      ],
+      "a_sha256": "1e2c5fb076ca25e9ae570e2232c381daadbfe3b88ba9170d5e3a293ad10badd8",
+      "b_sha256": "1e2c5fb076ca25e9ae570e2232c381daadbfe3b88ba9170d5e3a293ad10badd8",
+      "mask_a_sha256": null,
+      "mask_b_sha256": null,
+      "valid_count": 100,
+      "trigger": {
+        "bias_metric": 3.738217588150931,
+        "ratio": 0.043642297382876546,
+        "r": 1.0
+      },
+      "trigger_threshold": 100000000.0,
+      "expected": 1.0,
+      "expected_is_nan": false,
+      "branch": "normal",
+      "stable_tie": null
+    },
+    {
+      "id": "pearson_overflow",
+      "desc": "根号乘积安全 Pearson",
+      "dtype": "float64",
+      "shape": [
+        2
+      ],
+      "a_sha256": "cc325d38eeaf45c36e90b8096b7e103efc1f2b4951fc599fd36225727475a59b",
+      "b_sha256": "cc325d38eeaf45c36e90b8096b7e103efc1f2b4951fc599fd36225727475a59b",
+      "mask_a_sha256": null,
+      "mask_b_sha256": null,
+      "valid_count": 2,
+      "trigger": {
+        "bias_metric": 1.0,
+        "ratio": 0.0,
+        "r": 1.0
+      },
+      "trigger_threshold": 100000000.0,
+      "expected": 1.0,
+      "expected_is_nan": false,
+      "branch": "normal",
+      "stable_tie": null
+    },
+    {
+      "id": "f64_adjacent_ulp",
+      "desc": "f64 相邻 ULP extrema",
+      "dtype": "float64",
+      "shape": [
+        2
+      ],
+      "a_sha256": "c2d0fbf2f10391048b2cc20e027dab6605fcfedd0cfdfcfe6a66dd45489a1db5",
+      "b_sha256": "c2d0fbf2f10391048b2cc20e027dab6605fcfedd0cfdfcfe6a66dd45489a1db5",
+      "mask_a_sha256": null,
+      "mask_b_sha256": null,
+      "valid_count": 2,
+      "trigger": {
+        "bias_metric": 6369051672525774.0,
+        "ratio": 4.056481920730334e+31,
+        "r": 1.0
+      },
+      "trigger_threshold": 100000000.0,
+      "expected": 1.0,
+      "expected_is_nan": false,
+      "branch": "kahan",
+      "stable_tie": null
+    },
+    {
+      "id": "stable_zero_f32",
+      "desc": "f32 -0/+0 canonical key 稳定 tie",
+      "dtype": "float32",
+      "shape": [
+        2
+      ],
+      "a_sha256": "a9765c4805658a968e5abdccd437e25907681a1cff6375e363239c53b125fcd4",
+      "b_sha256": "c1112024d84bac179cfda8df2d45cdb8cb941ec29f75e8cffa61c3b4c46d44a1",
+      "mask_a_sha256": null,
+      "mask_b_sha256": null,
+      "valid_count": 2,
+      "trigger": {
+        "bias_metric": null,
+        "ratio": null,
+        "r": null
+      },
+      "trigger_threshold": 100000000.0,
+      "expected": null,
+      "expected_is_nan": true,
+      "branch": "nan",
+      "stable_tie": {
+        "sign_bits": [
+          1,
+          0
+        ],
+        "canonical_keys": [
+          2147483648,
+          2147483648
+        ],
+        "canonical_key_equal": true,
+        "expected_stable_order": [
+          0,
+          1
+        ],
+        "ascending_order": [
+          0,
+          1
+        ],
+        "descending_order": [
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "id": "stable_zero_f64",
+      "desc": "f64 -0/+0 canonical key 稳定 tie",
+      "dtype": "float64",
+      "shape": [
+        2
+      ],
+      "a_sha256": "a44f869b720be79dafbfd94382036b7bd2406e1c162d632f74cb4a67a081b37e",
+      "b_sha256": "723f1c3eac1d2c306857db9f4466b219af88d13fb056836892154fcd058c55d5",
+      "mask_a_sha256": null,
+      "mask_b_sha256": null,
+      "valid_count": 2,
+      "trigger": {
+        "bias_metric": null,
+        "ratio": null,
+        "r": null
+      },
+      "trigger_threshold": 100000000.0,
+      "expected": null,
+      "expected_is_nan": true,
+      "branch": "nan",
+      "stable_tie": {
+        "sign_bits": [
+          1,
+          0
+        ],
+        "canonical_keys": [
+          9223372036854775808,
+          9223372036854775808
+        ],
+        "canonical_key_equal": true,
+        "expected_stable_order": [
+          0,
+          1
+        ],
+        "ascending_order": [
+          0,
+          1
+        ],
+        "descending_order": [
+          0,
+          1
+        ]
+      }
+    }
+  ]
+}

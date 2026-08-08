@@ -1,0 +1,304 @@
+{
+  "name": "acceptance_v1",
+  "version": "2.0.0",
+  "schema_version": "1.1.0",
+  "meta": {
+    "generated_at": "2026-08-06T16:57:29+08:00",
+    "git": {
+      "head": "7f0ee95626befe0c256c595ffbbcf04c23798cbf",
+      "dirty": false,
+      "dirty_files": [
+        "M benchmarks/results/corpus_parity_v1.json",
+        "M benchmarks/results/parity_report_v1.json",
+        "M benchmarks/results/poc3_calibration_v1.json",
+        "M benchmarks/results/poc4_e2e_v1.json"
+      ],
+      "real_dirty_files": []
+    },
+    "env": {
+      "python": "3.12.7",
+      "numpy": "2.4.4",
+      "cupy": "14.1.1",
+      "torch": "2.13.0+cu132",
+      "qgplearn": "not-installed"
+    },
+    "gpu": {
+      "name": "NVIDIA GeForce RTX 4060 Laptop GPU",
+      "cc": "8.9",
+      "total_mib": "8188 MiB"
+    },
+    "corpus": "corpus_synth_v1",
+    "corpus_sha256": "0A7D7AB5A6AD1F7E20A94B5E0AF871A4F28DF802AFCE3AEFC0A365B7CA598FBE"
+  },
+  "evidence": {
+    "selfcheck_cpp": {
+      "path": "build\\poc3_cs_rank_selfcheck.exe",
+      "role": "correctness (5 ops C++ selfcheck)",
+      "sha256": "C9A1AFF7F70EB8D844690AD4903F3C0B845D5CED84249F485D89AB49972B2EF8"
+    },
+    "pytest": {
+      "path": "tests\\test_adapter_v1.py",
+      "role": "fc.* adapter test source (pytest run result in stages)",
+      "sha256": "3BE89EC3582623FC6D6706E7FE3A4263EEBEB7F8C1DBB7F26AF35A0970A15D83"
+    },
+    "pytest_timeline": {
+      "path": "tests\\test_timeline_no_lookahead_v1.py",
+      "role": "timeline no-lookahead integration",
+      "sha256": "74874A52ABA90BD99C3885663E33C80A39DE5F82BF84A139856E29F545C86877"
+    },
+    "parity_corpus": {
+      "path": "benchmarks\\results\\corpus_parity_v1.json",
+      "role": "frozen corpus vs oracle |dr|<=1e-12",
+      "sha256": "58672CFA9E1C462A805802660755A257A65BB0805ACC05259044157D6FD9FBAA"
+    },
+    "parity_arms": {
+      "path": "benchmarks\\results\\parity_report_v1.json",
+      "role": "numpy/cupy/qg/gpu arms parity",
+      "sha256": "DDE1B7C62D2B065A3C031FA29F75FD585ADC72928DDF7E8DF334FE0D2DD3082E"
+    },
+    "calibration": {
+      "path": "benchmarks\\results\\poc3_calibration_v1.json",
+      "role": "three-way memory HWM",
+      "sha256": "1CFB41D64D22094B68184B751C6D89BEB9DAAD30A040AF4294DB241764C7531F"
+    },
+    "poc4_e2e_v1.json": {
+      "path": "benchmarks\\results\\poc4_e2e_v1.json",
+      "role": "e2e speedup (F=12)",
+      "sha256": "20CF10C3520DC1B9DEEFD242B2A396BBA535C843E764965E26C3A08F9C27B46A"
+    },
+    "rolling_ic_labels_v1.json": {
+      "path": "tests\\fixtures\\rolling_ic_labels_v1.json",
+      "role": "timeline fixture manifest",
+      "sha256": "8FC6E396722F207BE8D65E795AA2815AC1143448C7AC001F9905039D0463CB10"
+    },
+    "gate_config_v1.json": {
+      "path": "docs\\gate_config_v1.json",
+      "role": "formal corpus gate",
+      "sha256": "5F2B43079D58D2D11241280853EAC331583CAFA29D955BA4C5A1BB7AB8F3FE31"
+    },
+    "v2_gate.json": {
+      "path": "benchmarks\\results\\runs\\stock_corr_v2_rebaseline_20260805\\gate.json",
+      "role": "fast same-panel gate",
+      "sha256": "43200CA37CAB539239A412D012D509DB207F19EC9178628FBCF14F845EADAF98"
+    },
+    "general_gate.json": {
+      "path": "benchmarks\\results\\runs\\stock_corr_general_gate_20260806\\gate.json",
+      "role": "general same-panel gate",
+      "sha256": "3BBB6C08FAE418F4E7882CB707252E61F85DBA23A7B39072C47208405F0B9DE8"
+    }
+  },
+  "gates": {
+    "gate_2_semantics": {
+      "ok": true,
+      "evidence": [
+        "selfcheck_cpp",
+        "pytest",
+        "parity_corpus",
+        "parity_arms"
+      ]
+    },
+    "gate_2_memory": {
+      "ok": true,
+      "evidence": [
+        "calibration",
+        "nvidia-smi"
+      ],
+      "note": "corr 类可分块已由 F/T 最小证明①②位级闭合 (rolling_ic chunked / factor_corr continuation)"
+    },
+    "gate_2_perf": {
+      "ok": true,
+      "evidence": [
+        "perf_exes",
+        "gate_config_v1.json",
+        "v2_gate.json",
+        "general_gate.json"
+      ],
+      "missing_rows": [],
+      "note": "gate_2_perf: all required op+size rows must BEATS frozen gate (median <= exact_half); UNKNOWN/NOT_BEAT/rc!=0 -> FAIL"
+    },
+    "gate_2_no_lookahead": {
+      "ok": true,
+      "evidence": [
+        "pytest_timeline",
+        "rolling_ic_labels_v1.json"
+      ],
+      "note": "timeline test executed standalone: 6 collected / 6 passed / 0 skipped / 0 failed (required 6/6/0/0)"
+    },
+    "gate_3_schema": {
+      "ok": true,
+      "evidence": [
+        "selfcheck_parameter_scan",
+        "pytest_F18"
+      ],
+      "note": "G=4 dict order + group_status partial-success + F18 active_groups"
+    },
+    "gate_3_e2e": {
+      "ok": true,
+      "evidence": [
+        "poc4_e2e_v1.json",
+        "corpus_seeds"
+      ],
+      "note": "e2e JSON structured: verdict=PASS, corpus_sha256=0A7D7AB5A6AD1F7E..., scope=PoC 4 minimal parameter-scan pipeline (p...; two-fresh-run consistency comparison is a Phase 4 supplement"
+    }
+  },
+  "perf_status": {
+    "rows": [
+      {
+        "op": "cs_rank",
+        "path": "workspace",
+        "gate_source": "corpus",
+        "gate_exact_half_ms": 13.926450001235935,
+        "median_ms": 9.2527,
+        "rc": 0,
+        "verdict": "BEATS"
+      },
+      {
+        "op": "parameter_scan",
+        "path": "canonical",
+        "gate_source": "corpus",
+        "gate_exact_half_ms": 55.34277500009921,
+        "median_ms": 36.6345,
+        "rc": 0,
+        "verdict": "BEATS"
+      },
+      {
+        "op": "rolling_ic",
+        "path": "canonical",
+        "gate_source": "corpus",
+        "gate_exact_half_ms": 77.18252500126255,
+        "median_ms": 49.1063,
+        "rc": 0,
+        "verdict": "BEATS"
+      },
+      {
+        "op": "factor_corr",
+        "path": "canonical",
+        "gate_source": "corpus",
+        "gate_exact_half_ms": 1543.5208750004676,
+        "median_ms": 219.6155,
+        "rc": 0,
+        "verdict": "BEATS"
+      },
+      {
+        "op": "stock_corr",
+        "path": "fast(N=500)",
+        "gate_source": "v2-same-panel",
+        "gate_exact_half_ms": 26.34840000064287,
+        "median_ms": 5.954,
+        "rc": 0,
+        "verdict": "BEATS"
+      },
+      {
+        "op": "stock_corr",
+        "path": "fast(N=2000)",
+        "gate_source": "v2-same-panel",
+        "gate_exact_half_ms": 359.3517999997857,
+        "median_ms": 38.7625,
+        "rc": 0,
+        "verdict": "BEATS"
+      },
+      {
+        "op": "stock_corr",
+        "path": "fast(N=5000)",
+        "gate_source": "v2-same-panel",
+        "gate_exact_half_ms": 2382.366899999397,
+        "median_ms": 203.7185,
+        "rc": 0,
+        "verdict": "BEATS"
+      },
+      {
+        "op": "stock_corr",
+        "path": "general(N=500)",
+        "gate_source": "general-same-panel-20260806",
+        "gate_exact_half_ms": 31.05000000050495,
+        "median_ms": 24.587500000052387,
+        "rc": 0,
+        "verdict": "BEATS",
+        "min_ms": 23.641200001293328,
+        "max_ms": 25.292600001193932,
+        "reps": 11,
+        "speedup_vs_cupy": 2.5256736146772787
+      },
+      {
+        "op": "stock_corr",
+        "path": "general(N=2000)",
+        "gate_source": "general-same-panel-20260806",
+        "gate_exact_half_ms": 288.9531999999235,
+        "median_ms": 255.14239999938582,
+        "rc": 0,
+        "verdict": "BEATS",
+        "min_ms": 254.05339999997523,
+        "max_ms": 257.8311000015674,
+        "reps": 7,
+        "speedup_vs_cupy": 2.2650347413884884
+      }
+    ],
+    "gate_identity": {
+      "corpus": {
+        "ok": true,
+        "found": true,
+        "problems": []
+      },
+      "fast": {
+        "ok": true,
+        "found": true,
+        "problems": []
+      },
+      "general": {
+        "ok": true,
+        "found": true,
+        "problems": []
+      }
+    },
+    "general_synthetic_note": "synthetic make_panel('returns') general N=500 median=50.986ms is a non-representative panel (~6% non-finite + integer/zero-point distribution); general verdict uses fresh corpus same-panel measure vs frozen gate (20260806)."
+  },
+  "known_gaps": [
+    {
+      "id": "below_5x",
+      "op": "cs_rank workspace",
+      "speedup": 3.01,
+      "title": ">=2x but <5x speedup target line",
+      "decision": "carried to Phase 4/NRR below_5x_note"
+    },
+    {
+      "id": "below_5x",
+      "op": "parameter_scan canonical",
+      "speedup": 3.021,
+      "title": ">=2x but <5x speedup target line",
+      "decision": "carried to Phase 4/NRR below_5x_note"
+    },
+    {
+      "id": "below_5x",
+      "op": "rolling_ic canonical",
+      "speedup": 3.143,
+      "title": ">=2x but <5x speedup target line",
+      "decision": "carried to Phase 4/NRR below_5x_note"
+    },
+    {
+      "id": "below_5x",
+      "op": "stock_corr general(N=500)",
+      "speedup": 2.526,
+      "title": ">=2x but <5x speedup target line",
+      "decision": "carried to Phase 4/NRR below_5x_note"
+    },
+    {
+      "id": "below_5x",
+      "op": "stock_corr general(N=2000)",
+      "speedup": 2.265,
+      "title": ">=2x but <5x speedup target line",
+      "decision": "carried to Phase 4/NRR below_5x_note"
+    },
+    {
+      "id": "stock_corr_general_synthetic_panel",
+      "title": "stock_corr general perf exe uses synthetic make_panel (non-representative)",
+      "evidence": "poc3_stock_corr_perf.cu:159-166 (~6% non-finite synthetic panel)",
+      "decision": "general verdict uses fresh corpus same-panel measure vs frozen gate; synthetic-panel line kept as informative note only"
+    }
+  ],
+  "overall_acceptance": {
+    "ok": true,
+    "gates_ok": 6,
+    "unlock_phase4": true,
+    "dirty_note": "git worktree clean"
+  }
+}

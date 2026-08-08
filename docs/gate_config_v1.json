@@ -1,0 +1,111 @@
+{
+ "schema_version": "1.1.0",
+ "run_id": "poc2_baseline_20260804c",
+ "generator": "benchmarks/generate_gate_config_v1.py",
+ "generator_sha256": "297ff625776f6bad134fc57a735a2d84b98aaf7e6f54911cb2db71477b456293",
+ "canonical_sources": {
+  "numpy": {
+   "path": "benchmarks/results/runs/poc2_baseline_20260804c/numpy.json",
+   "sha256": "8be7a4cd0760a6750c967c05c8989a056a297e7b5242fa78129e6db774329d53"
+  },
+  "cupy": {
+   "path": "benchmarks/results/runs/poc2_baseline_20260804c/cupy.json",
+   "sha256": "5e8e3a2d47269394bccddf443d8c379ef475a9682d432782756daf3de3c6c427"
+  },
+  "qgplearn": {
+   "path": "benchmarks/results/runs/poc2_baseline_20260804c/qgplearn.json",
+   "sha256": "0a1de3f983072b77a44d2a1153e82062bfd457f2307249606a82886166a04047"
+  }
+ },
+ "gates": {
+  "cs_rank": {
+   "scope": "formal",
+   "best_backend": "qgplearn",
+   "source_path": "benchmarks/results/runs/poc2_baseline_20260804c/qgplearn.json",
+   "source_sha256": "0a1de3f983072b77a44d2a1153e82062bfd457f2307249606a82886166a04047",
+   "source_operation_key": "cs_rank",
+   "raw_wall_ms": 27.85290000247187,
+   "exact_half": 13.926450001235935,
+   "display": 13.92,
+   "display_le_exact_half": true
+  },
+  "cs_rank_desc": {
+   "scope": "formal",
+   "best_backend": "qgplearn",
+   "source_path": "benchmarks/results/runs/poc2_baseline_20260804c/qgplearn.json",
+   "source_sha256": "0a1de3f983072b77a44d2a1153e82062bfd457f2307249606a82886166a04047",
+   "source_operation_key": "cs_rank_desc",
+   "raw_wall_ms": 27.52580000378657,
+   "exact_half": 13.762900001893286,
+   "display": 13.76,
+   "display_le_exact_half": true
+  },
+  "factor_corr": {
+   "scope": "formal",
+   "best_backend": "cupy",
+   "source_path": "benchmarks/results/runs/poc2_baseline_20260804c/cupy.json",
+   "source_sha256": "5e8e3a2d47269394bccddf443d8c379ef475a9682d432782756daf3de3c6c427",
+   "source_operation_key": "factor_corr",
+   "raw_wall_ms": 3087.0417500009353,
+   "exact_half": 1543.5208750004676,
+   "display": 1543.52,
+   "display_le_exact_half": true
+  },
+  "rolling_ic": {
+   "scope": "formal",
+   "best_backend": "cupy",
+   "source_path": "benchmarks/results/runs/poc2_baseline_20260804c/cupy.json",
+   "source_sha256": "5e8e3a2d47269394bccddf443d8c379ef475a9682d432782756daf3de3c6c427",
+   "source_operation_key": "rolling_ic",
+   "raw_wall_ms": 154.3650500025251,
+   "exact_half": 77.18252500126255,
+   "display": 77.18,
+   "display_le_exact_half": true
+  },
+  "parameter_scan(G=4)": {
+   "scope": "formal",
+   "best_backend": "qgplearn",
+   "source_path": "benchmarks/results/runs/poc2_baseline_20260804c/qgplearn.json",
+   "source_sha256": "0a1de3f983072b77a44d2a1153e82062bfd457f2307249606a82886166a04047",
+   "source_operation_key": "parameter_scan(G=4)",
+   "raw_wall_ms": 110.68555000019842,
+   "exact_half": 55.34277500009921,
+   "display": 55.34,
+   "display_le_exact_half": true
+  },
+  "stock_corr(N=500)": {
+   "scope": "formal",
+   "best_backend": "cupy",
+   "source_path": "benchmarks/results/runs/poc2_baseline_20260804c/cupy.json",
+   "source_sha256": "5e8e3a2d47269394bccddf443d8c379ef475a9682d432782756daf3de3c6c427",
+   "source_operation_key": "stock_corr(N=500)",
+   "raw_wall_ms": 43.611249995592516,
+   "exact_half": 21.805624997796258,
+   "display": 21.8,
+   "display_le_exact_half": true
+  },
+  "stock_corr(N=2000)": {
+   "scope": "extension",
+   "best_backend": "cupy",
+   "source_path": "benchmarks/results/runs/poc2_baseline_20260804c/cupy.json",
+   "source_sha256": "5e8e3a2d47269394bccddf443d8c379ef475a9682d432782756daf3de3c6c427",
+   "source_operation_key": "stock_corr(N=2000)",
+   "raw_wall_ms": 537.4797500007844,
+   "exact_half": 268.7398750003922,
+   "display": 268.73,
+   "display_le_exact_half": true
+  },
+  "stock_corr(N=5000)": {
+   "scope": "extension",
+   "best_backend": "cupy",
+   "source_path": "benchmarks/results/runs/poc2_baseline_20260804c/cupy.json",
+   "source_sha256": "5e8e3a2d47269394bccddf443d8c379ef475a9682d432782756daf3de3c6c427",
+   "source_operation_key": "stock_corr(N=5000)",
+   "raw_wall_ms": 2558.881699998892,
+   "exact_half": 1279.440849999446,
+   "display": 1279.44,
+   "display_le_exact_half": true
+  }
+ },
+ "config_payload_sha256": "daa2556a5221174a6130259b52ec4b1715d23aaf34bac396c762cba80e2d5a99"
+}

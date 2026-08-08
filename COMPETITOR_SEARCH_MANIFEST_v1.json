@@ -1,0 +1,519 @@
+{
+  "name": "COMPETITOR_SEARCH_MANIFEST_v1",
+  "v": "v3",
+  "date_iso": "2026-08-06T01:35:49+08:00",
+  "endpoint": "https://api.github.com/search/repositories",
+  "auth": "authenticated GitHub CLI",
+  "web_engine": "WebSearch (2026-08-06)",
+  "github_queries": [
+    {
+      "query": "GPU 量化因子",
+      "lang": "cn",
+      "total_count": 0,
+      "relevant_hits": "无",
+      "top_hits": []
+    },
+    {
+      "query": "因子截面",
+      "lang": "cn",
+      "total_count": 42,
+      "relevant_hits": "多因子选股/因子挖掘(gplearn_stock_dataframe/Factor-Miner/StockTrader/cross-sectional-factor-lab 等)，无 GPU 截面分析算子库",
+      "top_hits": [
+        {
+          "full_name": "han14466/gplearn_stock_dataframe",
+          "description": "改写了gplearn源码，原有的gplearn会把数据转为numpy，丢失了datetime和stockcode的原始信息。很难做截面的因子ic、ir分析，所以改动了相应的源码，使之可以做因子的截面ic分析。另外增加了时序函数和并行化框架ray的支持。",
+          "stargazers_count": 23,
+          "language": "Python",
+          "html_url": "https://github.com/han14466/gplearn_stock_dataframe"
+        },
+        {
+          "full_name": "algo23TangaoChen/PureVolatility",
+          "description": "复刻东吴证券《“波动率选股因子”系列研究（一）：寻找特质波动率中的纯真信息——剔除跨期截面相关性的纯真波动率因子》",
+          "stargazers_count": 7,
+          "language": "Jupyter Notebook",
+          "html_url": "https://github.com/algo23TangaoChen/PureVolatility"
+        },
+        {
+          "full_name": "Qingshan2077/StockRLTrader",
+          "description": "本项目使用 截面多因子选股/强化学习算法 构建股票交易指导系统，包含股票数据爬取、强化学习/多因子模型训练、模型回测、预测涨跌等功能，目前仍在开发阶段，功能不完善",
+          "stargazers_count": 8,
+          "language": "Python",
+          "html_url": "https://github.com/Qingshan2077/StockRLTrader"
+        },
+        {
+          "full_name": "ProgrammerYJW/Factor-Miner",
+          "description": "Factor Miner 是一套面向量化研究的因子挖掘系统，核心目标是在海量候选表达式空间中寻找具有稳健截面预测能力的α因子。",
+          "stargazers_count": 2,
+          "language": "Python",
+          "html_url": "https://github.com/ProgrammerYJW/Factor-Miner"
+        },
+        {
+          "full_name": "3mofficial/cross-sectional-factor-lab",
+          "description": "横截面多因子组合实验室：截面标准化、组合构建、换手与交易成本",
+          "stargazers_count": 0,
+          "language": "Python",
+          "html_url": "https://github.com/3mofficial/cross-sectional-factor-lab"
+        },
+        {
+          "full_name": "Qingshan2077/StockTrader",
+          "description": "A 股截面多因子选股系统。53 个技术因子（趋势 / 动量 / 波动 / 量能 / 风险 / 市场状态），经 MAD 截断→行业中性化→Z-Score 标准化后，由 LightGBM/Ridge 模型每日截面打分排序，React+FastAPI 看板展示排名、IC 分析、多空回测。",
+          "stargazers_count": 2,
+          "language": "Python",
+          "html_url": "https://github.com/Qingshan2077/StockTrader"
+        },
+        {
+          "full_name": "gaojn/DeepLearningFactor",
+          "description": "A股截面深度学习因子：过去60日量价序列 -> 未来5日VWAP收益截面 (GRU/MLP)",
+          "stargazers_count": 1,
+          "language": "Python",
+          "html_url": "https://github.com/gaojn/DeepLearningFactor"
+        },
+        {
+          "full_name": "hongyue0102/ai-multifactor-predictor",
+          "description": "V10 多因子 AI 预测系统 - 52因子截面数据+2层DNN预测H/M/L组合超额收益",
+          "stargazers_count": 1,
+          "language": "Python",
+          "html_url": "https://github.com/hongyue0102/ai-multifactor-predictor"
+        }
+      ]
+    },
+    {
+      "query": "GPU 因子",
+      "lang": "cn",
+      "total_count": 0,
+      "relevant_hits": "无",
+      "top_hits": []
+    },
+    {
+      "query": "量化因子 GPU",
+      "lang": "cn",
+      "total_count": 0,
+      "relevant_hits": "",
+      "top_hits": []
+    },
+    {
+      "query": "CUDA 量化",
+      "lang": "cn",
+      "total_count": 20,
+      "relevant_hits": "全部为 LLM/CUDA 模型量化(多义词噪音)，与因子截面无关",
+      "top_hits": [
+        {
+          "full_name": "jinbooooom/ai-infra-hpc",
+          "description": "hpc 教程，包含集合通信(mpi、nccl)、cuda 编程、向量化 SIMD、RDMA 通信等",
+          "stargazers_count": 627,
+          "language": "Cuda",
+          "html_url": "https://github.com/jinbooooom/ai-infra-hpc"
+        },
+        {
+          "full_name": "MerkyorLynn/lynn-engine",
+          "description": "Lynn 原生 LLM 推理引擎 · W4A8/NVFP4 量化 · 自写 CUDA/Triton kernel · MoE · 投机解码 | Lynn-native LLM inference engine for NVIDIA Blackwell",
+          "stargazers_count": 24,
+          "language": "Python",
+          "html_url": "https://github.com/MerkyorLynn/lynn-engine"
+        },
+        {
+          "full_name": "skygazer42/cuda_learning",
+          "description": "学习cuda算子编程,trt,量化，剪枝",
+          "stargazers_count": 0,
+          "language": "HTML",
+          "html_url": "https://github.com/skygazer42/cuda_learning"
+        },
+        {
+          "full_name": "piood/LightTorch",
+          "description": "一个轻量化的深度学习框架，基于C++和CUDA编写，支持CPU和GPU加速，Python接口调用",
+          "stargazers_count": 3,
+          "language": "Jupyter Notebook",
+          "html_url": "https://github.com/piood/LightTorch"
+        },
+        {
+          "full_name": "love530love/Flash-Attention-CUDA-GPU-BitNet-llama.cpp",
+          "description": "✅ Flash Attention✅ CUDA GPU 加速（Compute Capability 8.6）✅ AVX2 指令集优化✅ BitNet 量化推理✅ 完整的 llama.cpp 功能集 Release",
+          "stargazers_count": 0,
+          "language": null,
+          "html_url": "https://github.com/love530love/Flash-Attention-CUDA-GPU-BitNet-llama.cpp"
+        },
+        {
+          "full_name": "jlam1983/JLLM-CUDA-InferenceEngine",
+          "description": "一個基於 **Python + Pure CUDA (CuPy & PyTorch)** 打造的輕量化、工業級大模型（LLM）動態流式推理引擎。專為消費級顯示卡（如 NVIDIA RTX 3060 12GB）進行極致優化，支援 Llama 3 與 DeepSeek 等主流的 SwiGLU / GQA 架構模型。本專案的核心突破在於**消滅了全量模型預載的顯存高壓點**，透過 **1D 矩陣哈希去重**與**流式動態滑動視窗（Lazy On-Demand Loading）**技術，實現了「計算哪層、加載哪層、用完即丟」的極致記憶體複用，讓 12GB 顯存也能穩健跑通深層大模型推理。",
+          "stargazers_count": 0,
+          "language": "Python",
+          "html_url": "https://github.com/jlam1983/JLLM-CUDA-InferenceEngine"
+        },
+        {
+          "full_name": "Haven16262/LLM-Local-Deployment-Guide",
+          "description": "A practical guide for local LLM deployment with 4-bit quantization. / 4-bit量化本地大模型部署实战指南",
+          "stargazers_count": 0,
+          "language": "Python",
+          "html_url": "https://github.com/Haven16262/LLM-Local-Deployment-Guide"
+        },
+        {
+          "full_name": "Pauldest/ai-infra-engineer-handbook",
+          "description": "AI Infra 工程师体系化学习手册：从 Python/C++/OS/网络基础，到 PyTorch/Transformer、分布式训练(FSDP/DeepSpeed/Megatron)、CUDA/Triton、vLLM 推理与量化、K8s 集群调度",
+          "stargazers_count": 2,
+          "language": "C++",
+          "html_url": "https://github.com/Pauldest/ai-infra-engineer-handbook"
+        }
+      ]
+    },
+    {
+      "query": "截面因子",
+      "lang": "cn",
+      "total_count": 42,
+      "relevant_hits": "同 因子截面",
+      "top_hits": [
+        {
+          "full_name": "han14466/gplearn_stock_dataframe",
+          "description": "改写了gplearn源码，原有的gplearn会把数据转为numpy，丢失了datetime和stockcode的原始信息。很难做截面的因子ic、ir分析，所以改动了相应的源码，使之可以做因子的截面ic分析。另外增加了时序函数和并行化框架ray的支持。",
+          "stargazers_count": 23,
+          "language": "Python",
+          "html_url": "https://github.com/han14466/gplearn_stock_dataframe"
+        },
+        {
+          "full_name": "algo23TangaoChen/PureVolatility",
+          "description": "复刻东吴证券《“波动率选股因子”系列研究（一）：寻找特质波动率中的纯真信息——剔除跨期截面相关性的纯真波动率因子》",
+          "stargazers_count": 7,
+          "language": "Jupyter Notebook",
+          "html_url": "https://github.com/algo23TangaoChen/PureVolatility"
+        },
+        {
+          "full_name": "Qingshan2077/StockRLTrader",
+          "description": "本项目使用 截面多因子选股/强化学习算法 构建股票交易指导系统，包含股票数据爬取、强化学习/多因子模型训练、模型回测、预测涨跌等功能，目前仍在开发阶段，功能不完善",
+          "stargazers_count": 8,
+          "language": "Python",
+          "html_url": "https://github.com/Qingshan2077/StockRLTrader"
+        },
+        {
+          "full_name": "ProgrammerYJW/Factor-Miner",
+          "description": "Factor Miner 是一套面向量化研究的因子挖掘系统，核心目标是在海量候选表达式空间中寻找具有稳健截面预测能力的α因子。",
+          "stargazers_count": 2,
+          "language": "Python",
+          "html_url": "https://github.com/ProgrammerYJW/Factor-Miner"
+        },
+        {
+          "full_name": "3mofficial/cross-sectional-factor-lab",
+          "description": "横截面多因子组合实验室：截面标准化、组合构建、换手与交易成本",
+          "stargazers_count": 0,
+          "language": "Python",
+          "html_url": "https://github.com/3mofficial/cross-sectional-factor-lab"
+        },
+        {
+          "full_name": "Qingshan2077/StockTrader",
+          "description": "A 股截面多因子选股系统。53 个技术因子（趋势 / 动量 / 波动 / 量能 / 风险 / 市场状态），经 MAD 截断→行业中性化→Z-Score 标准化后，由 LightGBM/Ridge 模型每日截面打分排序，React+FastAPI 看板展示排名、IC 分析、多空回测。",
+          "stargazers_count": 2,
+          "language": "Python",
+          "html_url": "https://github.com/Qingshan2077/StockTrader"
+        },
+        {
+          "full_name": "gaojn/DeepLearningFactor",
+          "description": "A股截面深度学习因子：过去60日量价序列 -> 未来5日VWAP收益截面 (GRU/MLP)",
+          "stargazers_count": 1,
+          "language": "Python",
+          "html_url": "https://github.com/gaojn/DeepLearningFactor"
+        },
+        {
+          "full_name": "hongyue0102/ai-multifactor-predictor",
+          "description": "V10 多因子 AI 预测系统 - 52因子截面数据+2层DNN预测H/M/L组合超额收益",
+          "stargazers_count": 1,
+          "language": "Python",
+          "html_url": "https://github.com/hongyue0102/ai-multifactor-predictor"
+        }
+      ]
+    },
+    {
+      "query": "因子分析 GPU",
+      "lang": "cn",
+      "total_count": 0,
+      "relevant_hits": "无",
+      "top_hits": []
+    },
+    {
+      "query": "GPU 量化 截面",
+      "lang": "cn",
+      "total_count": 0,
+      "relevant_hits": "无",
+      "top_hits": []
+    },
+    {
+      "query": "cross-sectional factor GPU",
+      "lang": "en",
+      "total_count": 1,
+      "relevant_hits": "cookfishbro/equity-factor-lab(已知竞品)",
+      "top_hits": [
+        {
+          "full_name": "cookfishbro/equity-factor-lab",
+          "description": "Cross-sectional equity factor research platform: full quant workflow on a point-in-time S&P 500 universe with bias control, cost modeling, regime testing, and a 100k-factor GPU placebo null",
+          "stargazers_count": 0,
+          "language": "Python",
+          "html_url": "https://github.com/cookfishbro/equity-factor-lab"
+        }
+      ]
+    },
+    {
+      "query": "factor IC GPU",
+      "lang": "en",
+      "total_count": 0,
+      "relevant_hits": "无",
+      "top_hits": []
+    },
+    {
+      "query": "GPU factor research",
+      "lang": "en",
+      "total_count": 9,
+      "relevant_hits": "大多不相关(整数分解/图像);equity-factor-lab 已知",
+      "top_hits": [
+        {
+          "full_name": "devatnull/High-Performance-Integer-Factorization-Suite-GNFS-MPQS-QS",
+          "description": "High-performance integer factorization suite implementing GNFS, MPQS, and QS algorithms with optimized lattice reduction, vectorization, GPU acceleration, and tensor-based linear algebra. Features automatic algorithm selection, NUMA-aware scheduling, and checkpoint/restore for computational number theory research and cryptanalytic analysis.",
+          "stargazers_count": 10,
+          "language": "Python",
+          "html_url": "https://github.com/devatnull/High-Performance-Integer-Factorization-Suite-GNFS-MPQS-QS"
+        },
+        {
+          "full_name": "weimin023/GPU-qr-factorization",
+          "description": "2026 Linear Algebra Kernels For The Age Of Research",
+          "stargazers_count": 1,
+          "language": "Python",
+          "html_url": "https://github.com/weimin023/GPU-qr-factorization"
+        },
+        {
+          "full_name": "LucasKSJang/research-factory-ONLYLOCALAI",
+          "description": "Unattended web research on a single desktop GPU. Topics in → cited reports out, daily, at zero API cost. Ollama + Qwen3, SearxNG, GPT Researcher, n8n.",
+          "stargazers_count": 0,
+          "language": "Python",
+          "html_url": "https://github.com/LucasKSJang/research-factory-ONLYLOCALAI"
+        },
+        {
+          "full_name": "ayazhassan/padding_free_matrix_transpose_gpu",
+          "description": "The advances of Graphic Processing Units (GPU) technology and the introduction of CUDA programming model facilitates developing new solutions for sparse and dense linear algebra solvers. Matrix Transpose is an important linear algebra procedure that has deep impact in various computational science and engineering applications. Several factors hinder the expected performance of large matrix transpose on GPU devices. The degradation in performance involves the memory access pattern such as coalesced access in the global memory and bank conflict in the shared memory of streaming multiprocessors within the GPU. In this paper, two matrix transpose algorithms are proposed to alleviate the aforementioned issues of ensuring coalesced access and conflict free bank access. The proposed algorithms have comparable execution times with the NVIDIA SDK bank conflict - free matrix transpose implementation. The main advantage of proposed algorithms is that they eliminate bank conflicts while allocating shared memory exactly equal to the tile size (T x T) of the problem space. However, to the best of our knowledge an extra space of Tx(T+1) needs to be allocated in the published research. We have also applied the proposed transpose algorithm to recursive gaussian implementation of NVIDIA SDK and achieved about 6% improvement in performance.",
+          "stargazers_count": 0,
+          "language": "Cuda",
+          "html_url": "https://github.com/ayazhassan/padding_free_matrix_transpose_gpu"
+        },
+        {
+          "full_name": "rishab-sharma/image_research",
+          "description": "As observed machine learning, computer vision techniques and other computer science algorithms cannot compete the human level of intelligence in pattern recognition such as hand written digits and traffic signs. But here we have reviewed a biologically plausible deep neural network architecture which can make it possible using a fully parameterizable GPU implementation deep neural network independent of the pre-wired feature extractors designing, which are rather learned in a supervised way. In this method tiny fields of winner neurons gives sparsely connected neural layers which leads to huge network depth as found in human like species between retina and visual cortex. The winning neurons are trained on many columns of deep neurons to attain expertise on pre-processed inputs in many different ways after which their predictions are averaged. Also GPU used, enables the models to be trained faster than usual. Upon testing the proposed method over MNIST handwriting data it achieves a near-human performance. Upon considering traffic sign recognition, our architecture has an upper hand by a factor of two. We also tried to improve the state-of-theart on a huge amount of common image classification benchmarks.",
+          "stargazers_count": 3,
+          "language": null,
+          "html_url": "https://github.com/rishab-sharma/image_research"
+        },
+        {
+          "full_name": "cookfishbro/equity-factor-lab",
+          "description": "Cross-sectional equity factor research platform: full quant workflow on a point-in-time S&P 500 universe with bias control, cost modeling, regime testing, and a 100k-factor GPU placebo null",
+          "stargazers_count": 0,
+          "language": "Python",
+          "html_url": "https://github.com/cookfishbro/equity-factor-lab"
+        },
+        {
+          "full_name": "amit21AIT/Artifitial-Neural-Network-Churn-Modeling",
+          "description": "Business Problem: Dataset of a bank with 10,000 customers measured lots of attributes of the customer and is seeing unusual churn rates at a high rate. Want to understand what the problem is, address the problem, and give them insights. 10,000 is a sample, millions of customer across Europe. Took a sample of 10,000 measured six months ago lots of factors (name, credit score, grography, age, tenure, balance, numOfProducts, credit card, active member, estimated salary, exited, etc.). For these 10,000 randomly selected customers and track which stayed or left.  Goal: create a geographic segmentation model to tell which of the customers are at highest risk of leaving.  Valuable to any customer-oriented organisations. Geographic Segmentation Modeling can be applied to millions of scenarios, very valuable. (doesn't have to be for banks, churn rate, etc.). Same scenario works for (e.g. should this person get a loan or not? Should this be approved for credit => binary outcome, model, more likely to be reliable). Fradulant transactions (which is more likely to be fradulant)  Binary outcome with lots of independent variables you can build a proper robust model to tell you which factors influence the outcome. alt text  Problem: Classification problem with lots of independent variables (credit score, balance, number of products) and based on these variables we're predicting which of these customers will leave the bank. Artificial Neural Networks can do a terrific job with Classification problems and making those kind of predictions.  Libraries used: Theano numerical computation library, very efficient for fast numerical computations based on Numpy syntax GPU is much more powerful than CPU, as there are many more cores and run more floating points calculations per second GPU is much more specialized for highly intensive computing tasks and parallel computations, exactly for the case for neural networks When we're forward propogating the activations of the different neurons in the neural network thanks to the activation function well that involves parallel computations When errors are backpropagated to the neural networks that again involves parallel computation GPU is a much better choice for deep neural network than CPU - simple neural networks, CPU is sufficient Created by Machine Learning group at the Univeristy of Montreal Tensorflow Another numerical computation library that runs very fast computations that can run on your CPU or GPU Google Brain, Apache 2.0 license Theano & Tensorflow are used primarily for research and development in the deep learning field Deep Learning neural network from scratch, use the above Great for inventing new deep learning neural networks, deep learning models, lots of line of code Keras Wrapper for Theano + Tensorflow Amazing library to build deep neural networks in a few lines of code Very powerful deep neural networks in few lines of code based on Theano and Tensorflow Sci-kit Learn (Machine Learning models), Keras (Deep Learning models) Installing Theano, Tensorflow in three steps with Anaconda installed:  $ pip install theano $ pip install tensorflow $ pip install keras $ conda update --all",
+          "stargazers_count": 7,
+          "language": "Python",
+          "html_url": "https://github.com/amit21AIT/Artifitial-Neural-Network-Churn-Modeling"
+        },
+        {
+          "full_name": "ShreyasPeddi/GetBox-Recommendation",
+          "description": "GetBox Recommendation produces a curated report on best laptops for user by displaying the top three laptops that best match their needs. It utitlises the weighted decision matrix algorithm (wdm) to match best laptop to the user. It will take into account factors such as price, cpu, gpu, brand, port ratings. External research data is used as a basic of decision making",
+          "stargazers_count": 0,
+          "language": "Java",
+          "html_url": "https://github.com/ShreyasPeddi/GetBox-Recommendation"
+        }
+      ]
+    },
+    {
+      "query": "cross section factor python",
+      "lang": "en",
+      "total_count": 13,
+      "relevant_hits": "截面因子回测/研究(CPU):cross-sectional-factor-backtest 等，非 GPU",
+      "top_hits": [
+        {
+          "full_name": "Fernando-Urbano/forest-through-the-trees",
+          "description": "Data Science Project: Replication of \"Forest Through the Trees: Building Cross-Sections of Stock Returns\" - creation of assets to test validity of factor models with Python",
+          "stargazers_count": 28,
+          "language": "Python",
+          "html_url": "https://github.com/Fernando-Urbano/forest-through-the-trees"
+        },
+        {
+          "full_name": "bsomps/OpenGeoPlotter",
+          "description": "A PyQt5 app catered to the exploration industry for visualizing geologic drill hole data with features like cross-sections, simple 3D views, strip logs, scatter plots, and downhole line plots. Includes data transformation techniques like factor analysis, desurveying, and alpha-beta conversion.",
+          "stargazers_count": 38,
+          "language": "Python",
+          "html_url": "https://github.com/bsomps/OpenGeoPlotter"
+        },
+        {
+          "full_name": "Jtong619/Cross-sectional-factor-backtest",
+          "description": "Implements monthly quantile ranking for factors and calculates the long-short premium (Q1 minus Q5) using Python and Pandas",
+          "stargazers_count": 0,
+          "language": "Python",
+          "html_url": "https://github.com/Jtong619/Cross-sectional-factor-backtest"
+        },
+        {
+          "full_name": "3mofficial/cross-sectional-factor-lab",
+          "description": "横截面多因子组合实验室：截面标准化、组合构建、换手与交易成本",
+          "stargazers_count": 0,
+          "language": "Python",
+          "html_url": "https://github.com/3mofficial/cross-sectional-factor-lab"
+        },
+        {
+          "full_name": "Kath-jrCheng/cross-sectional-factor-research",
+          "description": "Cross-sectional factor research across 8 stocks (TMT + Real Estate) using 7-layer diagnostic framework | IC=0.213 | Walk-forward RF | Python",
+          "stargazers_count": 0,
+          "language": "Python",
+          "html_url": "https://github.com/Kath-jrCheng/cross-sectional-factor-research"
+        },
+        {
+          "full_name": "sapk806/cross_sectional_factor_backtest_project",
+          "description": "A Python project that simulates a portfolio backtest using an equal-weighted long and short portfolio determined by 12-month returns.",
+          "stargazers_count": 0,
+          "language": "Jupyter Notebook",
+          "html_url": "https://github.com/sapk806/cross_sectional_factor_backtest_project"
+        },
+        {
+          "full_name": "Titus-Z/Cross-Sectional-Factor-Research-and-Portfolio-Construction",
+          "description": "Leakage-aware cross-sectional U.S. equity factor research with walk-forward validation and cost-aware portfolio diagnostics.",
+          "stargazers_count": 0,
+          "language": "Python",
+          "html_url": "https://github.com/Titus-Z/Cross-Sectional-Factor-Research-and-Portfolio-Construction"
+        },
+        {
+          "full_name": "AntoineNaly/Shrinking_the_cross_section_JFE2020_Python_Replication",
+          "description": "Full Python replication code for Shrinking the cross-section by Serhiy Kozak, Stefan Nagel, and Shrihari Santosh (Journal of Financial Economics, 2020). The code replicates robust ridge-like and elastic-net like estimations of Stochastic Discount Factor (SDF) loadings on a high-dimensional set of equity factors.",
+          "stargazers_count": 0,
+          "language": "Python",
+          "html_url": "https://github.com/AntoineNaly/Shrinking_the_cross_section_JFE2020_Python_Replication"
+        }
+      ]
+    },
+    {
+      "query": "GPU alpha factor",
+      "lang": "en",
+      "total_count": 2,
+      "relevant_hits": "IIcodehub/GP-Alpha-Miner-GPU(★7 GPU 遗传规划因子挖掘 CuPy+DEAP)",
+      "top_hits": [
+        {
+          "full_name": "IIcodehub/GP-Alpha-Miner-GPU-Accelerated-Genetic-Programming-Framework",
+          "description": "GP-Alpha-Miner is a high-performance, industrial-grade quantitative factor mining framework. It combines the search capabilities of Genetic Programming (GP) with the parallel computing power of GPUs, aiming to automatically discover Alpha factors with high ICIR and low turnover rates from massive datasets. ",
+          "stargazers_count": 7,
+          "language": "Python",
+          "html_url": "https://github.com/IIcodehub/GP-Alpha-Miner-GPU-Accelerated-Genetic-Programming-Framework"
+        },
+        {
+          "full_name": "Safiyah-Aqilah/AlphaGPT_Tushare",
+          "description": "🤖 Generate and backtest quantitative factors for A-shares using AI and Tushare data to enhance investment strategies and performance insights.",
+          "stargazers_count": 1,
+          "language": null,
+          "html_url": "https://github.com/Safiyah-Aqilah/AlphaGPT_Tushare"
+        }
+      ]
+    },
+    {
+      "query": "factor zoo CUDA",
+      "lang": "en",
+      "total_count": 0,
+      "relevant_hits": "无",
+      "top_hits": []
+    }
+  ],
+  "web_queries": [
+    {
+      "query": "GPU 量化因子 截面分析 加速 开源",
+      "summary": "Spectre(Heerozh/spectre ★818 GPU 因子计算引擎+回测器 PyTorch);AurumQ-RL(A股多因子+GPU训练);skill-fundamental-factor-analysis(截面验证);TorchAO 等 LLM 量化为噪音"
+    },
+    {
+      "query": "CUDA 因子研究 截面 加速 量化交易",
+      "summary": "RAPIDS/cuDF 截面算子;华泰金工 CuPy/cuDF 高频因子加速(6x->100x);arXiv 2507.07107(截面排序双重 argsort GPU 化 51x);drmysore/gpu-algorithmic-trading(GPU 回测 H100)"
+    }
+  ],
+  "conclusion_v3": "在所记录检索范围(v2 英文+v3 中文短词+Web 全网)内，仍未发现与 GPU 因子截面分析算子库(截面排序/相关/IC/参数扫描的契约级 GPU 实现)直接重合的开源项目；GPU 因子计算/挖掘/回测引擎生态活跃，Spectre(★818)为最接近替代；中文 GitHub 无 GPU 因子截面分析(GPU 量化因子/GPU 因子/因子分析 GPU 全 0)；CUDA 量化为 LLM 量化多义词噪音。",
+  "manifest_sha256": "b11adb933b933573611b683c7233fb9e9a18559778f268a7ee4a9e33692740c7",
+  "verified_repos": [
+    {
+      "full_name": "Heerozh/spectre",
+      "stargazers_count": 818,
+      "forks_count": 133,
+      "license": "GPL-3.0",
+      "pushed_at": "2025-04-15T14:46:22Z",
+      "verify": "gh api repos/Heerozh/spectre (2026-08-06)"
+    }
+  ],
+  "recency_verification": {
+    "date_iso": "2026-08-06",
+    "method": "gh api repos/{owner}/{repo} pushed_at + search/repositories sort=updated",
+    "within_1y_cutoff": "pushed_at >= 2025-08-06",
+    "repos": [
+      {
+        "full_name": "Heerozh/spectre",
+        "stargazers_count": 818,
+        "pushed_at": "2025-04-15",
+        "archived": false,
+        "license": "GPL-3.0",
+        "within_1y": false,
+        "note": "最接近的引擎级替代(因子计算+截面标准化+回测)；>1年未更新"
+      },
+      {
+        "full_name": "WYFHHH/QuantGplearn",
+        "stargazers_count": 11,
+        "pushed_at": "2026-06-13",
+        "archived": false,
+        "license": "MIT",
+        "within_1y": true,
+        "note": "GPU 遗传规划因子挖掘(活跃)"
+      },
+      {
+        "full_name": "cookfishbro/equity-factor-lab",
+        "stargazers_count": 0,
+        "pushed_at": "2026-07-05",
+        "archived": false,
+        "license": null,
+        "within_1y": true,
+        "note": "因子研究平台 CPU 为主(活跃)"
+      },
+      {
+        "full_name": "yupoet/aurumq-rl",
+        "stargazers_count": 36,
+        "pushed_at": "2026-07-24",
+        "archived": false,
+        "license": "NOASSERTION",
+        "within_1y": true,
+        "note": "A股多因子+GPU训练栈(活跃)"
+      },
+      {
+        "full_name": "IIcodehub/GP-Alpha-Miner-GPU-Accelerated-Genetic-Programming-Framework",
+        "stargazers_count": 7,
+        "pushed_at": "2026-01-15",
+        "archived": false,
+        "license": null,
+        "within_1y": true,
+        "note": "GPU 因子挖掘 CuPy+DEAP(活跃)"
+      },
+      {
+        "full_name": "drmysore/gpu-algorithmic-trading",
+        "stargazers_count": 0,
+        "pushed_at": "2026-01-02",
+        "archived": false,
+        "license": null,
+        "within_1y": true,
+        "note": "GPU 回测"
+      },
+      {
+        "full_name": "rapidsai/cudf",
+        "stargazers_count": 9723,
+        "pushed_at": "2026-08-05",
+        "archived": false,
+        "license": "Apache-2.0",
+        "within_1y": true,
+        "note": "通用 GPU DataFrame(持续活跃)"
+      },
+      {
+        "full_name": "cupy/cupy",
+        "stargazers_count": 12232,
+        "pushed_at": "2026-08-04",
+        "archived": false,
+        "license": "MIT",
+        "within_1y": true,
+        "note": "通用 GPU 数组(持续活跃)"
+      }
+    ],
+    "supplementary_search": "search/repositories sort=updated: GPU factor quant / cross-sectional factor GPU / factor cross-section analysis GPU —— 1年内活跃的 GPU 因子相关项目仅 QuantGplearn/equity-factor-lab，无同定位(截面分析算子库)新进入者",
+    "conclusion": "1年内活跃的 GPU 因子相关项目存在(QuantGplearn/AurumQ-RL/equity-factor-lab/GP-Alpha-Miner-GPU/drmysore + CuPy/cuDF)，但全部为因子挖掘/计算引擎/回测生态位；无1年内活跃的契约级截面分析算子库；最接近的 Spectre(★818) 已>1年未更新(2025-04-15)。空白生态位仅对「契约级截面分析算子库」定位成立；通用 GPU 因子工具定位与活跃引擎+通用库重复"
+  }
+}

@@ -1,0 +1,200 @@
+{
+  "trace_version": "1.0.0",
+  "schema_version": "1.0.0",
+  "solver_version": "2.0.0",
+  "execution_date": "2026-08-04",
+  "generator": "tests/fixtures/generate_calibration_trace_v1.py",
+  "generator_sha256": "26a320b8a815c71447f56e7585712abb50afeaf7935cf3e4fb64cd0e0935b416",
+  "source": "tests/fixtures/calibration_v1.py",
+  "source_sha256": "332bce84e164b39980e4f1b0a5bce82974dbf25f13fd2c7925f0e63b8957d26a",
+  "schema": "tests/fixtures/calibration_v1.schema.json",
+  "schema_sha256": "d5da3458cbbeb6753f236ae8601433b827bfc7dd61b3e8f83d2c287daf20481b",
+  "constants": {
+    "minimum_samples": 6,
+    "max_age_days": 30,
+    "default_reserve_bytes": 536870912
+  },
+  "sampling": {
+    "formula": "max(0, free_before - min_free_during)",
+    "raw_pairs": [
+      {
+        "free_before": 8000000000,
+        "min_free_during": 7900000000
+      },
+      {
+        "free_before": 8000000000,
+        "min_free_during": 7850000000
+      },
+      {
+        "free_before": 8000000000,
+        "min_free_during": 7700000000
+      },
+      {
+        "free_before": 8000000000,
+        "min_free_during": 7600000000
+      },
+      {
+        "free_before": 8000000000,
+        "min_free_during": 7400000000
+      },
+      {
+        "free_before": 8000000000,
+        "min_free_during": 7350000000
+      },
+      {
+        "free_before": 100,
+        "min_free_during": 120
+      }
+    ],
+    "samples_bytes": [
+      100000000,
+      150000000,
+      300000000,
+      400000000,
+      600000000,
+      650000000,
+      0
+    ],
+    "nearest_rank_index": 6,
+    "calibrated_p99_bytes": 650000000,
+    "reserve_rule": "max(512 MiB, calibrated_p99)",
+    "reserve_bytes": 650000000
+  },
+  "cache_key_fields": [
+    "gpu_uuid",
+    "driver_version",
+    "cuda_runtime",
+    "total_device_bytes",
+    "schema_version",
+    "solver_version"
+  ],
+  "invalidation": {
+    "missing": [
+      "missing"
+    ],
+    "corrupt": [
+      "corrupt"
+    ],
+    "samples_lt_6": {
+      "valid": false,
+      "reasons": [
+        "samples_lt_6"
+      ]
+    },
+    "key_or_device_changed": {
+      "valid": false,
+      "reasons": [
+        "key_or_device_changed"
+      ]
+    },
+    "age_gt_30_days": {
+      "valid": false,
+      "reasons": [
+        "age_gt_30_days"
+      ]
+    }
+  },
+  "state_machine": [
+    {
+      "from": "missing",
+      "sample_count": 0,
+      "to": "collecting"
+    },
+    {
+      "from": "collecting",
+      "sample_count": 5,
+      "to": "collecting"
+    },
+    {
+      "from": "collecting",
+      "sample_count": 6,
+      "to": "ready"
+    },
+    {
+      "from": "persist",
+      "sample_count": 6,
+      "write_succeeded": false,
+      "to": "retryable_write_failure"
+    },
+    {
+      "from": "cache",
+      "sample_count": 0,
+      "to": "ready"
+    }
+  ],
+  "budget_boundaries": [
+    {
+      "ok": false,
+      "free_bytes": 536870912,
+      "reserve_bytes": 536870912,
+      "base_required_bytes": 4096,
+      "available_after_reserve_bytes": 0,
+      "reason": "insufficient_after_reserve"
+    },
+    {
+      "ok": false,
+      "free_bytes": 536875008,
+      "reserve_bytes": 536870912,
+      "base_required_bytes": 4096,
+      "available_after_reserve_bytes": 4096,
+      "reason": "insufficient_after_reserve"
+    },
+    {
+      "ok": true,
+      "free_bytes": 536875009,
+      "reserve_bytes": 536870912,
+      "base_required_bytes": 4096,
+      "available_after_reserve_bytes": 4097,
+      "reason": "pass"
+    }
+  ],
+  "atomic_write": {
+    "utf8_bom": false,
+    "lf_only": true,
+    "missing": {
+      "status": "missing",
+      "reasons": [
+        "missing"
+      ]
+    },
+    "corrupt": {
+      "status": "invalid",
+      "reasons": [
+        "corrupt"
+      ]
+    },
+    "first_complete_write": {
+      "status": "ready",
+      "reasons": []
+    },
+    "last_complete_rename_wins": true,
+    "temp_leftovers": []
+  },
+  "valid_payload": {
+    "schema_version": "1.0.0",
+    "solver_version": "2.0.0",
+    "cache_key": {
+      "gpu_uuid": "GPU-RTX4060-LAPTOP-POC",
+      "driver_version": "poc-driver-v1",
+      "cuda_runtime": "13.3",
+      "total_device_bytes": 8585740288,
+      "schema_version": "1.0.0",
+      "solver_version": "2.0.0"
+    },
+    "measured_at_utc": "2026-08-04T11:30:00Z",
+    "sample_formula": "max(0, free_before - min_free_during)",
+    "p99_method": "nearest-rank: ceil(0.99*n)-1",
+    "samples_bytes": [
+      100000000,
+      150000000,
+      300000000,
+      400000000,
+      600000000,
+      650000000,
+      0
+    ],
+    "calibrated_p99_bytes": 650000000,
+    "default_reserve_bytes": 536870912,
+    "reserve_bytes": 650000000
+  }
+}

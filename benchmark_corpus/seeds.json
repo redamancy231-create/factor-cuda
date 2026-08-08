@@ -1,0 +1,22 @@
+{
+  "corpus_family": "factor-cuda",
+  "master_seed": 20260802,
+  "derivation": "role_rng(master, role_tag, extra='') = numpy.default_rng(np.frombuffer(SHA-256(f\"{master}:{role_tag}:{extra}\"), dtype=uint32)); 每个阶段独立 rng_k；废弃旧的低64位截断（int.from_bytes & 0xFFFFFFFFFFFFFFFF 会致不同 master 同 role 碰撞）",
+  "roles": {
+    "mask": "mask",
+    "price": "price",
+    "tie": "tie",
+    "calibrate_probe": "calibrate_probe",
+    "subset": "subset",
+    "parity_sample": "parity_sample"
+  },
+  "configs": {
+    "canonical_v1": {"T": 1218, "N": 5000, "F": 12},
+    "smoke_v1": {"T": 40, "N": 100, "F": 4}
+  },
+  "notes": [
+    "唯一真源：manifest.seeds 只引用 seeds.json 不内联",
+    "禁止复用 fixture 种子 20260803（rolling_ic_labels_v1 已用）",
+    "--seed 覆写必须写入 manifest.seeds.override，否则视为生成错误"
+  ]
+}

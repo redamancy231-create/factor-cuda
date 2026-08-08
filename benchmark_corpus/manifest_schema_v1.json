@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "$id": "factor-cuda/corpus-manifest-v1",
+  "title": "factor-cuda benchmark corpus manifest v1",
+  "type": "object",
+  "required": ["corpus_id", "family", "version", "protocol_version", "shapes", "arrays",
+               "generation", "seeds", "hash", "stats", "labels", "env"],
+  "properties": {
+    "corpus_id": {"type": "string"},
+    "family": {"enum": ["real", "synthetic", "parity_anchors"]},
+    "version": {"type": "string"},
+    "protocol_version": {"type": "string"},
+    "shapes": {
+      "type": "object",
+      "required": ["T", "N", "F"],
+      "properties": {
+        "T": {"type": "integer", "minimum": 1},
+        "N": {"type": "integer", "minimum": 1},
+        "F": {"type": "integer", "minimum": 3}
+      }
+    },
+    "arrays": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "dtype", "shape"],
+        "properties": {
+          "name": {"type": "string"},
+          "dtype": {"type": "string"},
+          "shape": {"type": "array", "items": {"type": "integer"}},
+          "array_sha256": {"type": "string", "pattern": "^[0-9A-F]{64}$"}
+        }
+      }
+    },
+    "generation": {
+      "type": "object",
+      "required": ["script"],
+      "properties": {
+        "script": {"type": "string"},
+        "script_sha256": {"type": "string"},
+        "params": {"type": "object"}
+      }
+    },
+    "seeds": {
+      "type": "object",
+      "required": ["seeds_ref"],
+      "properties": {
+        "seeds_ref": {"const": "seeds.json"},
+        "override": {"type": "object"}
+      }
+    },
+    "hash": {
+      "type": "object",
+      "required": ["data_sha256", "algorithm"],
+      "properties": {
+        "data_sha256": {"type": "string", "pattern": "^[0-9A-F]{64}$"},
+        "algorithm": {"const": "SHA-256"}
+      }
+    },
+    "stats": {"type": "object"},
+    "labels": {
+      "type": "object",
+      "required": ["h", "lag", "W", "benchmark_row_range"],
+      "properties": {
+        "h": {"const": 5},
+        "lag": {"const": 1},
+        "W": {"const": 21},
+        "benchmark_row_range": {"type": "object"}
+      }
+    },
+    "env": {
+      "type": "object",
+      "required": ["python", "numpy", "env_fingerprint"],
+      "properties": {
+        "python": {"type": "string"},
+        "numpy": {"type": "string"},
+        "env_fingerprint": {"const": "python-3.12.7_numpy-2.4.4"},
+        "blas": {"type": "string"}
+      }
+    },
+    "lineage": {"type": "object"},
+    "calibration": {"type": "object"},
+    "generated_at": {"type": "string"}
+  }
+}

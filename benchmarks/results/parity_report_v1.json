@@ -1,0 +1,1710 @@
+{
+ "numpy": {
+  "backend": "numpy",
+  "version": "1.0.0",
+  "total": 27,
+  "passed": 27,
+  "na": 0,
+  "failed": 0,
+  "cases": [
+   {
+    "id": "rank_tie_asc",
+    "operation": "cs_rank",
+    "backend": "numpy",
+    "tolerance": "exact",
+    "expected": [
+     2.0,
+     3.0,
+     1.0
+    ],
+    "actual": [
+     2.0,
+     3.0,
+     1.0
+    ],
+    "pass": true
+   },
+   {
+    "id": "rank_tie_desc",
+    "operation": "cs_rank",
+    "backend": "numpy",
+    "tolerance": "exact",
+    "expected": [
+     1.0,
+     2.0,
+     3.0
+    ],
+    "actual": [
+     1.0,
+     2.0,
+     3.0
+    ],
+    "pass": true
+   },
+   {
+    "id": "rank_zero_asc",
+    "operation": "cs_rank",
+    "backend": "numpy",
+    "tolerance": "exact",
+    "expected": [
+     1.0,
+     2.0,
+     3.0
+    ],
+    "actual": [
+     1.0,
+     2.0,
+     3.0
+    ],
+    "pass": true
+   },
+   {
+    "id": "rank_nan_inf_asc",
+    "operation": "cs_rank",
+    "backend": "numpy",
+    "tolerance": "exact",
+    "expected": [
+     1.0,
+     "nan",
+     "nan",
+     "nan",
+     2.0
+    ],
+    "actual": [
+     1.0,
+     NaN,
+     NaN,
+     NaN,
+     2.0
+    ],
+    "pass": true
+   },
+   {
+    "id": "rank_mask_mismatch_asc",
+    "operation": "cs_rank",
+    "backend": "numpy",
+    "tolerance": "exact",
+    "expected": [
+     1.0,
+     "nan",
+     2.0,
+     3.0
+    ],
+    "actual": [
+     1.0,
+     NaN,
+     2.0,
+     3.0
+    ],
+    "pass": true
+   },
+   {
+    "id": "ic_valid_29",
+    "operation": "rolling_ic",
+    "backend": "numpy",
+    "tolerance": "exact",
+    "expected": "nan",
+    "pass": true,
+    "actual": NaN
+   },
+   {
+    "id": "ic_valid_30",
+    "operation": "rolling_ic",
+    "backend": "numpy",
+    "tolerance": "1e-12",
+    "expected": 1.0,
+    "pass": true,
+    "actual": 1.0000000000000002
+   },
+   {
+    "id": "ic_valid_31",
+    "operation": "rolling_ic",
+    "backend": "numpy",
+    "tolerance": "1e-12",
+    "expected": 1.0,
+    "pass": true,
+    "actual": 1.0
+   },
+   {
+    "id": "ic_all_invalid",
+    "operation": "rolling_ic",
+    "backend": "numpy",
+    "tolerance": "exact",
+    "expected": "nan",
+    "pass": true,
+    "actual": NaN
+   },
+   {
+    "id": "ic_two_sided_nan_inf_mask",
+    "operation": "rolling_ic",
+    "backend": "numpy",
+    "tolerance": "1e-12",
+    "expected": 1.0,
+    "pass": true,
+    "actual": 0.9999999999999999
+   },
+   {
+    "id": "ic_factor_scatter_nan",
+    "operation": "rolling_ic",
+    "backend": "numpy",
+    "tolerance": "1e-12",
+    "expected": 1.0,
+    "pass": true,
+    "actual": 0.9999999999999999
+   },
+   {
+    "id": "ic_tie1",
+    "operation": "rolling_ic",
+    "backend": "numpy",
+    "tolerance": "1e-12",
+    "expected": 1.0,
+    "pass": true,
+    "actual": 0.9999999999999999
+   },
+   {
+    "id": "ic_tie2",
+    "operation": "rolling_ic",
+    "backend": "numpy",
+    "tolerance": "1e-12",
+    "expected": 0.5,
+    "pass": true,
+    "actual": 0.49999999999999994
+   },
+   {
+    "id": "ic_factor_tradable_nan",
+    "operation": "rolling_ic",
+    "backend": "numpy",
+    "tolerance": "1e-12",
+    "expected": 1.0,
+    "pass": true,
+    "actual": 0.9999999999999999
+   },
+   {
+    "id": "corr_a_b",
+    "operation": "factor_corr",
+    "backend": "numpy",
+    "tolerance": "exact",
+    "expected": "nan",
+    "pass": true,
+    "actual": NaN
+   },
+   {
+    "id": "corr_a_c",
+    "operation": "factor_corr",
+    "backend": "numpy",
+    "tolerance": "1e-12",
+    "expected": 0.8660254037844385,
+    "pass": true,
+    "actual": 0.8660254037844385
+   },
+   {
+    "id": "corr_n2_self",
+    "operation": "factor_corr",
+    "backend": "numpy",
+    "tolerance": "1e-12",
+    "expected": 0.9999999999999999,
+    "pass": true,
+    "actual": 0.9999999999999999
+   },
+   {
+    "id": "corr_n2_reverse",
+    "operation": "factor_corr",
+    "backend": "numpy",
+    "tolerance": "1e-12",
+    "expected": -0.9999999999999999,
+    "pass": true,
+    "actual": -0.9999999999999999
+   },
+   {
+    "id": "corr_const_self",
+    "operation": "factor_corr",
+    "backend": "numpy",
+    "tolerance": "exact",
+    "expected": "nan",
+    "pass": true,
+    "actual": NaN
+   },
+   {
+    "id": "corr_float32_ac",
+    "operation": "factor_corr",
+    "backend": "numpy",
+    "tolerance": "1e-12",
+    "expected": 0.8660254037844385,
+    "pass": true,
+    "actual": 0.8660254037844385
+   },
+   {
+    "id": "corr_mask_false_finite",
+    "operation": "factor_corr",
+    "backend": "numpy",
+    "tolerance": "1e-12",
+    "expected": 0.9999999999999999,
+    "pass": true,
+    "actual": 0.9999999999999999
+   },
+   {
+    "id": "corr_no_common_valid",
+    "operation": "factor_corr",
+    "backend": "numpy",
+    "tolerance": "exact",
+    "expected": "nan",
+    "pass": true,
+    "actual": NaN
+   },
+   {
+    "id": "corr_underflow_domain",
+    "operation": "factor_corr",
+    "backend": "numpy",
+    "tolerance": "exception",
+    "expected": "ValueError",
+    "actual": "ValueError",
+    "err": "corr 数值域外：max|x|>1e150 或 min 非零|x|<1e-150",
+    "pass": true
+   },
+   {
+    "id": "corr_dtype_variant",
+    "operation": "factor_corr",
+    "backend": "numpy",
+    "tolerance": "1e-12",
+    "expected": 0.8660254037844385,
+    "pass": true,
+    "actual": 0.8660254037844385
+   },
+   {
+    "id": "corr_shape_error",
+    "operation": "factor_corr",
+    "backend": "numpy",
+    "tolerance": "exception",
+    "expected": "ValueError",
+    "actual": "ValueError",
+    "err": "factor_corr 输入形状错误：需要 (T,N,F) 3-D 面板或两条等长序列",
+    "pass": true
+   },
+   {
+    "id": "err_out_of_domain",
+    "operation": "factor_corr",
+    "backend": "numpy",
+    "tolerance": "exception",
+    "expected": "ValueError",
+    "actual": "ValueError",
+    "err": "corr 数值域外：max|x|>1e150 或 min 非零|x|<1e-150",
+    "pass": true
+   },
+   {
+    "id": "scan_container",
+    "operation": "parameter_scan",
+    "backend": "numpy",
+    "tolerance": "schema",
+    "expected": {
+     "groups": [
+      "(ascending,masked)",
+      "(ascending,unmasked)",
+      "(descending,masked)",
+      "(descending,unmasked)"
+     ],
+     "result_shape": "(T,N) float32",
+     "summary_fields": [
+      "total_groups",
+      "n_failed"
+     ]
+    },
+    "actual": {
+     "groups": [
+      "(ascending,masked)",
+      "(ascending,unmasked)",
+      "(descending,masked)",
+      "(descending,unmasked)"
+     ],
+     "schema_ok": true,
+     "content_checked": true
+    },
+    "pass": true
+   }
+  ],
+  "extended": [
+   {
+    "id": "ext_cs_rank_desc_mask",
+    "backend": "numpy",
+    "pass": true,
+    "actual": [
+     3.0,
+     NaN,
+     2.0,
+     1.0
+    ],
+    "expected": [
+     3.0,
+     NaN,
+     2.0,
+     1.0
+    ],
+    "err": null,
+    "na": false
+   },
+   {
+    "id": "ext_factor_corr_F1",
+    "backend": "numpy",
+    "pass": true,
+    "actual": [
+     1,
+     1
+    ],
+    "expected": "(1,1)",
+    "err": null,
+    "na": false
+   },
+   {
+    "id": "ext_factor_corr_allmask",
+    "backend": "numpy",
+    "pass": true,
+    "actual": [
+     [
+      NaN,
+      NaN
+     ],
+     [
+      NaN,
+      NaN
+     ]
+    ],
+    "expected": "全 NaN",
+    "err": null,
+    "na": false
+   },
+   {
+    "id": "ext_rolling_ic_single_mask",
+    "backend": "numpy",
+    "pass": true,
+    "actual": 0.7,
+    "expected": 0.7,
+    "err": null,
+    "na": false
+   },
+   {
+    "id": "ext_rolling_ic_minvalid_gt_N",
+    "backend": "numpy",
+    "pass": true,
+    "actual": NaN,
+    "expected": "NaN",
+    "err": null,
+    "na": false
+   },
+   {
+    "id": "ext_stock_corr_correctness",
+    "backend": "numpy",
+    "pass": true,
+    "actual": 1.1102230246251565e-16,
+    "expected": "≤1e-12 + 对称",
+    "err": null,
+    "na": false
+   },
+   {
+    "id": "ext_gemm_cancel_adversarial",
+    "backend": "numpy",
+    "pass": true,
+    "actual": -0.9903190460066436,
+    "expected": -0.9903190460066437,
+    "err": null,
+    "na": false
+   },
+   {
+    "id": "ext_corr_diag_boundary",
+    "backend": "numpy",
+    "pass": true,
+    "actual": "全部匹配 oracle",
+    "expected": "有限→1.0 / NaN→NaN",
+    "err": null,
+    "na": false
+   }
+  ],
+  "extended_passed": 8,
+  "extended_total": 8,
+  "timestamp": "2026-08-06T16:48:14"
+ },
+ "cupy": {
+  "backend": "cupy",
+  "version": "1.0.0",
+  "total": 27,
+  "passed": 27,
+  "na": 0,
+  "failed": 0,
+  "cases": [
+   {
+    "id": "rank_tie_asc",
+    "operation": "cs_rank",
+    "backend": "cupy",
+    "tolerance": "exact",
+    "expected": [
+     2.0,
+     3.0,
+     1.0
+    ],
+    "actual": [
+     2.0,
+     3.0,
+     1.0
+    ],
+    "pass": true
+   },
+   {
+    "id": "rank_tie_desc",
+    "operation": "cs_rank",
+    "backend": "cupy",
+    "tolerance": "exact",
+    "expected": [
+     1.0,
+     2.0,
+     3.0
+    ],
+    "actual": [
+     1.0,
+     2.0,
+     3.0
+    ],
+    "pass": true
+   },
+   {
+    "id": "rank_zero_asc",
+    "operation": "cs_rank",
+    "backend": "cupy",
+    "tolerance": "exact",
+    "expected": [
+     1.0,
+     2.0,
+     3.0
+    ],
+    "actual": [
+     1.0,
+     2.0,
+     3.0
+    ],
+    "pass": true
+   },
+   {
+    "id": "rank_nan_inf_asc",
+    "operation": "cs_rank",
+    "backend": "cupy",
+    "tolerance": "exact",
+    "expected": [
+     1.0,
+     "nan",
+     "nan",
+     "nan",
+     2.0
+    ],
+    "actual": [
+     1.0,
+     NaN,
+     NaN,
+     NaN,
+     2.0
+    ],
+    "pass": true
+   },
+   {
+    "id": "rank_mask_mismatch_asc",
+    "operation": "cs_rank",
+    "backend": "cupy",
+    "tolerance": "exact",
+    "expected": [
+     1.0,
+     "nan",
+     2.0,
+     3.0
+    ],
+    "actual": [
+     1.0,
+     NaN,
+     2.0,
+     3.0
+    ],
+    "pass": true
+   },
+   {
+    "id": "ic_valid_29",
+    "operation": "rolling_ic",
+    "backend": "cupy",
+    "tolerance": "exact",
+    "expected": "nan",
+    "pass": true,
+    "actual": NaN
+   },
+   {
+    "id": "ic_valid_30",
+    "operation": "rolling_ic",
+    "backend": "cupy",
+    "tolerance": "1e-12",
+    "expected": 1.0,
+    "pass": true,
+    "actual": 1.0
+   },
+   {
+    "id": "ic_valid_31",
+    "operation": "rolling_ic",
+    "backend": "cupy",
+    "tolerance": "1e-12",
+    "expected": 1.0,
+    "pass": true,
+    "actual": 1.0
+   },
+   {
+    "id": "ic_all_invalid",
+    "operation": "rolling_ic",
+    "backend": "cupy",
+    "tolerance": "exact",
+    "expected": "nan",
+    "pass": true,
+    "actual": NaN
+   },
+   {
+    "id": "ic_two_sided_nan_inf_mask",
+    "operation": "rolling_ic",
+    "backend": "cupy",
+    "tolerance": "1e-12",
+    "expected": 1.0,
+    "pass": true,
+    "actual": 1.0
+   },
+   {
+    "id": "ic_factor_scatter_nan",
+    "operation": "rolling_ic",
+    "backend": "cupy",
+    "tolerance": "1e-12",
+    "expected": 1.0,
+    "pass": true,
+    "actual": 1.0
+   },
+   {
+    "id": "ic_tie1",
+    "operation": "rolling_ic",
+    "backend": "cupy",
+    "tolerance": "1e-12",
+    "expected": 1.0,
+    "pass": true,
+    "actual": 1.0
+   },
+   {
+    "id": "ic_tie2",
+    "operation": "rolling_ic",
+    "backend": "cupy",
+    "tolerance": "1e-12",
+    "expected": 0.5,
+    "pass": true,
+    "actual": 0.5
+   },
+   {
+    "id": "ic_factor_tradable_nan",
+    "operation": "rolling_ic",
+    "backend": "cupy",
+    "tolerance": "1e-12",
+    "expected": 1.0,
+    "pass": true,
+    "actual": 1.0
+   },
+   {
+    "id": "corr_a_b",
+    "operation": "factor_corr",
+    "backend": "cupy",
+    "tolerance": "exact",
+    "expected": "nan",
+    "pass": true,
+    "actual": NaN
+   },
+   {
+    "id": "corr_a_c",
+    "operation": "factor_corr",
+    "backend": "cupy",
+    "tolerance": "1e-12",
+    "expected": 0.8660254037844385,
+    "pass": true,
+    "actual": 0.8660254037844385
+   },
+   {
+    "id": "corr_n2_self",
+    "operation": "factor_corr",
+    "backend": "cupy",
+    "tolerance": "1e-12",
+    "expected": 0.9999999999999999,
+    "pass": true,
+    "actual": 0.9999999999999999
+   },
+   {
+    "id": "corr_n2_reverse",
+    "operation": "factor_corr",
+    "backend": "cupy",
+    "tolerance": "1e-12",
+    "expected": -0.9999999999999999,
+    "pass": true,
+    "actual": -0.9999999999999999
+   },
+   {
+    "id": "corr_const_self",
+    "operation": "factor_corr",
+    "backend": "cupy",
+    "tolerance": "exact",
+    "expected": "nan",
+    "pass": true,
+    "actual": NaN
+   },
+   {
+    "id": "corr_float32_ac",
+    "operation": "factor_corr",
+    "backend": "cupy",
+    "tolerance": "1e-12",
+    "expected": 0.8660254037844385,
+    "pass": true,
+    "actual": 0.8660254037844385
+   },
+   {
+    "id": "corr_mask_false_finite",
+    "operation": "factor_corr",
+    "backend": "cupy",
+    "tolerance": "1e-12",
+    "expected": 0.9999999999999999,
+    "pass": true,
+    "actual": 0.9999999999999999
+   },
+   {
+    "id": "corr_no_common_valid",
+    "operation": "factor_corr",
+    "backend": "cupy",
+    "tolerance": "exact",
+    "expected": "nan",
+    "pass": true,
+    "actual": NaN
+   },
+   {
+    "id": "corr_underflow_domain",
+    "operation": "factor_corr",
+    "backend": "cupy",
+    "tolerance": "exception",
+    "expected": "ValueError",
+    "actual": "ValueError",
+    "err": "corr 数值域外：max|x|>1e150 或 min 非零|x|<1e-150",
+    "pass": true
+   },
+   {
+    "id": "corr_dtype_variant",
+    "operation": "factor_corr",
+    "backend": "cupy",
+    "tolerance": "1e-12",
+    "expected": 0.8660254037844385,
+    "pass": true,
+    "actual": 0.8660254037844385
+   },
+   {
+    "id": "corr_shape_error",
+    "operation": "factor_corr",
+    "backend": "cupy",
+    "tolerance": "exception",
+    "expected": "ValueError",
+    "actual": "ValueError",
+    "err": "factor_corr 输入形状错误：需要 (T,N,F) 3-D 面板或两条等长序列",
+    "pass": true
+   },
+   {
+    "id": "err_out_of_domain",
+    "operation": "factor_corr",
+    "backend": "cupy",
+    "tolerance": "exception",
+    "expected": "ValueError",
+    "actual": "ValueError",
+    "err": "corr 数值域外：max|x|>1e150 或 min 非零|x|<1e-150",
+    "pass": true
+   },
+   {
+    "id": "scan_container",
+    "operation": "parameter_scan",
+    "backend": "cupy",
+    "tolerance": "schema",
+    "expected": {
+     "groups": [
+      "(ascending,masked)",
+      "(ascending,unmasked)",
+      "(descending,masked)",
+      "(descending,unmasked)"
+     ],
+     "result_shape": "(T,N) float32",
+     "summary_fields": [
+      "total_groups",
+      "n_failed"
+     ]
+    },
+    "actual": {
+     "groups": [
+      "(ascending,masked)",
+      "(ascending,unmasked)",
+      "(descending,masked)",
+      "(descending,unmasked)"
+     ],
+     "schema_ok": true,
+     "content_checked": true
+    },
+    "pass": true
+   }
+  ],
+  "extended": [
+   {
+    "id": "ext_cs_rank_desc_mask",
+    "backend": "cupy",
+    "pass": true,
+    "actual": [
+     3.0,
+     NaN,
+     2.0,
+     1.0
+    ],
+    "expected": [
+     3.0,
+     NaN,
+     2.0,
+     1.0
+    ],
+    "err": null,
+    "na": false
+   },
+   {
+    "id": "ext_factor_corr_F1",
+    "backend": "cupy",
+    "pass": true,
+    "actual": [
+     1,
+     1
+    ],
+    "expected": "(1,1)",
+    "err": null,
+    "na": false
+   },
+   {
+    "id": "ext_factor_corr_allmask",
+    "backend": "cupy",
+    "pass": true,
+    "actual": [
+     [
+      NaN,
+      NaN
+     ],
+     [
+      NaN,
+      NaN
+     ]
+    ],
+    "expected": "全 NaN",
+    "err": null,
+    "na": false
+   },
+   {
+    "id": "ext_rolling_ic_single_mask",
+    "backend": "cupy",
+    "pass": true,
+    "actual": 0.7,
+    "expected": 0.7,
+    "err": null,
+    "na": false
+   },
+   {
+    "id": "ext_rolling_ic_minvalid_gt_N",
+    "backend": "cupy",
+    "pass": true,
+    "actual": NaN,
+    "expected": "NaN",
+    "err": null,
+    "na": false
+   },
+   {
+    "id": "ext_stock_corr_correctness",
+    "backend": "cupy",
+    "pass": true,
+    "actual": 1.1102230246251565e-16,
+    "expected": "≤1e-12 + 对称",
+    "err": null,
+    "na": false
+   },
+   {
+    "id": "ext_gemm_cancel_adversarial",
+    "backend": "cupy",
+    "pass": true,
+    "actual": -0.9903190460066436,
+    "expected": -0.9903190460066437,
+    "err": null,
+    "na": false
+   },
+   {
+    "id": "ext_corr_diag_boundary",
+    "backend": "cupy",
+    "pass": true,
+    "actual": "全部匹配 oracle",
+    "expected": "有限→1.0 / NaN→NaN",
+    "err": null,
+    "na": false
+   }
+  ],
+  "extended_passed": 8,
+  "extended_total": 8,
+  "timestamp": "2026-08-06T16:48:15"
+ },
+ "qgplearn": {
+  "backend": "qgplearn",
+  "version": "1.0.0",
+  "total": 27,
+  "passed": 15,
+  "na": 12,
+  "failed": 0,
+  "cases": [
+   {
+    "id": "rank_tie_asc",
+    "operation": "cs_rank",
+    "backend": "qgplearn",
+    "tolerance": "exact",
+    "expected": [
+     2.0,
+     3.0,
+     1.0
+    ],
+    "actual": [
+     2.0,
+     3.0,
+     1.0
+    ],
+    "pass": true
+   },
+   {
+    "id": "rank_tie_desc",
+    "operation": "cs_rank",
+    "backend": "qgplearn",
+    "tolerance": "exact",
+    "expected": [
+     1.0,
+     2.0,
+     3.0
+    ],
+    "actual": [
+     1.0,
+     2.0,
+     3.0
+    ],
+    "pass": true
+   },
+   {
+    "id": "rank_zero_asc",
+    "operation": "cs_rank",
+    "backend": "qgplearn",
+    "tolerance": "exact",
+    "expected": [
+     1.0,
+     2.0,
+     3.0
+    ],
+    "actual": [
+     1.0,
+     2.0,
+     3.0
+    ],
+    "pass": true
+   },
+   {
+    "id": "rank_nan_inf_asc",
+    "operation": "cs_rank",
+    "backend": "qgplearn",
+    "tolerance": "exact",
+    "expected": [
+     1.0,
+     "nan",
+     "nan",
+     "nan",
+     2.0
+    ],
+    "actual": [
+     1.0,
+     NaN,
+     NaN,
+     NaN,
+     2.0
+    ],
+    "pass": true
+   },
+   {
+    "id": "rank_mask_mismatch_asc",
+    "operation": "cs_rank",
+    "backend": "qgplearn",
+    "tolerance": "exact",
+    "expected": [
+     1.0,
+     "nan",
+     2.0,
+     3.0
+    ],
+    "actual": [
+     1.0,
+     NaN,
+     2.0,
+     3.0
+    ],
+    "pass": true
+   },
+   {
+    "id": "ic_valid_29",
+    "operation": "rolling_ic",
+    "backend": "qgplearn",
+    "tolerance": "exact",
+    "expected": "nan",
+    "pass": true,
+    "actual": NaN
+   },
+   {
+    "id": "ic_valid_30",
+    "operation": "rolling_ic",
+    "backend": "qgplearn",
+    "tolerance": "1e-12",
+    "expected": 1.0,
+    "pass": true,
+    "actual": 1.0
+   },
+   {
+    "id": "ic_valid_31",
+    "operation": "rolling_ic",
+    "backend": "qgplearn",
+    "tolerance": "1e-12",
+    "expected": 1.0,
+    "pass": true,
+    "actual": 1.0
+   },
+   {
+    "id": "ic_all_invalid",
+    "operation": "rolling_ic",
+    "backend": "qgplearn",
+    "tolerance": "exact",
+    "expected": "nan",
+    "pass": true,
+    "actual": NaN
+   },
+   {
+    "id": "ic_two_sided_nan_inf_mask",
+    "operation": "rolling_ic",
+    "backend": "qgplearn",
+    "tolerance": "1e-12",
+    "expected": 1.0,
+    "pass": true,
+    "actual": 1.0
+   },
+   {
+    "id": "ic_factor_scatter_nan",
+    "operation": "rolling_ic",
+    "backend": "qgplearn",
+    "tolerance": "1e-12",
+    "expected": 1.0,
+    "pass": true,
+    "actual": 1.0
+   },
+   {
+    "id": "ic_tie1",
+    "operation": "rolling_ic",
+    "backend": "qgplearn",
+    "tolerance": "1e-12",
+    "expected": 1.0,
+    "pass": true,
+    "actual": 1.0
+   },
+   {
+    "id": "ic_tie2",
+    "operation": "rolling_ic",
+    "backend": "qgplearn",
+    "tolerance": "1e-12",
+    "expected": 0.5,
+    "pass": true,
+    "actual": 0.5
+   },
+   {
+    "id": "ic_factor_tradable_nan",
+    "operation": "rolling_ic",
+    "backend": "qgplearn",
+    "tolerance": "1e-12",
+    "expected": 1.0,
+    "pass": true,
+    "actual": 1.0
+   },
+   {
+    "id": "corr_a_b",
+    "operation": "factor_corr",
+    "backend": "qgplearn",
+    "tolerance": "exact",
+    "expected": "nan",
+    "actual": "N/A",
+    "err": "QuantGplearn 无 factor_corr 原生算子（能力映射 N/A）",
+    "pass": false,
+    "na": true
+   },
+   {
+    "id": "corr_a_c",
+    "operation": "factor_corr",
+    "backend": "qgplearn",
+    "tolerance": "1e-12",
+    "expected": 0.8660254037844385,
+    "actual": "N/A",
+    "err": "QuantGplearn 无 factor_corr 原生算子（能力映射 N/A）",
+    "pass": false,
+    "na": true
+   },
+   {
+    "id": "corr_n2_self",
+    "operation": "factor_corr",
+    "backend": "qgplearn",
+    "tolerance": "1e-12",
+    "expected": 0.9999999999999999,
+    "actual": "N/A",
+    "err": "QuantGplearn 无 factor_corr 原生算子（能力映射 N/A）",
+    "pass": false,
+    "na": true
+   },
+   {
+    "id": "corr_n2_reverse",
+    "operation": "factor_corr",
+    "backend": "qgplearn",
+    "tolerance": "1e-12",
+    "expected": -0.9999999999999999,
+    "actual": "N/A",
+    "err": "QuantGplearn 无 factor_corr 原生算子（能力映射 N/A）",
+    "pass": false,
+    "na": true
+   },
+   {
+    "id": "corr_const_self",
+    "operation": "factor_corr",
+    "backend": "qgplearn",
+    "tolerance": "exact",
+    "expected": "nan",
+    "actual": "N/A",
+    "err": "QuantGplearn 无 factor_corr 原生算子（能力映射 N/A）",
+    "pass": false,
+    "na": true
+   },
+   {
+    "id": "corr_float32_ac",
+    "operation": "factor_corr",
+    "backend": "qgplearn",
+    "tolerance": "1e-12",
+    "expected": 0.8660254037844385,
+    "actual": "N/A",
+    "err": "QuantGplearn 无 factor_corr 原生算子（能力映射 N/A）",
+    "pass": false,
+    "na": true
+   },
+   {
+    "id": "corr_mask_false_finite",
+    "operation": "factor_corr",
+    "backend": "qgplearn",
+    "tolerance": "1e-12",
+    "expected": 0.9999999999999999,
+    "actual": "N/A",
+    "err": "QuantGplearn 无 factor_corr 原生算子（能力映射 N/A）",
+    "pass": false,
+    "na": true
+   },
+   {
+    "id": "corr_no_common_valid",
+    "operation": "factor_corr",
+    "backend": "qgplearn",
+    "tolerance": "exact",
+    "expected": "nan",
+    "actual": "N/A",
+    "err": "QuantGplearn 无 factor_corr 原生算子（能力映射 N/A）",
+    "pass": false,
+    "na": true
+   },
+   {
+    "id": "corr_underflow_domain",
+    "operation": "factor_corr",
+    "backend": "qgplearn",
+    "tolerance": "exception",
+    "expected": "ValueError",
+    "actual": "N/A",
+    "err": "QuantGplearn 无 factor_corr 原生算子（能力映射 N/A）",
+    "pass": false,
+    "na": true
+   },
+   {
+    "id": "corr_dtype_variant",
+    "operation": "factor_corr",
+    "backend": "qgplearn",
+    "tolerance": "1e-12",
+    "expected": 0.8660254037844385,
+    "actual": "N/A",
+    "err": "QuantGplearn 无 factor_corr 原生算子（能力映射 N/A）",
+    "pass": false,
+    "na": true
+   },
+   {
+    "id": "corr_shape_error",
+    "operation": "factor_corr",
+    "backend": "qgplearn",
+    "tolerance": "exception",
+    "expected": "ValueError",
+    "actual": "N/A",
+    "err": "QuantGplearn 无 factor_corr 原生算子（能力映射 N/A）",
+    "pass": false,
+    "na": true
+   },
+   {
+    "id": "err_out_of_domain",
+    "operation": "factor_corr",
+    "backend": "qgplearn",
+    "tolerance": "exception",
+    "expected": "ValueError",
+    "actual": "N/A",
+    "err": "QuantGplearn 无 factor_corr 原生算子（能力映射 N/A）",
+    "pass": false,
+    "na": true
+   },
+   {
+    "id": "scan_container",
+    "operation": "parameter_scan",
+    "backend": "qgplearn",
+    "tolerance": "schema",
+    "expected": {
+     "groups": [
+      "(ascending,masked)",
+      "(ascending,unmasked)",
+      "(descending,masked)",
+      "(descending,unmasked)"
+     ],
+     "result_shape": "(T,N) float32",
+     "summary_fields": [
+      "total_groups",
+      "n_failed"
+     ]
+    },
+    "actual": {
+     "groups": [
+      "(ascending,masked)",
+      "(ascending,unmasked)",
+      "(descending,masked)",
+      "(descending,unmasked)"
+     ],
+     "schema_ok": true,
+     "content_checked": true
+    },
+    "pass": true
+   }
+  ],
+  "extended": [
+   {
+    "id": "ext_cs_rank_desc_mask",
+    "backend": "qgplearn",
+    "pass": true,
+    "actual": [
+     3.0,
+     NaN,
+     2.0,
+     1.0
+    ],
+    "expected": [
+     3.0,
+     NaN,
+     2.0,
+     1.0
+    ],
+    "err": null,
+    "na": false
+   },
+   {
+    "id": "ext_factor_corr_F1",
+    "backend": "qgplearn",
+    "pass": false,
+    "actual": "N/A",
+    "expected": "(1,1)",
+    "err": "QG 无 factor_corr",
+    "na": true
+   },
+   {
+    "id": "ext_factor_corr_allmask",
+    "backend": "qgplearn",
+    "pass": false,
+    "actual": "N/A",
+    "expected": "全 NaN",
+    "err": "QG 无 factor_corr",
+    "na": true
+   },
+   {
+    "id": "ext_rolling_ic_single_mask",
+    "backend": "qgplearn",
+    "pass": false,
+    "actual": 0.699999988079071,
+    "expected": 0.7,
+    "err": "masked=0.699999988079071 oracle=0.7 none=0.714285671710968",
+    "na": false
+   },
+   {
+    "id": "ext_rolling_ic_minvalid_gt_N",
+    "backend": "qgplearn",
+    "pass": true,
+    "actual": NaN,
+    "expected": "NaN",
+    "err": null,
+    "na": false
+   },
+   {
+    "id": "ext_stock_corr_correctness",
+    "backend": "qgplearn",
+    "pass": false,
+    "actual": "N/A",
+    "expected": "≤1e-12",
+    "err": "QG 无 stock_corr",
+    "na": true
+   },
+   {
+    "id": "ext_gemm_cancel_adversarial",
+    "backend": "qgplearn",
+    "pass": false,
+    "actual": "N/A",
+    "expected": "≤1e-12",
+    "err": "QG 无 stock_corr",
+    "na": true
+   },
+   {
+    "id": "ext_corr_diag_boundary",
+    "backend": "qgplearn",
+    "pass": false,
+    "actual": "N/A",
+    "expected": "oracle 同判",
+    "err": "QG 无 corr",
+    "na": true
+   }
+  ],
+  "extended_passed": 2,
+  "extended_total": 8,
+  "timestamp": "2026-08-06T16:48:16"
+ },
+ "gpu": {
+  "backend": "gpu",
+  "version": "1.0.0",
+  "total": 27,
+  "passed": 27,
+  "na": 0,
+  "failed": 0,
+  "cases": [
+   {
+    "id": "rank_tie_asc",
+    "operation": "cs_rank",
+    "backend": "gpu",
+    "tolerance": "exact",
+    "expected": [
+     2.0,
+     3.0,
+     1.0
+    ],
+    "actual": [
+     2.0,
+     3.0,
+     1.0
+    ],
+    "pass": true
+   },
+   {
+    "id": "rank_tie_desc",
+    "operation": "cs_rank",
+    "backend": "gpu",
+    "tolerance": "exact",
+    "expected": [
+     1.0,
+     2.0,
+     3.0
+    ],
+    "actual": [
+     1.0,
+     2.0,
+     3.0
+    ],
+    "pass": true
+   },
+   {
+    "id": "rank_zero_asc",
+    "operation": "cs_rank",
+    "backend": "gpu",
+    "tolerance": "exact",
+    "expected": [
+     1.0,
+     2.0,
+     3.0
+    ],
+    "actual": [
+     1.0,
+     2.0,
+     3.0
+    ],
+    "pass": true
+   },
+   {
+    "id": "rank_nan_inf_asc",
+    "operation": "cs_rank",
+    "backend": "gpu",
+    "tolerance": "exact",
+    "expected": [
+     1.0,
+     "nan",
+     "nan",
+     "nan",
+     2.0
+    ],
+    "actual": [
+     1.0,
+     NaN,
+     NaN,
+     NaN,
+     2.0
+    ],
+    "pass": true
+   },
+   {
+    "id": "rank_mask_mismatch_asc",
+    "operation": "cs_rank",
+    "backend": "gpu",
+    "tolerance": "exact",
+    "expected": [
+     1.0,
+     "nan",
+     2.0,
+     3.0
+    ],
+    "actual": [
+     1.0,
+     NaN,
+     2.0,
+     3.0
+    ],
+    "pass": true
+   },
+   {
+    "id": "ic_valid_29",
+    "operation": "rolling_ic",
+    "backend": "gpu",
+    "tolerance": "exact",
+    "expected": "nan",
+    "pass": true,
+    "actual": NaN
+   },
+   {
+    "id": "ic_valid_30",
+    "operation": "rolling_ic",
+    "backend": "gpu",
+    "tolerance": "1e-12",
+    "expected": 1.0,
+    "pass": true,
+    "actual": 1.0000000000000002
+   },
+   {
+    "id": "ic_valid_31",
+    "operation": "rolling_ic",
+    "backend": "gpu",
+    "tolerance": "1e-12",
+    "expected": 1.0,
+    "pass": true,
+    "actual": 1.0
+   },
+   {
+    "id": "ic_all_invalid",
+    "operation": "rolling_ic",
+    "backend": "gpu",
+    "tolerance": "exact",
+    "expected": "nan",
+    "pass": true,
+    "actual": NaN
+   },
+   {
+    "id": "ic_two_sided_nan_inf_mask",
+    "operation": "rolling_ic",
+    "backend": "gpu",
+    "tolerance": "1e-12",
+    "expected": 1.0,
+    "pass": true,
+    "actual": 0.9999999999999999
+   },
+   {
+    "id": "ic_factor_scatter_nan",
+    "operation": "rolling_ic",
+    "backend": "gpu",
+    "tolerance": "1e-12",
+    "expected": 1.0,
+    "pass": true,
+    "actual": 0.9999999999999999
+   },
+   {
+    "id": "ic_tie1",
+    "operation": "rolling_ic",
+    "backend": "gpu",
+    "tolerance": "1e-12",
+    "expected": 1.0,
+    "pass": true,
+    "actual": 0.9999999999999999
+   },
+   {
+    "id": "ic_tie2",
+    "operation": "rolling_ic",
+    "backend": "gpu",
+    "tolerance": "1e-12",
+    "expected": 0.5,
+    "pass": true,
+    "actual": 0.49999999999999994
+   },
+   {
+    "id": "ic_factor_tradable_nan",
+    "operation": "rolling_ic",
+    "backend": "gpu",
+    "tolerance": "1e-12",
+    "expected": 1.0,
+    "pass": true,
+    "actual": 0.9999999999999999
+   },
+   {
+    "id": "corr_a_b",
+    "operation": "factor_corr",
+    "backend": "gpu",
+    "tolerance": "exact",
+    "expected": "nan",
+    "pass": true,
+    "actual": NaN
+   },
+   {
+    "id": "corr_a_c",
+    "operation": "factor_corr",
+    "backend": "gpu",
+    "tolerance": "1e-12",
+    "expected": 0.8660254037844385,
+    "pass": true,
+    "actual": 0.8660254037844386
+   },
+   {
+    "id": "corr_n2_self",
+    "operation": "factor_corr",
+    "backend": "gpu",
+    "tolerance": "1e-12",
+    "expected": 0.9999999999999999,
+    "pass": true,
+    "actual": 0.9999999999999999
+   },
+   {
+    "id": "corr_n2_reverse",
+    "operation": "factor_corr",
+    "backend": "gpu",
+    "tolerance": "1e-12",
+    "expected": -0.9999999999999999,
+    "pass": true,
+    "actual": -0.9999999999999999
+   },
+   {
+    "id": "corr_const_self",
+    "operation": "factor_corr",
+    "backend": "gpu",
+    "tolerance": "exact",
+    "expected": "nan",
+    "pass": true,
+    "actual": NaN
+   },
+   {
+    "id": "corr_float32_ac",
+    "operation": "factor_corr",
+    "backend": "gpu",
+    "tolerance": "1e-12",
+    "expected": 0.8660254037844385,
+    "pass": true,
+    "actual": 0.8660254037844386
+   },
+   {
+    "id": "corr_mask_false_finite",
+    "operation": "factor_corr",
+    "backend": "gpu",
+    "tolerance": "1e-12",
+    "expected": 0.9999999999999999,
+    "pass": true,
+    "actual": 0.9999999999999999
+   },
+   {
+    "id": "corr_no_common_valid",
+    "operation": "factor_corr",
+    "backend": "gpu",
+    "tolerance": "exact",
+    "expected": "nan",
+    "pass": true,
+    "actual": NaN
+   },
+   {
+    "id": "corr_underflow_domain",
+    "operation": "factor_corr",
+    "backend": "gpu",
+    "tolerance": "exception",
+    "expected": "ValueError",
+    "actual": "ValueError",
+    "err": "corr 数值域外：max|x|>1e150 或 min 非零|x|<1e-150",
+    "pass": true
+   },
+   {
+    "id": "corr_dtype_variant",
+    "operation": "factor_corr",
+    "backend": "gpu",
+    "tolerance": "1e-12",
+    "expected": 0.8660254037844385,
+    "pass": true,
+    "actual": 0.8660254037844386
+   },
+   {
+    "id": "corr_shape_error",
+    "operation": "factor_corr",
+    "backend": "gpu",
+    "tolerance": "exception",
+    "expected": "ValueError",
+    "actual": "ValueError",
+    "err": "factor_corr 输入形状错误：需要 (T,N,F) 3-D 面板或两条等长序列",
+    "pass": true
+   },
+   {
+    "id": "err_out_of_domain",
+    "operation": "factor_corr",
+    "backend": "gpu",
+    "tolerance": "exception",
+    "expected": "ValueError",
+    "actual": "ValueError",
+    "err": "corr 数值域外：max|x|>1e150 或 min 非零|x|<1e-150",
+    "pass": true
+   },
+   {
+    "id": "scan_container",
+    "operation": "parameter_scan",
+    "backend": "gpu",
+    "tolerance": "schema",
+    "expected": {
+     "groups": [
+      "(ascending,masked)",
+      "(ascending,unmasked)",
+      "(descending,masked)",
+      "(descending,unmasked)"
+     ],
+     "result_shape": "(T,N) float32",
+     "summary_fields": [
+      "total_groups",
+      "n_failed"
+     ]
+    },
+    "actual": {
+     "groups": [
+      "(ascending,masked)",
+      "(ascending,unmasked)",
+      "(descending,masked)",
+      "(descending,unmasked)"
+     ],
+     "schema_ok": true,
+     "content_checked": true
+    },
+    "pass": true
+   }
+  ],
+  "extended": [
+   {
+    "id": "ext_cs_rank_desc_mask",
+    "backend": "gpu",
+    "pass": true,
+    "actual": [
+     3.0,
+     NaN,
+     2.0,
+     1.0
+    ],
+    "expected": [
+     3.0,
+     NaN,
+     2.0,
+     1.0
+    ],
+    "err": null,
+    "na": false
+   },
+   {
+    "id": "ext_factor_corr_F1",
+    "backend": "gpu",
+    "pass": true,
+    "actual": [
+     1,
+     1
+    ],
+    "expected": "(1,1)",
+    "err": null,
+    "na": false
+   },
+   {
+    "id": "ext_factor_corr_allmask",
+    "backend": "gpu",
+    "pass": true,
+    "actual": [
+     [
+      NaN,
+      NaN
+     ],
+     [
+      NaN,
+      NaN
+     ]
+    ],
+    "expected": "全 NaN",
+    "err": null,
+    "na": false
+   },
+   {
+    "id": "ext_rolling_ic_single_mask",
+    "backend": "gpu",
+    "pass": true,
+    "actual": 0.7,
+    "expected": 0.7,
+    "err": null,
+    "na": false
+   },
+   {
+    "id": "ext_rolling_ic_minvalid_gt_N",
+    "backend": "gpu",
+    "pass": true,
+    "actual": NaN,
+    "expected": "NaN",
+    "err": null,
+    "na": false
+   },
+   {
+    "id": "ext_stock_corr_correctness",
+    "backend": "gpu",
+    "pass": true,
+    "actual": 1.1102230246251565e-16,
+    "expected": "≤1e-12 + 对称",
+    "err": null,
+    "na": false
+   },
+   {
+    "id": "ext_gemm_cancel_adversarial",
+    "backend": "gpu",
+    "pass": true,
+    "actual": -0.9903190460066436,
+    "expected": -0.9903190460066437,
+    "err": null,
+    "na": false
+   },
+   {
+    "id": "ext_corr_diag_boundary",
+    "backend": "gpu",
+    "pass": true,
+    "actual": "全部匹配 oracle",
+    "expected": "有限→1.0 / NaN→NaN",
+    "err": null,
+    "na": false
+   }
+  ],
+  "extended_passed": 8,
+  "extended_total": 8,
+  "timestamp": "2026-08-06T16:48:16"
+ },
+ "_env": {
+  "platform": "Windows-11-10.0.26100-SP0",
+  "python": "3.12.7",
+  "numpy": "2.4.4",
+  "pandas": "3.0.2",
+  "scipy": "1.17.1",
+  "torch": "2.13.0+cu132",
+  "cupy": "14.1.1",
+  "torch_cuda": true,
+  "gpu": "NVIDIA GeForce RTX 4060 Laptop GPU"
+ }
+}

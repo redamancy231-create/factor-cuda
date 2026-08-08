@@ -1,0 +1,92 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "$id": "calibration_v1.schema.json",
+ "title": "factor-cuda reserve calibration cache v1",
+ "type": "object",
+ "additionalProperties": false,
+ "required": [
+  "schema_version",
+  "solver_version",
+  "cache_key",
+  "measured_at_utc",
+  "sample_formula",
+  "p99_method",
+  "samples_bytes",
+  "calibrated_p99_bytes",
+  "default_reserve_bytes",
+  "reserve_bytes"
+ ],
+ "properties": {
+  "schema_version": {
+   "const": "1.0.0"
+  },
+  "solver_version": {
+   "const": "2.0.0"
+  },
+  "cache_key": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "gpu_uuid",
+    "driver_version",
+    "cuda_runtime",
+    "total_device_bytes",
+    "schema_version",
+    "solver_version"
+   ],
+   "properties": {
+    "gpu_uuid": {
+     "type": "string",
+     "minLength": 1
+    },
+    "driver_version": {
+     "type": "string",
+     "minLength": 1
+    },
+    "cuda_runtime": {
+     "type": "string",
+     "minLength": 1
+    },
+    "total_device_bytes": {
+     "type": "integer",
+     "minimum": 1
+    },
+    "schema_version": {
+     "const": "1.0.0"
+    },
+    "solver_version": {
+     "const": "2.0.0"
+    }
+   }
+  },
+  "measured_at_utc": {
+   "type": "string",
+   "format": "date-time"
+  },
+  "sample_formula": {
+   "const": "max(0, free_before - min_free_during)"
+  },
+  "p99_method": {
+   "const": "nearest-rank: ceil(0.99*n)-1"
+  },
+  "samples_bytes": {
+   "type": "array",
+   "minItems": 6,
+   "items": {
+    "type": "integer",
+    "minimum": 0
+   }
+  },
+  "calibrated_p99_bytes": {
+   "type": "integer",
+   "minimum": 0
+  },
+  "default_reserve_bytes": {
+   "const": 536870912
+  },
+  "reserve_bytes": {
+   "type": "integer",
+   "minimum": 536870912
+  }
+ }
+}

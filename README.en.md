@@ -8,8 +8,8 @@
 
 ## Status
 
-**Released v1.0.1 (2026-08-08)** — PoC items ①–④ closed out; Phases 1–4 complete.
-- The operation-semantics contract is frozen (L0 Spec, CLAUDE.md); all 126 Phase 2 acceptance tests passed locally on GPU / 3 skipped (GitHub Actions runs the CPU/contract arm without GPU: 75 passed); all six Phase 3 acceptance gates are marked PASS.
+**Released v1.1.0 (2026-08-08)** — PoC items ①–④ closed out; Phases 1–4 complete + P3 adapter auto-cache.
+- The operation-semantics contract is frozen (L0 Spec, CLAUDE.md); all 150 tests passed locally on GPU / 3 skipped (GitHub Actions runs the CPU/contract arm without GPU: 75 passed); all six Phase 3 acceptance gates are marked PASS.
 - Phase 4 benchmark end-to-end **~3.0×** (vs the best same-semantics free alternative; below the pre-registered 5× superiority threshold → **registered as negative result NRR-2026-024**).
 - The memory-model "divisible" trilogy (F-blocking / streaming / N-blocking) is validated as a PoC / memory-feasibility path: factor F=128 model peak 12,645.61 MiB (over budget) → streaming measured 7,079.75 MiB (fits).
 
@@ -25,7 +25,7 @@ GPU-accelerated cross-sectional operators (pybind11 bindings + pure-Python backe
 | `stock_corr` | (N,N) correlation matrix | f32/f64 | CPU / CUDA |
 | `rolling_ic` | (T,) Spearman IC | f32/f64 | CPU / CUDA (auto via device=None) |
 
-Also: a static GPU-memory budget model (`docs/memory_budget_v1.json`), workspace allocation caching, corpus parity verification.
+Also: a static GPU-memory budget model (`docs/memory_budget_v1.json`), workspace allocation caching, adapter-level auto-cache (transparent to `fc.*` callers; release device buffers via `fc.clear_workspaces()`), corpus parity verification.
 
 ## Quick Start
 
@@ -122,6 +122,7 @@ Real operator outputs on a deterministic synthetic panel (RTX 4060 Laptop):
 |------|---------|
 | `benchmarks/results/phase4_bench_v1.md` | Phase 4 E2E benchmark (3.04× / 2.94×) |
 | `benchmarks/results/acceptance_v1.md` | Phase 2-3 acceptance (six gates PASS) |
+| `benchmarks/results/ws_py_cache_v1.md` | Adapter auto-cache speedup (rolling_ic 1.35× / cs_rank 1.20×) |
 
 ## Competitors & Baselines
 

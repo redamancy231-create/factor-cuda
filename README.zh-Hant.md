@@ -8,8 +8,8 @@
 
 ## 狀態
 
-**已發佈 v1.0.1（2026-08-08）**——PoC ①–④ 均已完成驗證 + Phase 1-4 完成。
-- 操作語義契約已凍結（L0 Spec，CLAUDE.md）；Phase 2 驗收測試套件本機 GPU **126 項通過 / 3 項跳過**（GitHub Actions 無 GPU 跑 CPU/契約臂 75 項通過）；Phase 3 六項驗收關卡全數 PASS。
+**已發佈 v1.1.0（2026-08-08）**——PoC ①–④ 均已完成驗證 + Phase 1-4 完成 + P3 適配層自動快取。
+- 操作語義契約已凍結（L0 Spec，CLAUDE.md）；測試套件本機 GPU **150 項通過 / 3 項跳過**（GitHub Actions 無 GPU 跑 CPU/契約臂 75 項通過）；Phase 3 六項驗收關卡全數 PASS。
 - Phase 4 benchmark 端到端 **~3.0×**（vs 同語義最佳免費替代；未達 5× 優勢門檻 → **負結果已登記 NRR-2026-024**）。
 - 記憶體模型「可分塊」三件套（F-blocking / streaming / N-blocking）已驗證（PoC/記憶體可行性路徑）：factor F=128 模型峰值 12,645.61 MiB 超預算 → streaming 實測 7,079.75 MiB 符合預算。
 
@@ -25,7 +25,7 @@ GPU 加速橫斷面分析運算子（pybind11 綁定 + 純 Python 後端）：
 | `stock_corr` | (N,N) 相關矩陣 | f32/f64 | CPU / CUDA |
 | `rolling_ic` | (T,) Spearman IC | f32/f64 | CPU / CUDA（device=None 自動） |
 
-配套：GPU 記憶體靜態預算模型（`docs/memory_budget_v1.json`）、workspace 分配快取、corpus parity 驗證。
+配套：GPU 記憶體靜態預算模型（`docs/memory_budget_v1.json`）、workspace 分配快取、**適配層自動快取（fc 透明，`fc.clear_workspaces()` 釋放）**、corpus parity 驗證。
 
 ## 快速開始
 
@@ -122,6 +122,7 @@ RTX 4060 Laptop（sm_89），corpus 1218×5000×12，vs 同語義最佳免費替
 |------|------|
 | `benchmarks/results/phase4_bench_v1.md` | Phase 4 E2E benchmark（3.04× / 2.94×） |
 | `benchmarks/results/acceptance_v1.md` | Phase 2-3 驗收（六關全 PASS） |
+| `benchmarks/results/ws_py_cache_v1.md` | 適配層自動快取收益（rolling_ic 1.35× / cs_rank 1.20×） |
 
 ## 競品與對照
 

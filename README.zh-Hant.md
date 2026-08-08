@@ -113,6 +113,7 @@ RTX 4060 Laptop（sm_89），corpus 1218×5000×12，vs 同語義最佳免費替
 |------|------|
 | `CLAUDE.md` | L0 Spec（操作語義契約/成功標準/常見陷阱，凍結） |
 | `docs/memory_budget_v1.json` | GPU 記憶體靜態預算模型 |
+| `FUTURE_WORK.md` | 未來修改方向（優化/功能/工程候選，按依據分層） |
 | `CHANGELOG.md` | 變更記錄 |
 | `PLAN.md` | 歷史方案文件（superseded） |
 

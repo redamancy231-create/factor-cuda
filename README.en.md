@@ -113,6 +113,7 @@ Real operator outputs on a deterministic synthetic panel (RTX 4060 Laptop):
 |------|---------|
 | `CLAUDE.md` | L0 Spec (operation-semantics contract / success criteria / pitfalls, frozen) |
 | `docs/memory_budget_v1.json` | static GPU-memory budget model |
+| `FUTURE_WORK.md` | future work directions (optimization / feature / engineering candidates, evidence-ranked) |
 | `CHANGELOG.md` | change log |
 | `PLAN.md` | historical design document (superseded) |
 

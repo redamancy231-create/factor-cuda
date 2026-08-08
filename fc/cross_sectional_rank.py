@@ -8,6 +8,12 @@
 import numpy as np
 
 from . import _util as u
+from ._workspace import _WorkspaceCache
+
+# P3 adapter auto-cache: one cached device-buffer workspace per (T,N) shape.
+# Transparent to callers (they never pass a workspace); cleared by
+# fc.clear_workspaces().
+_RANK_CACHE = _WorkspaceCache(lambda: u.fcb().CsRankWorkspace())
 
 
 def cross_sectional_rank(values, mask=None, descending=False):
@@ -21,7 +27,11 @@ def cross_sectional_rank(values, mask=None, descending=False):
     mask = u.mask_must_match_device(mask, device, "mask")
     m = u.check_mask(mask, name="mask", T=T, N=N)
     u.sync_entry(device)
-    res = u.fcb().cs_rank_f32(x, m, descending)
+    with _RANK_CACHE.use((T, N)) as ws:
+        if ws is not None:
+            res = u.fcb().cs_rank_f32(x, m, descending, workspace=ws)
+        else:
+            res = u.fcb().cs_rank_f32(x, m, descending)
     return u.make_output(res, kind=kind, device=device, mode="mirror")
 
 

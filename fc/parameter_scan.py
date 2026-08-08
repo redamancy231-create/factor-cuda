@@ -13,6 +13,13 @@ import time
 import numpy as np
 
 from . import _util as u
+from ._workspace import _WorkspaceCache
+
+# P3 adapter auto-cache. parameter_scan shares cs_rank's device buffer set, so
+# it reuses CsRankWorkspace (one workspace per (T,N) shape, kept in its own
+# cache so cs_rank and parameter_scan do not contend on the same handle).
+# Transparent to callers; cleared by fc.clear_workspaces().
+_SCAN_CACHE = _WorkspaceCache(lambda: u.fcb().CsRankWorkspace())
 
 _AXES = ("direction", "mask_mode")
 _DIR_VALUES = ("ascending", "descending")
@@ -56,8 +63,8 @@ def parameter_scan(axes, X, mask=None):
     effective, combos = _normalize_axes(axes)
     G = len(combos)
 
-    kind, device, x = u.to_numpy(X, name="X", ndim=2, dtypes="f32f64",
-                                 downcast_to="float32")
+    _, device, x = u.to_numpy(X, name="X", ndim=2, dtypes="f32f64",
+                              downcast_to="float32")
     T, N = x.shape
     u.require_cuda("parameter_scan")
     if N > (1 << 24):
@@ -78,7 +85,13 @@ def parameter_scan(axes, X, mask=None):
 
     u.sync_entry(device)
     t_start = time.perf_counter()
-    r = u.fcb().parameter_scan_f32(x, m, return_timing=True, active_groups=active)
+    with _SCAN_CACHE.use((T, N)) as ws:
+        if ws is not None:
+            r = u.fcb().parameter_scan_f32(x, m, return_timing=True,
+                                           active_groups=active, workspace=ws)
+        else:
+            r = u.fcb().parameter_scan_f32(x, m, return_timing=True,
+                                           active_groups=active)
     elapsed_ms = (time.perf_counter() - t_start) * 1e3  # authority (review F12)
 
     groups = []

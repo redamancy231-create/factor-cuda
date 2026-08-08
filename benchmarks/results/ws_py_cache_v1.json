@@ -1,0 +1,107 @@
+{
+  "schema_version": "1.0.0",
+  "artifact": "ws_py_cache_v1.json",
+  "generator": "ws_py_cache_v1.py",
+  "generated_at": "2026-08-08T20:09:46+08:00",
+  "env": {
+    "python": "3.12.7",
+    "torch": "2.13.0+cu132",
+    "cuda_available": true,
+    "gpu": "NVIDIA GeForce RTX 4060 Laptop GPU",
+    "compute_capability": "8.9"
+  },
+  "panel": {
+    "T": 1218,
+    "N": 5000,
+    "seed": 42
+  },
+  "method": "same-panel cached vs uncached (only cache on/off differs); median of 11 wall-clock calls; warmup before timing",
+  "threshold": 1.2,
+  "judgement": "speedup >= 1.2x AND bitwise_identical AND cache_reused for every op; P3 gate",
+  "closure_status": "OK",
+  "provenance": {
+    "source": "live",
+    "git_head": "3784d2a216ef1579036ef311df4843c8e9b9b9d6",
+    "git_dirty": true,
+    "capture_sha256": "328C98611858997B8E896D0900043D8AEA46E4C0A3BAC65C408A6A7312130D64"
+  },
+  "disclosure": "Python 适配层 + 绑定层开销≈0（上会话实测）；缓存收益来自消除 per-call 设备分配（C++ workspace 先例：cs_rank 16.4→9.17ms、rolling_ic 48.98→33.0ms）。",
+  "ops": [
+    {
+      "op": "rolling_ic",
+      "uncached_ms": 53.425,
+      "cached_ms": 38.2007,
+      "speedup_x": 1.3985,
+      "bitwise_identical": true,
+      "cache_reused": true,
+      "cache_entries_after_first": 1,
+      "cache_entries_after_second": 1,
+      "output_kind": "ic",
+      "output_sha256": "32DE20C1C03DCE4B1DA14BD711871A9AE2A1E45B76111A5AA1F72595B652954D",
+      "uncached_raw_ms": [
+        52.0141,
+        52.2914,
+        52.5305,
+        52.5428,
+        52.5778,
+        53.425,
+        53.5342,
+        53.828,
+        53.9014,
+        54.0432,
+        56.4207
+      ],
+      "cached_raw_ms": [
+        37.5392,
+        37.572,
+        37.8406,
+        38.0046,
+        38.1185,
+        38.2007,
+        38.5826,
+        39.1159,
+        39.6583,
+        39.6919,
+        39.8139
+      ]
+    },
+    {
+      "op": "cs_rank",
+      "uncached_ms": 30.3152,
+      "cached_ms": 23.6233,
+      "speedup_x": 1.2833,
+      "bitwise_identical": true,
+      "cache_reused": true,
+      "cache_entries_after_first": 1,
+      "cache_entries_after_second": 1,
+      "output_kind": "rank",
+      "output_sha256": "A7C7F78EE410FC041968C777BCD4DC39CD3D5832CB83AE8D196B661BD98F0DEF",
+      "uncached_raw_ms": [
+        28.1967,
+        28.5204,
+        28.7605,
+        29.5572,
+        30.1323,
+        30.3152,
+        31.1747,
+        31.5017,
+        32.0826,
+        32.2334,
+        32.4961
+      ],
+      "cached_raw_ms": [
+        21.0859,
+        21.6805,
+        22.4016,
+        22.5175,
+        23.1991,
+        23.6233,
+        24.1456,
+        24.2882,
+        24.7089,
+        24.9649,
+        25.3181
+      ]
+    }
+  ]
+}

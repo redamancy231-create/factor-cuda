@@ -6,6 +6,11 @@
 # (bool rejected). ASCII-only comments. Phase 1.
 from . import _util as u
 from ._cpu_core import np_rolling_ic
+from ._workspace import _WorkspaceCache
+
+# P3 adapter auto-cache: one cached device-buffer workspace per (T,N) shape.
+# Transparent to callers; cleared by fc.clear_workspaces().
+_ROLL_CACHE = _WorkspaceCache(lambda: u.fcb().RollingIcWorkspace())
 
 
 def rolling_ic(factor, forward_returns, factor_mask=None, fwd_mask=None,
@@ -38,7 +43,11 @@ def rolling_ic(factor, forward_returns, factor_mask=None, fwd_mask=None,
         exec_dev = df if kf == "torch" else (dr if kr == "torch" else None)
         if exec_dev:
             u.sync_entry(exec_dev)
-        res = u.fcb().rolling_ic_f64(f, r, fm, rm, min_valid)
+        with _ROLL_CACHE.use((T, N)) as ws:
+            if ws is not None:
+                res = u.fcb().rolling_ic_f64(f, r, fm, rm, min_valid, workspace=ws)
+            else:
+                res = u.fcb().rolling_ic_f64(f, r, fm, rm, min_valid)
         return u.make_output(res, kind="torch" if (kf == "torch" or kr == "torch")
                              else "numpy", device=df, mode="roll")
     # CPU execution (device=None auto-CPU, or device='cpu')

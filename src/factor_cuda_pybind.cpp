@@ -121,11 +121,17 @@ static void check_rc(int rc, const char* fn) {
   throw std::runtime_error(std::string(fn) + " failed with error code " + std::to_string(rc));
 }
 
-// ---- 1. cs_rank_f32(X, mask=None, descending=False) -----------------------
+// ---- 1. cs_rank_f32(X, mask=None, descending=False, workspace=None) -------
 // Strict float32 in/out. Returns the (T,N) float32 stable-ordinal rank matrix
 // (valid cells = exact integer rank 1..K; invalid cells = quiet NaN payload
-// 0x7fc00000, preserved bitwise).
-py::array_t<float> cs_rank_f32(py::object X, py::object mask, bool descending) {
+// 0x7fc00000, preserved bitwise). workspace: optional CsRankWorkspace handle
+// (P3 adapter auto-cache, 2026-08-08). When provided, device buffers are reused
+// across calls with the same shape/device (no per-call cudaMalloc/cudaFree); on
+// shape/device mismatch the workspace clears + re-allocates. None = allocate and
+// free every call (previous behavior). NOT thread-safe -- calls sharing a
+// workspace must be serialized by the caller.
+py::array_t<float> cs_rank_f32(py::object X, py::object mask, bool descending,
+                               cs_rank_workspace* ws) {
   ArrF32 xa = require_f32(X, "X");
   auto xb = xa.unchecked<2>();
   const py::ssize_t T = xb.shape(0);
@@ -149,7 +155,7 @@ py::array_t<float> cs_rank_f32(py::object X, py::object mask, bool descending) {
   {
     py::gil_scoped_release release;
     rc = cs_rank_gpu(xa.data(), mp, static_cast<int>(T), static_cast<int>(N),
-                     descending, out.data());
+                     descending, out.data(), nullptr, ws);
   }
   check_rc(rc, "cs_rank_gpu");
 
@@ -159,14 +165,17 @@ py::array_t<float> cs_rank_f32(py::object X, py::object mask, bool descending) {
 }
 
 // ---- 2. rolling_ic_f64(F, R, fmask=None, rmask=None, min_valid=30,
-// ----        return_ranks=False) --------------------------------------------
+// ----        return_ranks=False, workspace=None) -----------------------------
 // float64 in (f32 auto-upcast exactly). Default returns (T,) float64 IC;
 // return_ranks=True returns (ic, rank_f, rank_r) where rank_* are (T,N)
 // float64 with 0 for invalid cells (NON-contract diagnostics -- the kernel
 // dumps these after the scatter stages; 0 means "not ranked", intentionally
-// different from cs_rank's NaN convention).
+// different from cs_rank's NaN convention). workspace: optional
+// RollingIcWorkspace handle (P3 adapter auto-cache, 2026-08-08). Same reuse
+// semantics as cs_rank_f32's workspace. NOT thread-safe.
 py::object rolling_ic_f64(py::object F, py::object R, py::object fmask, py::object rmask,
-                          py::object min_valid_obj, bool return_ranks) {
+                          py::object min_valid_obj, bool return_ranks,
+                          rolling_ic_workspace* ws) {
   ArrD Fa = upcast_f64(F, "F");
   ArrD Ra = upcast_f64(R, "R");
   auto fb = Fa.unchecked<2>();
@@ -207,7 +216,7 @@ py::object rolling_ic_f64(py::object F, py::object R, py::object fmask, py::obje
   {
     py::gil_scoped_release release;
     rc = rolling_ic_gpu(Fa.data(), Ra.data(), fmp, rmp, static_cast<int>(T),
-                        static_cast<int>(N), min_valid, ic.data(), nullptr, rf_p, rr_p);
+                        static_cast<int>(N), min_valid, ic.data(), nullptr, rf_p, rr_p, ws);
   }
   check_rc(rc, "rolling_ic_gpu");
 
@@ -267,7 +276,8 @@ py::object stock_corr_f64(py::object X, py::object mask, bool return_stats) {
   return py::make_tuple(result, sd);
 }
 
-// ---- 4. parameter_scan_f32(X, mask) ----------------------------------------
+// ---- 4. parameter_scan_f32(X, mask, return_timing=False, active_groups=None,
+// ----        workspace=None) --------------------------------------------------
 // Strict float32 X; mask REQUIRED (None -> ValueError -- otherwise the
 // unmasked groups would silently run as all-finite, violating the frozen
 // parameter_scan contract "masked mode requires a mask").
@@ -279,7 +289,7 @@ py::object stock_corr_f64(py::object X, py::object mask, bool return_stats) {
 // group is None and the rest still return; any other positive group code is a
 // scan-level RuntimeError (no partial result).
 py::dict parameter_scan_f32(py::object X, py::object mask, bool return_timing,
-                            py::object active_groups) {
+                            py::object active_groups, cs_rank_workspace* ws) {
   ArrF32 xa = require_f32(X, "X");
   auto xb = xa.unchecked<2>();
   const py::ssize_t T = xb.shape(0);
@@ -378,7 +388,7 @@ py::dict parameter_scan_f32(py::object X, py::object mask, bool return_timing,
                                   : std::chrono::steady_clock::time_point{};
     rc = parameter_scan_gpu(xa.data(), mp, static_cast<int>(T), static_cast<int>(N),
                             hp, group_status, nullptr, h_time_ms_p,
-                            h_time_gpu_ms_p, h_active);
+                            h_time_gpu_ms_p, h_active, ws);
     if (return_timing) {
       const auto t1 = std::chrono::steady_clock::now();
       elapsed_diag = std::chrono::duration<double, std::milli>(t1 - t0).count();
@@ -428,11 +438,16 @@ py::dict parameter_scan_f32(py::object X, py::object mask, bool return_timing,
 PYBIND11_MODULE(factor_cuda_pybind, m) {
   m.doc() = "factor-cuda GPU kernel bindings (cs_rank / rolling_ic / stock_corr /\n"
             "parameter_scan), pybind11, GPU-only low-level layer.\n"
-            "  cs_rank_f32(X, mask=None, descending=False) -> (T,N) float32\n"
+            "  cs_rank_f32(X, mask=None, descending=False, workspace=None) -> (T,N) f32\n"
             "  rolling_ic_f64(F, R, fmask=None, rmask=None, min_valid=30,\n"
-            "                 return_ranks=False) -> (T,) float64 | (ic, rf, rr)\n"
+            "                 return_ranks=False, workspace=None) -> (T,) f64 | (ic,rf,rr)\n"
             "  stock_corr_f64(X, mask=None, return_stats=False) -> (N,N) float64\n"
-            "  parameter_scan_f32(X, mask) -> {groups, group_status}\n"
+            "  parameter_scan_f32(X, mask, return_timing=False,\n"
+            "                    active_groups=None, workspace=None) -> {groups, group_status}\n"
+            "  CsRankWorkspace() / RollingIcWorkspace() -> cached device-buffer\n"
+            "    handles; pass as workspace to reuse buffers across calls with the\n"
+            "    same shape (None = allocate/free every call). .clear() releases\n"
+            "    buffers (idempotent). NOT thread-safe -- serialize shared use.\n"
             "Inputs with matching dtype/layout may be zero-copy borrowed during\n"
             "the GPU call; conversions (f32->f64, bool->uint8, layout) allocate\n"
             "copies held until the call returns. Do not mutate inputs from\n"
@@ -446,24 +461,52 @@ PYBIND11_MODULE(factor_cuda_pybind, m) {
   // (review 2026-08-06: missing defaults made every omit-optional call a
   // TypeError). parameter_scan's mask stays required (contract: masked mode
   // needs a mask).
+  // Cached device-buffer workspace handles (P3 adapter auto-cache, 2026-08-08).
+  // The C++ workspace types are non-copyable/non-movable owning aggregates;
+  // these Python classes are thin handles so the adapter can hold a workspace
+  // across calls (reusing device buffers per shape key) without exposing its
+  // internals. clear() releases all cached buffers (idempotent; safe on empty)
+  // via the owner MemTracker. Workspaces are NOT thread-safe -- calls sharing a
+  // workspace must be serialized by the caller (the fc adapter holds one lock
+  // per shape key).
+  py::class_<cs_rank_workspace>(m, "CsRankWorkspace")
+      .def(py::init<>())
+      .def("clear", &cs_rank_workspace_clear,
+           "Release all cached device buffers (idempotent; safe on empty). "
+           "Next call re-allocates.");
+  py::class_<rolling_ic_workspace>(m, "RollingIcWorkspace")
+      .def(py::init<>())
+      .def("clear", &rolling_ic_workspace_clear,
+           "Release all cached device buffers (idempotent; safe on empty). "
+           "Next call re-allocates.");
+
   m.def("cs_rank_f32", &cs_rank_f32, py::arg("X"), py::arg("mask") = py::none(),
-        py::arg("descending") = false,
+        py::arg("descending") = false, py::arg("workspace") = py::none(),
         "Stable ordinal cross-sectional rank of a (T,N) float32 panel. "
-        "Valid cells -> integer rank 1..K; invalid -> quiet NaN 0x7fc00000.");
+        "Valid cells -> integer rank 1..K; invalid -> quiet NaN 0x7fc00000. "
+        "workspace: optional CsRankWorkspace to reuse device buffers across "
+        "calls with the same shape (None = allocate/free every call).");
   m.def("rolling_ic_f64", &rolling_ic_f64, py::arg("F"), py::arg("R"),
         py::arg("fmask") = py::none(), py::arg("rmask") = py::none(),
         py::arg("min_valid") = 30, py::arg("return_ranks") = false,
+        py::arg("workspace") = py::none(),
         "Daily cross-sectional Spearman IC. Optional rank outputs are "
-        "non-contract diagnostics (0 = not ranked).");
+        "non-contract diagnostics (0 = not ranked). workspace: optional "
+        "RollingIcWorkspace to reuse device buffers across calls with the "
+        "same shape (None = allocate/free every call).");
   m.def("stock_corr_f64", &stock_corr_f64, py::arg("X"), py::arg("mask") = py::none(),
         py::arg("return_stats") = false,
         "(N,N) stock correlation matrix; optional dispatch stats are "
         "non-contract diagnostics.");
   m.def("parameter_scan_f32", &parameter_scan_f32, py::arg("X"), py::arg("mask"),
         py::arg("return_timing") = false, py::arg("active_groups") = py::none(),
+        py::arg("workspace") = py::none(),
         "G=4 cross-sectional-rank parameter scan (direction x mask_mode). "
         "Low-level schema; whitelist-downgraded groups are None. "
         "return_timing=True adds per-group time_ms/time_gpu_ms (+ diagnostic "
         "_elapsed_ms_diag); active_groups=None runs all 4, else a length-4 "
-        "0/1 list selects which groups to execute (skipped groups: -100).");
+        "0/1 list selects which groups to execute (skipped groups: -100). "
+        "workspace: optional CsRankWorkspace (parameter_scan shares cs_rank's "
+        "buffer set) to reuse device buffers across calls with the same shape "
+        "(None = allocate/free every call).");
 }

@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: GitHub Discussions
+    url: https://github.com/redamancy231-create/factor-cuda/discussions
+    about: 讨论、问题咨询
+  - name: 安全漏洞报告
+    url: https://github.com/redamancy231-create/factor-cuda/security
+    about: 私有报告安全漏洞（勿公开 Issue）

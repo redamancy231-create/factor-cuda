@@ -1,0 +1,13 @@
+# Normalize line endings to LF for reproducible script_sha256 checks and
+# cross-platform consistency (GitHub CI checkout uses these rules).
+* text=auto
+*.py text eol=lf
+*.cu text eol=lf
+*.cuh text eol=lf
+*.cpp text eol=lf
+*.h text eol=lf
+*.md text eol=lf
+*.json text eol=lf
+*.yml text eol=lf
+*.ps1 text eol=lf
+*.bat text eol=crlf

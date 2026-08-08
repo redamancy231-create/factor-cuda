@@ -216,6 +216,7 @@ class TestF01SignatureSnapshot:
         assert ps[2].default is None
         assert all(p.kind is p.POSITIONAL_OR_KEYWORD for p in ps)
 
+    @NEED_CUDA
     def test_return_dtype_shape_cross_sectional_rank(self):
         X = rng.standard_normal((12, 8)).astype(np.float32)
         out = fc.cross_sectional_rank(X)
@@ -268,6 +269,7 @@ class TestF02StrictScalarTypes:
             with pytest.raises(ValueError):
                 fc.cross_sectional_rank(X, None, descending=bad)
 
+    @NEED_CUDA
     def test_descending_accepts_bool(self):
         X = rng.standard_normal((4, 4)).astype(np.float32)
         assert fc.cross_sectional_rank(X, None, descending=True).dtype == np.float32
@@ -492,6 +494,7 @@ class TestF07SyncBoundaries:
         with pytest.raises(ValueError):
             fc.factor_corr(F3, torch.utils.dlpack.to_dlpack(mf), backend="cpu")
 
+    @NEED_CUDA
     def test_entry_sync_host_input(self):
         # Host-resident inputs have no producer stream; op must still be
         # synchronous (result correct immediately).
@@ -1271,6 +1274,7 @@ class TestF18TestSupplement:
 
     # ---- read-only contract + independent output -----------------------
 
+    @NEED_CUDA
     def test_input_read_only(self):
         """All public ops leave their numpy inputs byte-identical (read-only
         contract). Parametrized across rank / factor_corr / stock_corr /
@@ -1298,6 +1302,7 @@ class TestF18TestSupplement:
         fc.rolling_ic(f, r, min_valid=2, device="cpu")
         assert np.array_equal(f, fc_) and np.array_equal(r, rc)
 
+    @NEED_CUDA
     def test_output_independent_allocation(self):
         """Repeated calls return independent allocations; outputs never share
         memory with inputs (across rank / stock_corr / factor_plane)."""
@@ -1392,6 +1397,7 @@ class TestF18TestSupplement:
         X = np.zeros((1, (1 << 28) + 1), dtype=np.float32)
         fc.parameter_scan([("direction", ["ascending"])], X)
 
+    @NEED_CUDA
     def test_repeated_calls_bitwise_stable(self):
         X = rng.standard_normal((30, 20)).astype(np.float32)
         o1 = fc.cross_sectional_rank(X, None, False)
@@ -1463,6 +1469,7 @@ class TestF18TestSupplement:
         with pytest.raises(ValueError):
             fc.rolling_ic(f, r, min_valid=2, device="tpu")
 
+    @NEED_CUDA
     def test_mask_must_be_bool(self):
         X = rng.standard_normal((10, 8)).astype(np.float32)
         with pytest.raises(ValueError):
@@ -1470,6 +1477,7 @@ class TestF18TestSupplement:
         with pytest.raises(ValueError):
             fc.cross_sectional_rank(X, np.ones((10, 8), dtype=np.float64))
 
+    @NEED_CUDA
     def test_mask_shape_mismatch(self):
         X = rng.standard_normal((10, 8)).astype(np.float32)
         with pytest.raises(ValueError):

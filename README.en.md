@@ -1,5 +1,7 @@
 # factor-cuda — CUDA-Accelerated Cross-Sectional Factor Analysis
 
+> [简体中文](README.md) · [English](README.en.md) · [繁體中文](README.zh-Hant.md)
+
 > GPU-accelerated cross-sectional analysis for quantitative factors — cross-sectional ranking, correlation, IC, and parameter scans.
 > Together with ashare-mcp (data acquisition) and ml-quant-trading (factor production), it forms a free A-share quantitative-research pipeline.
 > **This project does NOT compute factors, backtest, or fetch data.**

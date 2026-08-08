@@ -1,5 +1,11 @@
 # factor-cuda — CUDA 因子截面分析加速
 
+> [简体中文](README.md) · [English](README.en.md) · [繁體中文](README.zh-Hant.md)
+>
+> ![GitHub stars](https://img.shields.io/github/stars/redamancy231-create/factor-cuda)
+> ![GitHub release](https://img.shields.io/github/v/release/redamancy231-create/factor-cuda)
+> ![GitHub license](https://img.shields.io/github/license/redamancy231-create/factor-cuda)
+
 > GPU 加速的量化因子**截面分析**工具——截面排序、相关性、IC、参数扫描。
 > 与 ashare-mcp（数据获取）、ml-quant-trading（因子生产）组成 A 股量化研究免费管线。
 > **本项目不做因子计算、不做回测、不做数据获取。**

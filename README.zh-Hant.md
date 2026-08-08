@@ -1,5 +1,7 @@
 # factor-cuda — CUDA 因子橫斷面分析加速
 
+> [简体中文](README.md) · [English](README.en.md) · [繁體中文](README.zh-Hant.md)
+
 > GPU 加速的量化因子**橫斷面分析**工具——橫斷面排序、相關性、IC、參數掃描。
 > 與 ashare-mcp（資料取得）、ml-quant-trading（因子生產）組成 A 股量化研究免費管線。
 > **本專案不做因子計算、不做回測、不做資料取得。**

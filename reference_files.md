@@ -61,6 +61,8 @@
 - [CHANGELOG.md](CHANGELOG.md) — 变更记录
 - [RISK.md](RISK.md) — 风险登记
 - [README.md](README.md) — 项目入口
+- [FUTURE_WORK.md](FUTURE_WORK.md) — 未来修改方向（v1.1.0 后，双审查闭环）
+- [PROJECT_ASSESSMENT.md](PROJECT_ASSESSMENT.md) — 项目价值评估（内部，已 gitignore）
 - [project_status.md](project_status.md) — 内部状态（已 gitignore）
 - [reviews/](reviews/) — 独立审查报告
 - [prompts/](prompts/) — 审查提示词

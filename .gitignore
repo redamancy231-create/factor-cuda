@@ -26,6 +26,7 @@ venv/
 # 内部追踪（不公开推送）
 project_status.md
 poc34_workload_estimate.md
+PROJECT_ASSESSMENT.md
 prompts/
 reviews/
 scratch/

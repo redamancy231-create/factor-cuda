@@ -16,7 +16,7 @@
 
 ## Status
 
-**Released v1.1.0 (2026-08-08)** — PoC items ①–④ closed out; Phases 1–4 complete + P3 adapter auto-cache.
+**Released v1.1.1 (2026-08-10)** — PoC items ①–④ closed out; Phases 1–4 complete + P3 adapter auto-cache + selfcheck occlusion-gap hardening (corpus_parity full-column 5000).
 - The operation-semantics contract is frozen (L0 Spec, CLAUDE.md); all 150 tests passed locally on GPU / 3 skipped (GitHub Actions runs the CPU/contract arm without GPU: 85 passed); all six Phase 3 acceptance gates are marked PASS.
 - Phase 4 benchmark end-to-end **~3.0×** (vs the best same-semantics free alternative; below the pre-registered 5× superiority threshold → **registered as negative result NRR-2026-024**).
 - The memory-model "divisible" trilogy (F-blocking / streaming / N-blocking) is validated as a PoC / memory-feasibility path: factor F=128 model peak 12,645.61 MiB (over budget) → streaming measured 7,079.75 MiB (fits).
@@ -140,8 +140,8 @@ Real operator outputs on a deterministic synthetic panel (RTX 4060 Laptop):
 
 ## Related Projects
 
-- [ashare-mcp](https://github.com/redamancy231-create/ashare-mcp) — A-share data acquisition
-- [ml-quant-trading](https://github.com/redamancy231-create/ml-quant-trading) — factor production
+- [ashare-mcp](https://github.com/CharmYue/ashare-mcp) — A-share data acquisition (upstream original)
+- [ml-quant-trading](https://github.com/initial-d/ml-quant-trading) — factor production (upstream original)
 - [etf-pattern-match-pybind11](https://github.com/redamancy231-create/etf-pattern-match-pybind11) — a reference project using the same stack (pybind11 + CMake)
 - [negative-results-registry](https://github.com/redamancy231-create/negative-results-registry) — negative-result registry (NRR-2026-024)
 - [redamancy231-create](https://github.com/redamancy231-create/redamancy231-create) — personal profile / full project index

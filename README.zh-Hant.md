@@ -16,7 +16,7 @@
 
 ## 狀態
 
-**已發佈 v1.1.0（2026-08-08）**——PoC ①–④ 均已完成驗證 + Phase 1-4 完成 + P3 適配層自動快取。
+**已發佈 v1.1.1（2026-08-10）**——PoC ①–④ 均已完成驗證 + Phase 1-4 完成 + P3 適配層自動快取 + selfcheck 遮擋缺口補強（corpus_parity 全欄 5000）。
 - 操作語義契約已凍結（L0 Spec，CLAUDE.md）；測試套件本機 GPU **150 項通過 / 3 項跳過**（GitHub Actions 無 GPU 跑 CPU/契約臂 85 項通過）；Phase 3 六項驗收關卡全數 PASS。
 - Phase 4 benchmark 端到端 **~3.0×**（vs 同語義最佳免費替代；未達 5× 優勢門檻 → **負結果已登記 NRR-2026-024**）。
 - 記憶體模型「可分塊」三件套（F-blocking / streaming / N-blocking）已驗證（PoC/記憶體可行性路徑）：factor F=128 模型峰值 12,645.61 MiB 超預算 → streaming 實測 7,079.75 MiB 符合預算。
@@ -140,8 +140,8 @@ RTX 4060 Laptop（sm_89），corpus 1218×5000×12，vs 同語義最佳免費替
 
 ## 相關專案
 
-- [ashare-mcp](https://github.com/redamancy231-create/ashare-mcp) — A 股資料取得
-- [ml-quant-trading](https://github.com/redamancy231-create/ml-quant-trading) — 因子生產
+- [ashare-mcp](https://github.com/CharmYue/ashare-mcp) — A 股資料取得（上游原專案）
+- [ml-quant-trading](https://github.com/initial-d/ml-quant-trading) — 因子生產（上游原專案）
 - [etf-pattern-match-pybind11](https://github.com/redamancy231-create/etf-pattern-match-pybind11) — 同技術堆疊（pybind11+CMake）的參考專案
 - [negative-results-registry](https://github.com/redamancy231-create/negative-results-registry) — 負結果登記（NRR-2026-024）
 - [redamancy231-create](https://github.com/redamancy231-create/redamancy231-create) — 個人主頁 / 全部專案索引

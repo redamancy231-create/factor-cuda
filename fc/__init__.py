@@ -21,7 +21,7 @@ def clear_workspaces():
     _clear_workspaces()
 
 
-__version__ = "1.1.0"
+__version__ = "1.1.1"
 # clear_workspaces stays a module attribute (callable as fc.clear_workspaces)
 # but is intentionally NOT in __all__: the F01 signature snapshot locks the
 # contract public API exactly, and the release helper is not contract.

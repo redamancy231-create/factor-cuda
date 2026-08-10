@@ -373,7 +373,7 @@ def test_validate_rejects_forged_derived_fields():
 # ---- 8. package API -----------------------------------------------------------
 
 def test_version_and_clear_api():
-    assert fc.__version__ == "1.1.0"
+    assert fc.__version__ == "1.1.1"
     # release helper: module attribute, NOT part of the locked contract __all__
     assert callable(fc.clear_workspaces)
     assert "clear_workspaces" not in fc.__all__

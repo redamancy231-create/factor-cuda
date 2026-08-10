@@ -35,7 +35,7 @@
 | cs_rank（复核，Phase 1） | corpus `gate_config_v1.json` cs_rank exact_half 13.926 | selfcheck 163 case（poc/poc3_cs_rank_selfcheck.cu）+ F01 系列 | 9.34ms BEATS（vs raw 27.85 = 2.98×） |
 | factor_corr | corpus `gate_config_v1.json` 1543.521 | selfcheck anchors+最小证明② + corpus_parity factor 2.65e-14 + F10/HG-2 | 217.69ms BEATS（14.2× vs raw 3087.04） |
 | stock_corr fast（全有效面板） | **v2 同面板 gate** `benchmarks/results/runs/stock_corr_v2_rebaseline_20260805/gate.json` | selfcheck v2 dispatch 8 例 + corpus_parity fast 2.22e-16 + F10/HG-2 | 6.09/37.34/200.30ms BEATS 26.35/359.35/2382.37（4.3×/9.6×/11.9×） |
-| stock_corr general（NaN/mask 面板） | **待建同面板 gate**（corpus returns[:, :N]+mask，CuPy masked-GEMM exact_half，对称 reps） | corpus_parity general 4.44e-16 + F10/HG-2 | **未裁决**（见 §2；初步同面板 1.96×/1.99×） |
+| stock_corr general（NaN/mask 面板） | **待建同面板 gate**（corpus returns[:, :N]+mask，CuPy masked-GEMM exact_half，对称 reps） | corpus_parity general 6.66e-16 + F10/HG-2 | **未裁决**（见 §2；初步同面板 1.96×/1.99×） |
 | rolling_ic | corpus `gate_config_v1.json` 77.183 | selfcheck 85+最小证明① + F01 系列 | 48.43ms BEATS（3.19× vs raw 154.37） |
 | parameter_scan | corpus `gate_config_v1.json` parameter_scan(G=4) 55.343 | selfcheck（G=4 字典序+group_status）+ F18（adapter 逻辑层） | 35.82ms BEATS（3.09× vs raw 110.69） |
 
@@ -54,7 +54,7 @@ PASS/FAIL 规则：五维全 PASS 记 PASS；性能 <2×（相对公平基线 ra
 
 **待裁决动作（P0）**：仿 `benchmarks/rebaseline_stock_corr_gate_v1.py` 协议，导出 corpus returns[:, :500]+mask 为冻结 .bin（消除 `poc3_stock_corr_perf.cu:159-166` 合成面板与 `poc4_e2e_v1.py` corpus 面板之间 52.19 vs 27.05 的 2× 矛盾），CuPy masked-GEMM exact_half 同面板对称 reps 重测 GPU general。裁决规则：≥2× 记 PASS（附边界注释）；<2× 记 NRR 负结果（硬件 FP64 天花板 1/64 结构性归因 + kernel 效率次因，禁止写「可实现 2×」），不阻塞 Phase 2/3 语义门。
 
-**正确性**：PLAN Phase 2 门槛（numpy.corrcoef 对照/FP64 CPU fallback/无未来函数）双路径 PASS——corpus_parity general 4.44e-16/fast 2.22e-16 + F10 oracle 直连 + HG-2 bias ≤1e-12 + fc/_cpu_core.py `_two_pass_corr` Kahan 守卫。general <2× 是性能负结果，非正确性失败，**不构成 Phase 2 阻塞**。
+**正确性**：PLAN Phase 2 门槛（numpy.corrcoef 对照/FP64 CPU fallback/无未来函数）双路径 PASS——corpus_parity general 6.66e-16/fast 2.22e-16 + F10 oracle 直连 + HG-2 bias ≤1e-12 + fc/_cpu_core.py `_two_pass_corr` Kahan 守卫。general <2× 是性能负结果，非正确性失败，**不构成 Phase 2 阻塞**。
 
 ---
 

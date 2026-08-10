@@ -9,8 +9,8 @@ authors:
   - family-names: "redamancy231-create"
     given-names: "redamancy231"
     website: "https://github.com/redamancy231-create"
-version: "1.1.0"
-date-released: "2026-08-08"
+version: "1.1.1"
+date-released: "2026-08-10"
 license: "MIT"
 keywords:
   - quant-finance

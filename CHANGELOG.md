@@ -4,6 +4,7 @@
 
 | 日期 | 模型型号 | 变更内容 |
 |------|---------|---------|
+| 2026-08-10 | DeepSeek-V4-Flash (via Claude Code CLI) | **selfcheck 遮挡缺口补强 + corpus_parity 全列（覆盖盘点 4 缺口闭合）**——① `poc3_stock_corr_selfcheck.cu` 新增棋盘交错遮挡/整列全 False mask/masked-out 极端值域校验 3 用例；② `poc3_rolling_ic_selfcheck.cu` 新增常量行 GPU→NaN 用例（闭合唯一 test+bench 双缺失分支）；③ `corpus_parity_v1.py` stock_corr 默认改**全列 5000**（流式比较避免 12.5M 对物化，`--n-sub` 降级保留但 gate 保持 false），回环 gate_closed=True：general **12,502,500 对全 PASS** max_dr=6.66e-16、**fallback_count=10318/12.5M（0.08%，全列揭示前缀 0.27% 之外的真实触发率）**；三份改动经 Codex CLI 直修 + 本地编译 ALL PASS + compute-sanitizer 0 errors 验证 |
 | 2026-08-10 | DeepSeek-V4-Flash (via Claude Code CLI) | **README 三语补充技术栈 badge（CUDA 13.3 + Python 3.12+）**——主 README 已有 5 个 badge，按 QG 参考分析补充 2 个 shields.io 技术 badge；CUDA 用 `support_matrix.json` build_tested 单一真源值（13.3，非 QG 的 Optional——FC 是 CUDA-first 必需构建）；**顺带修复三语 badge 漂移**：英文/繁体 README 原本无 badge 块，现与主 README 对齐（语言 badge 各用各语言） |
 | 2026-08-08 | DeepSeek-V4-Flash (via Claude Code CLI) | **FUTURE_WORK.md 未来修改方向 + 双审查闭环（commits `b997bfa`→`70e600d`→`bae5c95`）**——方向文档（按依据×价值/成本分层，含优化/性能/功能/工程/限制/决策建议）+ 三语 README 索引；**内部 Workflow 17 findings（2 BLOCKER）+ 外部 GPT-5.6-Sol 13 条（1 BLOCKER）全处置**：+238% 过期依据重写、N=22600 高估修正、**143<184 数学修正**、12.6 GiB 跨口径分栏、新增 §2.4 设备驻留零拷贝等；外部额外抓出内部漏掉的 143<184/跨口径/零拷贝遗漏；项目价值评估（工具 C+/方法论 A-）沉淀 `PROJECT_ASSESSMENT.md`（gitignored） |
 | 2026-08-08 | DeepSeek-V4-Flash (via Claude Code CLI) | **发布 v1.1.0（P3 适配层自动缓存）**——三语 README 版本/测试数字/功能配套/证据索引同步 + CITATION.cff version 1.1.0 + GitHub release tag v1.1.0；fc 包 `__version__` 1.1.0 |

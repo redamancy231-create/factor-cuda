@@ -928,6 +928,59 @@ int main(int argc, char** argv) {
     check_matrix("masked_bias_1e12", X.data(), M.data(), T, N);        // general
   }
 
+  // ---- mask-shape coverage gaps (2026-08-10) ----------------------------------
+  printf("== mask shape gaps ==\n");
+  {
+    // gap: checkerboard mask (2026-08-10). All stored values are finite;
+    // opposite-parity columns have no joint rows, while same-parity columns do.
+    const int T = 12, N = 4;
+    Lcg rng(0xC4ECu);
+    std::vector<double> X(static_cast<size_t>(T) * N);
+    std::vector<uint8_t> M(static_cast<size_t>(T) * N);
+    for (int t = 0; t < T; ++t) {
+      for (int i = 0; i < N; ++i) {
+        X[static_cast<size_t>(t) * N + i] = rng.uniform() * 4.0 - 2.0;
+        M[static_cast<size_t>(t) * N + i] = ((t + i) % 2 == 0) ? 1u : 0u;
+      }
+      // Columns 0 and 2 share the even rows and have a +1 finite golden.
+      X[static_cast<size_t>(t) * N + 2] =
+          2.0 * X[static_cast<size_t>(t) * N + 0] + 0.5;
+    }
+    check_matrix("checkerboard_mask", X.data(), M.data(), T, N);
+    std::vector<double> out(static_cast<size_t>(N) * N);
+    int rc = stock_corr_gpu(X.data(), M.data(), T, N, out.data());
+    double v = rc == 0 ? out[2] : nan_payload();  // off-diagonal (0,2)
+    bool golden = rc == 0 && std::isfinite(v) && std::abs(v - 1.0) <= 1e-12;
+    printf("  [%s] checkerboard_mask offdiag[0,2]=%.6g expect +1\n",
+           golden ? "PASS" : "FAIL", v);
+    if (!golden) ++g_fail;
+  }
+  {
+    // gap: all-false column mask (2026-08-10). Finite stored data models a
+    // never-trading stock; every pair involving col1, including its diagonal,
+    // must be NaN while the unaffected (0,2) pair remains finite.
+    const int T = 6, N = 3, masked_col = 1;
+    const double X[T * N] = {1, 10, 2, 2, 20, 1, 3, 30, 4,
+                             4, 40, 3, 5, 50, 6, 6, 60, 5};
+    std::vector<uint8_t> M(static_cast<size_t>(T) * N, 1u);
+    for (int t = 0; t < T; ++t)
+      M[static_cast<size_t>(t) * N + masked_col] = 0u;
+    check_matrix("all_false_column_mask", X, M.data(), T, N);
+    std::vector<double> out(static_cast<size_t>(N) * N);
+    int rc = stock_corr_gpu(X, M.data(), T, N, out.data());
+    bool golden = rc == 0;
+    if (golden) {
+      for (int i = 0; i < N; ++i) {
+        golden = golden && std::isnan(out[static_cast<size_t>(masked_col) * N + i]);
+        golden = golden && std::isnan(out[static_cast<size_t>(i) * N + masked_col]);
+      }
+      golden = golden && std::isfinite(out[2]);  // unaffected pair (0,2)
+    }
+    printf("  [%s] all_false_column_mask NaN row/col + finite unaffected pair\n",
+           golden ? "PASS" : "FAIL");
+    if (!golden) ++g_fail;
+  }
+
   // ---- N-blocking (pair-axis width blocking) -----------------------------------
   // Every case: production stock_corr_gpu vs stock_corr_gpu_nblock output
   // bitwise-equal (the "pair independent -> bitwise identical" contract) +
@@ -1214,6 +1267,23 @@ int main(int argc, char** argv) {
   printf("== domain -4 ==\n");
   {
     std::vector<double> out(4);
+    // gap: masked-out extreme domain value (2026-08-10). Every 1e160 cell is
+    // excluded by the mask, so valid cells remain in-domain and rc must be 0.
+    {
+      const int T = 9, N = 3;
+      std::vector<double> X(static_cast<size_t>(T) * N);
+      std::vector<uint8_t> M(static_cast<size_t>(T) * N, 1u);
+      for (int t = 0; t < T; ++t) {
+        for (int i = 0; i < N; ++i)
+          X[static_cast<size_t>(t) * N + i] =
+              static_cast<double>((t + 1) * (i + 2)) + 0.25 * i;
+        const int i = t % N;
+        M[static_cast<size_t>(t) * N + i] = 0u;
+        X[static_cast<size_t>(t) * N + i] = 1e160;
+      }
+      check_matrix("masked_extreme_domain_value", X.data(), M.data(), T, N);
+    }
+
     // max|x| = 2e150 > 1e150 -> -4 (both cells valid and finite).
     const double big[4] = {1e150, 2e150, 1.0, 1.0};
     int rc = stock_corr_gpu(big, nullptr, 2, 2, out.data());

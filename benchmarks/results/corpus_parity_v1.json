@@ -1,8 +1,8 @@
 {
-  "schema_version": "1.1.0",
+  "schema_version": "1.2.0",
   "artifact": "corpus_parity_v1.json",
-  "generator": "benchmarks/corpus_parity_v1.py v1.1 (DeepSeek-V4-Flash via Claude Code CLI, 2026-08-05)",
-  "generated_at": "2026-08-08T00:41:55",
+  "generator": "benchmarks/corpus_parity_v1.py v1.2 (Codex CLI, 2026-08-10)",
+  "generated_at": "2026-08-10T20:56:47",
   "env": {
     "platform": "Windows-11-10.0.26100-SP0",
     "python": "3.12.7",
@@ -11,7 +11,9 @@
     "gpu": "NVIDIA GeForce RTX 4060 Laptop GPU"
   },
   "tolerance": 1e-12,
-  "n_sub": 200,
+  "n_sub": 5000,
+  "corpus_columns": 5000,
+  "full_column_coverage": true,
   "provenance": {
     "corpus": {
       "id": "corpus_synth_v1",
@@ -33,13 +35,13 @@
         "sha256": "6D32CB87BDD6EA76E68EEF147750F48312B7F832263F8F826769397FC8C20C4E"
       },
       "returns": {
-        "sha256": "2C67948A1B14D2721293C5CCB8A7B7FE4F6E0C2B56E570D98CE6F2300A7C163C"
+        "sha256": "61AEA5F78787B9C502F8E1C4D104ADAFEF5F97CB2045118487947467376445BC"
       },
       "returns_mask": {
-        "sha256": "F60E83C64CF13B6165728700CB295924EF25866A099C4EA314F3D96DDB0833FB"
+        "sha256": "6D32CB87BDD6EA76E68EEF147750F48312B7F832263F8F826769397FC8C20C4E"
       },
       "fast": {
-        "sha256": "8B60AD1471A8A908A4705940F4FE22DE78BDAD0A5E4E767F4201202C9085FCC8"
+        "sha256": "934D6F927093A4E6DE5232362076947B143248ACBF7692875BC49D8A8876ABE4"
       },
       "degen": {
         "sha256": "D3A5D6A5FB4F4CB7774B6D997940C0639F840669A1439BD482698B12D48708F9"
@@ -56,10 +58,10 @@
         "sha256": "4DCAFF7849515D2FA2B1E851FE3C379C9756D1A0A3EC790B247CCE8D2A1E1F0E"
       },
       "stock": {
-        "sha256": "8FE1715DCC79AC99266F7BDE57F9D307D7E40991BFD4D2A2D26A6B723C279F1D"
+        "sha256": "B0650576C2D5E0AA26902836D18AD8BB647472FCF37E06E9A97C48587AF54CBC"
       },
       "fast": {
-        "sha256": "6910BABBAFF99F0C382DCAE5334AC15E2831B6A0957D3F535783C2DEDEA6B0DC"
+        "sha256": "3AF5C67F92C4ED9D878E9F88331AD7A8838CDA0803860088C44428E6A8913CE3"
       },
       "degen": {
         "sha256": "B26E26A5674328CAD548EE37BF73C38EEF8382BE719E9331D01020D9EB2977C1"
@@ -73,7 +75,7 @@
   "dispatch": {
     "stock_corpus": {
       "selected_path": 1,
-      "fallback_count": 55,
+      "fallback_count": 10318,
       "rc": 0
     },
     "stock_fast": {
@@ -98,6 +100,7 @@
     "stock_degen": 0,
     "stock_fallback": 1
   },
+  "dispatch_coverage_ok": true,
   "coverage_ok": true,
   "comparisons_ok": true,
   "provenance_ok": true,
@@ -135,37 +138,37 @@
     },
     {
       "case": "stock_corr_general",
-      "n_pairs": 20100,
-      "n_finite": 20100,
-      "n_finite_ok": 20100,
+      "n_pairs": 12502500,
+      "n_finite": 12502500,
+      "n_finite_ok": 12502500,
       "n_nan": 0,
       "n_nan_match": 0,
-      "max_dr": 4.440892098500626e-16,
+      "max_dr": 6.661338147750939e-16,
       "worst_pair": [
-        40,
-        103
+        230,
+        1641
       ],
       "gpu_symmetric": true,
       "n_mismatch": 0,
       "mismatches": [],
       "bias": {
-        "max_finite_pair_bias": 0.21300366341933186,
-        "max_pair_bias_all": 0.21300366341933186,
+        "max_finite_pair_bias": 0.3054800417310785,
+        "max_pair_bias_all": 0.3054800417310785,
         "n_degenerate_pairs": 0,
-        "max_abs": 0.0999760702252388,
-        "min_nonzero_abs": 3.255698999282686e-08,
+        "max_abs": 0.09999819844961166,
+        "min_nonzero_abs": 3.5290081967787046e-10,
         "underflow_scale_pairs": 0
       },
       "pass": true,
       "strict_parity_applies": true,
-      "fallback_count": 55,
+      "fallback_count": 10318,
       "selected_path": 1
     },
     {
       "case": "stock_corr_fast",
-      "n_pairs": 20100,
-      "n_finite": 20100,
-      "n_finite_ok": 20100,
+      "n_pairs": 12502500,
+      "n_finite": 12502500,
+      "n_finite_ok": 12502500,
       "n_nan": 0,
       "n_nan_match": 0,
       "max_dr": 2.220446049250313e-16,
@@ -177,11 +180,11 @@
       "n_mismatch": 0,
       "mismatches": [],
       "bias": {
-        "max_finite_pair_bias": 0.09382416240386733,
-        "max_pair_bias_all": 0.09382416240386733,
+        "max_finite_pair_bias": 0.10592881819632034,
+        "max_pair_bias_all": 0.10592881819632034,
         "n_degenerate_pairs": 0,
-        "max_abs": 0.10180421685713122,
-        "min_nonzero_abs": 7.273640199172921e-08,
+        "max_abs": 0.10848019209807229,
+        "min_nonzero_abs": 1.0275320682564823e-08,
         "underflow_scale_pairs": 0
       },
       "pass": true,

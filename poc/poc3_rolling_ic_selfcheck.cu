@@ -779,6 +779,53 @@ int main() {
         ++g_fail;
       }
     }
+
+    // gap: constant-row IC -> NaN on GPU (2026-08-10)
+    {
+      const int T = 4, N = 40, min_valid = 30;
+      std::vector<double> F(static_cast<size_t>(T) * N);
+      std::vector<double> R(static_cast<size_t>(T) * N);
+      std::vector<uint8_t> fM(static_cast<size_t>(T) * N, 1);
+      std::vector<uint8_t> rM(static_cast<size_t>(T) * N, 1);
+      for (int t = 0; t < T; ++t) {
+        for (int j = 0; j < N; ++j) {
+          const int g = t * N + j;
+          if (t == 0) {
+            F[g] = 7.0;                         // constant factor row
+            R[g] = static_cast<double>(j + 1);  // varied returns
+          } else if (t == 1) {
+            F[g] = static_cast<double>(j + 1);  // varied factor
+            R[g] = -3.0;                        // constant return row
+          } else if (t == 2) {
+            F[g] = static_cast<double>(j + 1);
+            R[g] = static_cast<double>(j + 1);  // finite IC = 1
+          } else {
+            F[g] = static_cast<double>(j + 1);
+            R[g] = static_cast<double>(N - j);  // finite IC = -1
+          }
+        }
+      }
+      const std::vector<int> chunks = {2, 2};
+      std::vector<double> full(static_cast<size_t>(T)), chunked(static_cast<size_t>(T));
+      const int rc1 = rolling_ic_gpu(F.data(), R.data(), fM.data(), rM.data(), T, N,
+                                     min_valid, full.data());
+      const int rc2 = rolling_ic_gpu_chunked(F.data(), R.data(), fM.data(), rM.data(), T, N,
+                                             min_valid, chunks, chunked.data());
+      const bool full_shape = std::isnan(full[0]) && std::isnan(full[1]) &&
+                              std::isfinite(full[2]) && std::isfinite(full[3]);
+      const bool chunked_shape = std::isnan(chunked[0]) && std::isnan(chunked[1]) &&
+                                 std::isfinite(chunked[2]) && std::isfinite(chunked[3]);
+      const bool ok = rc1 == 0 && rc2 == 0 && ic_bitwise(full, chunked) &&
+                      full_shape && chunked_shape;
+      printf("  [%s] constant-row-gpu-nan (T=%d N=%d min_valid=%d chunks={2,2})\n",
+             ok ? "PASS" : "FAIL", T, N, min_valid);
+      if (!ok) {
+        printf("      rc1=%d rc2=%d full=[%.12g %.12g %.12g %.12g] chunked=[%.12g %.12g %.12g %.12g]\n",
+               rc1, rc2, full[0], full[1], full[2], full[3], chunked[0], chunked[1],
+               chunked[2], chunked[3]);
+        ++g_fail;
+      }
+    }
   }
 
   // ---- workspace path (P2 PoC4 perf, 2026-08-08): cached-buffer reuse must be

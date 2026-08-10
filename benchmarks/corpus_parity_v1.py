@@ -17,18 +17,24 @@ v1.1（2026-08-05，GPT-5.6-Sol 审查响应 F1-F4）补强：
     min 非零|x|、~1e-140 下溢守卫），替代单列级度量。
   - **复合门槛**：`gate_closed = comparisons_ok AND coverage_ok AND provenance_ok`。
 
+v1.2（2026-08-10，Codex CLI 全列补强）：
+  - stock_corr corpus/general 与 all-valid/fast 默认覆盖 corpus 全列；`--n-sub`
+    仅作为资源受限时的显式降级开关，输出记录实测列数与是否全列覆盖。
+  - 两个 O(N²) stock oracle 改为逐 pair 流式比较，避免全列时物化巨量 Python 对象；
+    mismatch 只保留前 5 个详情但仍精确计数，fail-closed 判定不变。
+
 跨端链路：
   1. corpus_loader_v1.load() 校验 corpus_synth_v1 data_sha256（冻结语料权威读入口）；
   2. 导出 f64/u8 冻结面板到 scratch/corpus_parity/（gitignored）+ 记录 hash；
   3. 运行 build/poc3_corpus_parity.exe（GPU kernel 输出矩阵 dump + STATS 回传）；
   4. 对冻结 wrapper corr_oracle_v1.py 逐 pair 对比（|Δr|≤1e-12 / NaN parity）。
 
-五用例：A factor_corr 全 corpus (F,F)；B stock_corr corpus returns 前缀（general）；
-C stock_corr all-valid 面板前缀（fast）；D stock_corr 冻结 degenerate 面板（fast+NaN 对角）；
+五用例：A factor_corr 全 corpus (F,F)；B stock_corr corpus returns 默认全列（general）；
+C stock_corr all-valid 面板默认全列（fast）；D stock_corr 冻结 degenerate 面板（fast+NaN 对角）；
 E stock_corr 冻结低偏置 fallback 面板（general+fallback 命中）。
 
 用法：
-    PYTHONIOENCODING=utf-8 python corpus_parity_v1.py [--n-sub 200]
+    PYTHONIOENCODING=utf-8 python corpus_parity_v1.py [--n-sub N]  # 默认 corpus 全列
 """
 from __future__ import annotations
 
@@ -61,8 +67,8 @@ from corr_oracle_v1 import corr_oracle, pair_valid_mask  # noqa: E402
 
 OUT_JSON = RESULTS / "corpus_parity_v1.json"
 OUT_MD = RESULTS / "corpus_parity_v1.md"
-VERSION = "1.1.0"
-GENERATOR = "benchmarks/corpus_parity_v1.py v1.1 (DeepSeek-V4-Flash via Claude Code CLI, 2026-08-05)"
+VERSION = "1.2.0"
+GENERATOR = "benchmarks/corpus_parity_v1.py v1.2 (Codex CLI, 2026-08-10)"
 TOL = 1e-12
 BIAS_THRESHOLD = 1e3   # HG-2 大偏置豁免阈值
 UNDERFLOW_SCALE = 1e-140  # HG-2 var 下溢风险尺度守卫
@@ -71,7 +77,7 @@ FB_T, FB_N = 100, 4
 
 # 预期 dispatch（0=fast, 1=general）——执行证据断言
 EXPECTED_PATH = {
-    "stock_corpus": 1,   # corpus returns 前缀 ~199/200 列部分有效 → general
+    "stock_corpus": 1,   # corpus returns 全列含部分有效列 → general
     "stock_fast": 0,     # all-valid 面板 → fast
     "stock_degen": 0,    # 冻结 degenerate 面板 all-valid → fast
     "stock_fallback": 1,  # 冻结 fallback 面板带 mask → general
@@ -137,7 +143,7 @@ def export_panels(d: dict, fast_panel: np.ndarray, n_sub: int,
     mask = d["mask"].astype(np.uint8)
     returns = d["returns"][:, :n_sub].astype(np.float64)
     returns_mask = d["mask"][:, :n_sub].astype(np.uint8)
-    fast_sub = fast_panel[:, :n_sub].astype(np.float64)  # all-valid 面板前缀
+    fast_sub = fast_panel[:, :n_sub].astype(np.float64)  # 默认全列；--n-sub 仅用于资源受限降级
 
     paths = {
         "factors": SCRATCH / f"factors_{T}x{N}x{F}_f64.bin",
@@ -239,12 +245,34 @@ def pair_metrics(xv: np.ndarray, yv: np.ndarray, valid: np.ndarray) -> dict:
     return m
 
 
-def compare_case(name: str, gpu: np.ndarray, pairs, metrics_list, oracles,
-                 tol: float = TOL) -> dict:
-    """gpu: (M,M) f64；pairs/metrics_list/oracles 平行。
+def iter_stock_case_records(panel: np.ndarray, mask: np.ndarray | None = None):
+    """逐 pair 生成 metrics/oracle，避免全列时物化 O(N²) Python 对象。"""
+    n_cols = panel.shape[1]
+    for i in range(n_cols):
+        xv = panel[:, i]
+        mask_i = None if mask is None else mask[:, i]
+        for j in range(i, n_cols):
+            yv = panel[:, j]
+            mask_j = None if mask is None else mask[:, j]
+            valid = pair_valid_mask(xv, yv, mask_a=mask_i, mask_b=mask_j)
+            yield (
+                (i, j),
+                pair_metrics(xv, yv, valid),
+                corr_oracle(xv, yv, mask_a=mask_i, mask_b=mask_j),
+            )
 
-    oracle 计算由调用方完成（性能）；本函数只做逐元素判定、偏置/尺度聚合与断言。
+
+def compare_case(name: str, gpu: np.ndarray, pairs, metrics_list=None,
+                 oracles=None, tol: float = TOL) -> dict:
+    """逐元素判定、聚合偏置/尺度并保持 fail-closed。
+
+    小用例可传平行的 pairs/metrics_list/oracles；全列 stock 用例直接传
+    ((i, j), metrics, oracle) 记录迭代器，避免 O(N²) 常驻内存。
     """
+    if (metrics_list is None) != (oracles is None):
+        raise ValueError("metrics_list 与 oracles 必须同时提供或同时省略")
+    records = pairs if metrics_list is None else zip(pairs, metrics_list, oracles)
+
     n_pairs = 0
     n_nan = 0
     n_nan_match = 0
@@ -252,6 +280,7 @@ def compare_case(name: str, gpu: np.ndarray, pairs, metrics_list, oracles,
     n_finite_ok = 0
     max_dr = 0.0
     worst_pair = None
+    mismatch_count = 0
     mismatches = []
     max_bias = 0.0          # 全部 pair（含退化 → 可能 inf）
     max_finite_bias = 0.0   # 仅有限比较 pair（strict parity 适用的对象）
@@ -259,7 +288,7 @@ def compare_case(name: str, gpu: np.ndarray, pairs, metrics_list, oracles,
     min_nonzero = float("inf")
     underflow_pairs = 0
     n_degenerate = 0
-    for (i, j), m, oval in zip(pairs, metrics_list, oracles):
+    for (i, j), m, oval in records:
         n_pairs += 1
         if m.get("bias_max") is not None:
             max_bias = max(max_bias, m["bias_max"])
@@ -271,8 +300,11 @@ def compare_case(name: str, gpu: np.ndarray, pairs, metrics_list, oracles,
             min_nonzero = min(min_nonzero, m["min_nonzero_abs"])
         if m.get("underflow_scale"):
             underflow_pairs += 1
-        if np.isfinite(oval) and m.get("bias_max") is not None \
-                and m["bias_max"] != float("inf"):
+        if (
+            np.isfinite(oval)
+            and m.get("bias_max") is not None
+            and m["bias_max"] != float("inf")
+        ):
             max_finite_bias = max(max_finite_bias, m["bias_max"])
         g = gpu[i, j]
         if np.isnan(oval):
@@ -280,13 +312,17 @@ def compare_case(name: str, gpu: np.ndarray, pairs, metrics_list, oracles,
             if np.isnan(g):
                 n_nan_match += 1
             else:
-                mismatches.append({"i": i, "j": j, "gpu": float(g),
-                                   "oracle": "NaN", "kind": "gpu_finite_oracle_nan"})
+                mismatch_count += 1
+                if len(mismatches) < 5:
+                    mismatches.append({"i": i, "j": j, "gpu": float(g),
+                                       "oracle": "NaN", "kind": "gpu_finite_oracle_nan"})
         else:
             n_finite += 1
             if np.isnan(g):
-                mismatches.append({"i": i, "j": j, "gpu": "NaN",
-                                   "oracle": float(oval), "kind": "gpu_nan_oracle_finite"})
+                mismatch_count += 1
+                if len(mismatches) < 5:
+                    mismatches.append({"i": i, "j": j, "gpu": "NaN",
+                                       "oracle": float(oval), "kind": "gpu_nan_oracle_finite"})
             else:
                 dr = abs(g - oval)
                 if dr > max_dr:
@@ -295,8 +331,10 @@ def compare_case(name: str, gpu: np.ndarray, pairs, metrics_list, oracles,
                 if dr <= tol:
                     n_finite_ok += 1
                 else:
-                    mismatches.append({"i": i, "j": j, "gpu": float(g),
-                                       "oracle": float(oval), "kind": "dr", "dr": dr})
+                    mismatch_count += 1
+                    if len(mismatches) < 5:
+                        mismatches.append({"i": i, "j": j, "gpu": float(g),
+                                           "oracle": float(oval), "kind": "dr", "dr": dr})
     # GPU 镜像对称：lower[i,j] 逐位复制 upper[j,i]。NaN 项须视为相等（GPU 静默
     # NaN 0x7fc00000 被位级镜像复制，np.array_equal 默认 NaN!=NaN 会误判）。
     sym_ok = bool(np.array_equal(gpu, gpu.T, equal_nan=True))
@@ -310,8 +348,8 @@ def compare_case(name: str, gpu: np.ndarray, pairs, metrics_list, oracles,
         "max_dr": max_dr,
         "worst_pair": worst_pair,
         "gpu_symmetric": sym_ok,
-        "n_mismatch": len(mismatches),
-        "mismatches": mismatches[:5],
+        "n_mismatch": mismatch_count,
+        "mismatches": mismatches,
         "bias": {
             "max_finite_pair_bias": max_finite_bias,
             "max_pair_bias_all": max_bias,
@@ -321,7 +359,7 @@ def compare_case(name: str, gpu: np.ndarray, pairs, metrics_list, oracles,
             "underflow_scale_pairs": underflow_pairs,
         },
         "pass": (n_finite_ok == n_finite) and (n_nan_match == n_nan) and sym_ok
-                and (len(mismatches) == 0) and (underflow_pairs == 0),
+                and (mismatch_count == 0) and (underflow_pairs == 0),
         # strict parity（|Δr|≤1e-12 vs wrapper）仅适用于低偏置有限 pair：全部
         # 有限比较 pair 的 max|mean|/σ < 1e3 且无下溢尺度；退化（NaN）pair 以
         # NaN parity 判定，不进入 strict parity 适用域。
@@ -334,15 +372,26 @@ def compare_case(name: str, gpu: np.ndarray, pairs, metrics_list, oracles,
 
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--n-sub", type=int, default=200)
+    ap.add_argument(
+        "--n-sub", type=int, default=None,
+        help="stock_corr 列数；默认使用 corpus 全列，仅用于资源受限降级",
+    )
     args = ap.parse_args()
-    n_sub = args.n_sub
 
     d, manifest = load_corpus("corpus_synth_v1")
     T, N, F = d["factors"].shape
-    print(f"corpus {manifest['corpus_id']} T={T} N={N} F={F} (sha256 validated)")
+    corpus_columns = d["returns"].shape[1]
+    n_sub = corpus_columns if args.n_sub is None else args.n_sub
+    if not 1 <= n_sub <= corpus_columns:
+        ap.error(f"--n-sub 必须在 [1, {corpus_columns}] 内")
+    full_column_coverage = n_sub == corpus_columns
+    column_scope = "全列" if full_column_coverage else "前缀降级"
+    print(f"corpus {manifest['corpus_id']} T={T} N={N} F={F} "
+          f"stock_corr={column_scope} {n_sub}/{corpus_columns} (sha256 validated)")
 
     fast_panel = np.fromfile(FAST_PANEL_PATH, dtype=np.float64).reshape(1218, 5000)
+    if n_sub > fast_panel.shape[1]:
+        ap.error(f"--n-sub={n_sub} 超过 all-valid 面板列数 {fast_panel.shape[1]}")
     degen = frozen_degenerate_panel()
     fb, fb_mask = frozen_fallback_panel()
 
@@ -370,7 +419,7 @@ def main() -> int:
         print(f"dispatch: {case:16s} expected={expected} actual={s['selected_path'] if s else '?'} "
               f"fallback_count={s['fallback_count'] if s else '?'} -> {'OK' if ok else 'FAIL'}")
     fallback_hit = (stats.get("stock_fallback") or {}).get("fallback_count", 0) > 0
-    coverage_ok = all(stats_ok.values()) and fallback_hit
+    dispatch_coverage_ok = all(stats_ok.values()) and fallback_hit
 
     # ---- oracle 对比 ------------------------------------------------------------
     factors = d["factors"].astype(np.float64)
@@ -390,34 +439,28 @@ def main() -> int:
     gpu_factor = np.fromfile(outs["factor"], dtype=np.float64).reshape(F, F)
     res_factor = compare_case("factor_corr", gpu_factor, fac_pairs, fac_metrics, fac_oracles)
 
-    # B: stock_corr corpus returns 前缀（general）
+    # B: stock_corr corpus returns 默认全列（general）
     returns = d["returns"][:, :n_sub].astype(np.float64)
     ret_mask = d["mask"][:, :n_sub]
-    ret_pairs = [(i, j) for i in range(n_sub) for j in range(i, n_sub)]
-    ret_oracles, ret_metrics = [], []
-    t0 = time.time()
-    for i, j in ret_pairs:
-        valid = pair_valid_mask(returns[:, i], returns[:, j],
-                                mask_a=ret_mask[:, i], mask_b=ret_mask[:, j])
-        ret_metrics.append(pair_metrics(returns[:, i], returns[:, j], valid))
-        ret_oracles.append(corr_oracle(returns[:, i], returns[:, j],
-                                       mask_a=ret_mask[:, i], mask_b=ret_mask[:, j]))
-    print(f"stock_corr corpus oracle done in {time.time()-t0:.1f}s")
     gpu_stock = np.fromfile(outs["stock"], dtype=np.float64).reshape(n_sub, n_sub)
-    res_stock = compare_case("stock_corr_general", gpu_stock, ret_pairs, ret_metrics, ret_oracles)
-
-    # C: stock_corr all-valid 面板前缀（fast）
-    fast_sub = fast_panel[:, :n_sub]
-    fast_pairs = [(i, j) for i in range(n_sub) for j in range(i, n_sub)]
-    fast_oracles, fast_metrics = [], []
     t0 = time.time()
-    for i, j in fast_pairs:
-        valid = pair_valid_mask(fast_sub[:, i], fast_sub[:, j])
-        fast_metrics.append(pair_metrics(fast_sub[:, i], fast_sub[:, j], valid))
-        fast_oracles.append(corr_oracle(fast_sub[:, i], fast_sub[:, j]))
-    print(f"stock_corr fast oracle done in {time.time()-t0:.1f}s")
+    res_stock = compare_case(
+        "stock_corr_general", gpu_stock,
+        iter_stock_case_records(returns, ret_mask),
+    )
+    print(f"stock_corr corpus oracle+compare done in {time.time()-t0:.1f}s")
+    del returns, ret_mask, gpu_stock
+
+    # C: stock_corr all-valid 面板默认全列（fast）
+    fast_sub = fast_panel[:, :n_sub]
     gpu_fast = np.fromfile(outs["fast"], dtype=np.float64).reshape(n_sub, n_sub)
-    res_fast = compare_case("stock_corr_fast", gpu_fast, fast_pairs, fast_metrics, fast_oracles)
+    t0 = time.time()
+    res_fast = compare_case(
+        "stock_corr_fast", gpu_fast,
+        iter_stock_case_records(fast_sub),
+    )
+    print(f"stock_corr fast oracle+compare done in {time.time()-t0:.1f}s")
+    del fast_sub, gpu_fast
 
     # D: stock_corr 冻结 degenerate 面板（fast + NaN 对角）
     degen_pairs = [(i, j) for i in range(DEGEN_N) for j in range(i, DEGEN_N)]
@@ -448,7 +491,7 @@ def main() -> int:
         all(c["strict_parity_applies"] for c in cases)
     # 退化对角用例须同时覆盖有限对角与 NaN/退化对角（F1 硬断言）
     degen_covers_both = res_degen["n_finite"] > 0 and res_degen["n_nan"] > 0
-    coverage_ok = coverage_ok and degen_covers_both
+    coverage_ok = dispatch_coverage_ok and degen_covers_both and full_column_coverage
     provenance_ok = True  # 全链路 hash 已记录且本轮 fresh 运行
     gate_closed = bool(comparisons_ok and coverage_ok and provenance_ok)
 
@@ -472,9 +515,12 @@ def main() -> int:
         "env": _env_fingerprint(),
         "tolerance": TOL,
         "n_sub": n_sub,
+        "corpus_columns": corpus_columns,
+        "full_column_coverage": full_column_coverage,
         "provenance": provenance,
         "dispatch": stats,
         "expected_paths": EXPECTED_PATH,
+        "dispatch_coverage_ok": dispatch_coverage_ok,
         "coverage_ok": coverage_ok,
         "comparisons_ok": comparisons_ok,
         "provenance_ok": provenance_ok,
@@ -500,17 +546,18 @@ def main() -> int:
         "✅ degenerate 用例同时覆盖有限对角（正常列 1.0）与 NaN/退化对角（常量列）"
         if degen_covers_both else "❌ degenerate 用例未同时覆盖两类对角"
     )
-    md = f"""# 冻结 corpus 跨端 parity 重测（v1.1）—— stock_corr v2 审查 F4 放行门槛
+    md = f"""# 冻结 corpus 跨端 parity 重测（v1.2）—— stock_corr v2 审查 F4 放行门槛
 
 > 生成：{time.strftime('%Y-%m-%d')} · {GENERATOR}
-> 语料：{manifest['corpus_id']}（T={T} N={N} F={F}，data_sha256 已校验）+ all-valid 冻结面板前缀 N={n_sub}
-> v1.1 响应 GPT-5.6-Sol 审查：执行证据（selected_path/fallback_count）断言 + NaN/退化对角 + 全链路 hash + 逐 pair bias/尺度 + 复合 gate_closed
+> 语料：{manifest['corpus_id']}（T={T} N={N} F={F}，data_sha256 已校验）+ stock_corr {column_scope} N={n_sub}/{corpus_columns}
+> v1.2 全列补强：默认覆盖 corpus/general 与 all-valid/fast 全列；流式 oracle 保持逐 pair fail-closed
+> v1.1 审查补强继续保留：执行证据 + NaN/退化对角 + 全链路 hash + 逐 pair bias/尺度 + 复合 gate_closed
 
 ## 结论
 
 **`gate_closed = comparisons_ok AND coverage_ok AND provenance_ok` = {'✅ 关闭' if gate_closed else '❌ 未关闭'}**
 - comparisons_ok = **{'✅' if comparisons_ok else '❌'}** 实现（GPU kernel）对冻结 wrapper corr_oracle_v1.py 逐元素满足 |Δr| ≤ {TOL} / NaN parity
-- coverage_ok = **{'✅' if coverage_ok else '❌'}** 全部 4 个 stock 用例的**实际 dispatch 路径**与预期一致 + fallback_count>0 + {degen_note}
+- coverage_ok = **{'✅' if coverage_ok else '❌'}** 全部 4 个 stock 用例的**实际 dispatch 路径**与预期一致 + fallback_count>0 + full_column_coverage={full_column_coverage} + {degen_note}
 - provenance_ok = **{'✅' if provenance_ok else '❌'}** 全链路 SHA-256（corpus/all-valid 面板/导出输入/GPU 输出/exe）已记录且本轮 fresh 运行
 
 | 用例 | pair 数 | 有限 ok/总 | NaN 匹配 | max|Δr| | max pair bias | fallback | 判定 |
@@ -547,8 +594,8 @@ def main() -> int:
 ## 用例说明
 
 - **factor_corr**：全 corpus (T,N,F) masked pooled 相关 → (F,F)，含对角 1.0/NaN。
-- **stock_corr_general**：corpus returns 前缀，~199/200 列部分有效（含 NaN/mask False）→ general path。
-- **stock_corr_fast**：all-valid 冻结面板前缀（全列 count==T）→ fast path（de-mean Gram）。
+- **stock_corr_general**：corpus returns {column_scope}（N={n_sub}/{corpus_columns}，含 NaN/mask False）→ general path。
+- **stock_corr_fast**：all-valid 冻结面板 {column_scope}（N={n_sub}/{corpus_columns}，全部 count==T）→ fast path（de-mean Gram）。
 - **stock_corr_degenerate_diag**：冻结面板（常量列 + 正常列，全有效）→ fast path；覆盖**有限对角与 NaN/退化对角**两类。
 - **stock_corr_fallback**：冻结低偏置面板（独立 N(2,1) 列触发抵消检测 + 常量列 + mask 强制 general）→ general path 且 **fallback 实际命中**（fallback_count>0），结果对冻结 wrapper 有限/NaN 双判据通过。
 
@@ -561,7 +608,8 @@ def main() -> int:
 
 ## 复现
 
-    PYTHONIOENCODING=utf-8 python benchmarks/corpus_parity_v1.py [--n-sub 200]
+    PYTHONIOENCODING=utf-8 python benchmarks/corpus_parity_v1.py
+    # 资源受限降级：追加 --n-sub 2000（仍为前缀，非全列验收）
 
 *生成模型: {GENERATOR}*
 """

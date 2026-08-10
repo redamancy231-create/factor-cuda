@@ -3,6 +3,8 @@
 > [简体中文](README.md) · [English](README.en.md) · [繁體中文](README.zh-Hant.md)
 >
 > ![简体中文](https://img.shields.io/badge/%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87-%E6%96%87%E6%A1%A3-green)
+> ![CUDA 13.3](https://img.shields.io/badge/CUDA-13.3-76B900?logo=nvidia&logoColor=white)
+> ![Python 3.12+](https://img.shields.io/badge/Python-3.12%2B-3776AB?logo=python&logoColor=white)
 > ![GitHub stars](https://img.shields.io/github/stars/redamancy231-create/factor-cuda)
 > ![GitHub release](https://img.shields.io/github/v/release/redamancy231-create/factor-cuda)
 > ![GitHub license](https://img.shields.io/github/license/redamancy231-create/factor-cuda)

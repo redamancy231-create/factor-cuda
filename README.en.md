@@ -1,6 +1,14 @@
 # factor-cuda — CUDA-Accelerated Cross-Sectional Factor Analysis
 
 > [简体中文](README.md) · [English](README.en.md) · [繁體中文](README.zh-Hant.md)
+>
+> ![English](https://img.shields.io/badge/English-Docs-green)
+> ![CUDA 13.3](https://img.shields.io/badge/CUDA-13.3-76B900?logo=nvidia&logoColor=white)
+> ![Python 3.12+](https://img.shields.io/badge/Python-3.12%2B-3776AB?logo=python&logoColor=white)
+> ![GitHub stars](https://img.shields.io/github/stars/redamancy231-create/factor-cuda)
+> ![GitHub release](https://img.shields.io/github/v/release/redamancy231-create/factor-cuda)
+> ![GitHub license](https://img.shields.io/github/license/redamancy231-create/factor-cuda)
+> ![CI](https://img.shields.io/github/actions/workflow/status/redamancy231-create/factor-cuda/ci.yml)
 
 > GPU-accelerated cross-sectional analysis for quantitative factors — cross-sectional ranking, correlation, IC, and parameter scans.
 > Together with ashare-mcp (data acquisition) and ml-quant-trading (factor production), it forms a free A-share quantitative-research pipeline.

@@ -1,6 +1,14 @@
 # factor-cuda — CUDA 因子橫斷面分析加速
 
 > [简体中文](README.md) · [English](README.en.md) · [繁體中文](README.zh-Hant.md)
+>
+> ![繁體中文](https://img.shields.io/badge/%E7%B9%81%E9%AB%94%E4%B8%AD%E6%96%87-%E6%96%87%E6%AA%94-green)
+> ![CUDA 13.3](https://img.shields.io/badge/CUDA-13.3-76B900?logo=nvidia&logoColor=white)
+> ![Python 3.12+](https://img.shields.io/badge/Python-3.12%2B-3776AB?logo=python&logoColor=white)
+> ![GitHub stars](https://img.shields.io/github/stars/redamancy231-create/factor-cuda)
+> ![GitHub release](https://img.shields.io/github/v/release/redamancy231-create/factor-cuda)
+> ![GitHub license](https://img.shields.io/github/license/redamancy231-create/factor-cuda)
+> ![CI](https://img.shields.io/github/actions/workflow/status/redamancy231-create/factor-cuda/ci.yml)
 
 > GPU 加速的量化因子**橫斷面分析**工具——橫斷面排序、相關性、IC、參數掃描。
 > 與 ashare-mcp（資料取得）、ml-quant-trading（因子生產）組成 A 股量化研究免費管線。
